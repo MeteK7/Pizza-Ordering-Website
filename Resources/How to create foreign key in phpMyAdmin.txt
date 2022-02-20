@@ -1,0 +1,5 @@
+Platform: YouTube
+Channel: Vicode Media
+Name: How to create foreign key in phpMyAdmin
+Publish Date: Feb 27, 2020
+Link: https://www.youtube.com/watch?v=7HTAX0dfJqg

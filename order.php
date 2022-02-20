@@ -1,4 +1,7 @@
 <!DOCTYPE html>
+<?php
+   include "session.php";
+?>
 <html>
 <head>
 	<meta charset="utf-8">
@@ -25,6 +28,10 @@
 	</style>
 </head>
 <body>
+	  <h1>Welcome <?php echo $_SESSION['uname']; ?></h1> 
+        <form method='post' action="">
+            <input type="submit" value="Logout" name="but_logout">
+        </form>
 	<div>
 		<form action="payment-summary">
 			<div>

@@ -2,21 +2,25 @@
 <?php
 include "config.php";
 
-if(isset($_POST['but_submit'])){
+if(isset($_POST['submit-login'])){
+	 $username = $_POST['username'];  
+    $password = $_POST['password'];  
 
-    $uname = mysqli_real_escape_string($conn,$_POST['username']);
-    $password = mysqli_real_escape_string($conn,$_POST['password']);
+	 //to prevent from mysqli injection
+    $username = stripcslashes($username);
+    $password = stripcslashes($password);
+    $username = mysqli_real_escape_string($conn, $username);  
+    $password = mysqli_real_escape_string($conn, $password);  
 
-    if ($uname != "" && $password != ""){
+    if ($username != "" && $password != ""){
 
-        $sql_query = "select count(*) as cntUser from tbl_customer where username='".$uname."' and password='".$password."'";
-        $result = mysqli_query($conn,$sql_query);
-        $row = mysqli_fetch_array($result);
-
-        $count = $row['cntUser'];
+        $sql = "select count(*) from tbl_customer where username='".$username."' and password='".$password."'";
+        $result = mysqli_query($conn,$sql);
+        $row = mysqli_fetch_array($result, MYSQLI_ASSOC);
+        $count =mysqli_num_rows($result); 
 
         if($count > 0){
-            $_SESSION['uname'] = $uname;
+            $_SESSION['username'] = $username;
             header('Location: order.php');
         }else{
             echo "Invalid username and password";
@@ -25,6 +29,13 @@ if(isset($_POST['but_submit'])){
     }
 
 }
+/*
+OLD QUERY
+        $sql_query = "select count(*) as cntUser from tbl_customer where username='".$username."' and password='".$password."'";
+        $result = mysqli_query($conn,$sql_query);
+        $row = mysqli_fetch_array($result);
+        $count = $row['cntUser'];
+*/
 ?>
 <html>
 <head>
@@ -45,7 +56,7 @@ if(isset($_POST['but_submit'])){
 			<input type="text" name="username">
 			<label>Password:</label>
 			<input type="Password" name="password">
-			<input type="submit" value="Log in" name="but_submit" id="but_submit">
+			<input type="submit" value="Log in" name="submit-login" id="submit-login">
 		</form>
 		<p>If you visit our website for the first time, please register:</p>
 		<form action="register.php" method="post">

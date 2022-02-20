@@ -28,9 +28,9 @@
 	</style>
 </head>
 <body>
-	  <h1>Welcome <?php echo $_SESSION['uname']; ?></h1> 
+	  <h1>Welcome <?php echo $_SESSION['username']; ?></h1> 
         <form method='post' action="">
-            <input type="submit" value="Logout" name="but_logout">
+            <input type="submit" value="Logout" name="submit-logout">
         </form>
 	<div>
 		<form action="payment-summary">

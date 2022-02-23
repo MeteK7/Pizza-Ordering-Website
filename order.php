@@ -7,6 +7,11 @@ include('config.php');
 $query = "SELECT * FROM tbl_pizza";
 $result = $conn->query($query);
 ?>
+<?php
+function get_availability(){
+	echo "Stay Safe";
+}
+?>
 <html>
 <head>
 	<meta charset="utf-8">
@@ -31,6 +36,14 @@ $result = $conn->query($query);
 			text-align: center;
 		}
 	</style>
+	<script type="text/javascript">
+		function calculateAvailabilityById(quantityId){
+			var result ="<?php get_availability(); ?>";
+			var quantityByUser=document.getElementById(quantityId);
+			document.write(quantityByUser.value);
+			//document.write(quantityId);
+		}
+	</script>
 </head>
 <body>
 	<h1>Welcome <?php echo $_SESSION['username']; ?></h1> 
@@ -94,29 +107,33 @@ $result = $conn->query($query);
 								$sn=1;
 								while($data = $result->fetch_assoc()) 
 								{
-							?>
+									?>
 									<tr>
-										<td><?php echo $sn; ?> </td>
-										<td><?php echo $data['name']; ?> </td>
-										<td><?php echo $data['price_small']; ?> </td>
-										<td><?php echo $data['price_medium']; ?> </td>
-										<td><?php echo $data['price_large']; ?> </td>
-										<td><input type="text" id="<?php echo $data['id']; ?>" name="quantity"></td>
-										<td><?php echo $data['availability']; ?> </td>
+										<td><?php echo $sn; ?></td>
+										<td><?php echo $data['name']; ?></td>
+										<td><?php echo $data['price_small']; ?></td>
+										<td><?php echo $data['price_medium']; ?></td>
+										<td><?php echo $data['price_large']; ?></td>
+										<td>
+											<input onkeydown="calculateAvailabilityById('qty-<?php echo $data['id'];?>')" type="text" id="qty-<?php echo $data['id']; ?>" name="input-quantity">
+										</td>
+										<td>
+											<?php echo $data['availability']; ?> 
+										</td>
 										<tr>
-							<?php
-									$sn++;
-								}
-							} 
-							else 
-								{ 
-							?>
-									<tr>
-										<td colspan="8">No data found</td>
-									</tr>
-							<?php 
-								} 
-							?>
+											<?php
+											$sn++;
+										}
+									} 
+									else 
+									{ 
+										?>
+										<tr>
+											<td colspan="8">No data found</td>
+										</tr>
+										<?php 
+									} 
+									?>
 										<!--
 											<tr>
 												<td>Vegetarian Pizza</td>
@@ -167,108 +184,108 @@ $result = $conn->query($query);
 												<td></td>
 											</tr>
 										-->
-										</table>
-									</center>
-								</div>
-								<div class="div-table-beverage">
-									<p>Beverage:</p>
-									<center>
-										<table>
-											<tr>
-												<th>Beverages</th>
-												<th>Price</th>
-												<th>Quantity</th>
-												<th>Availability</th>
-											</tr>
-											<tr>
-												<td>Water</td>
-												<td>2TL</td>
-												<td><input type="text" id="qty-water" name="quantity"></td>
-												<td></td>
-											</tr>
-											<tr>
-												<td>Cola</td>
-												<td>4TL</td>
-												<td><input type="text" id="qty-cola" name="quantity"></td>
-												<td></td>
-											</tr>
-											<tr>
-												<td>Beer</td>
-												<td>6TL</td>
-												<td><input type="text" id="qty-beer" name="quantity"></td>
-												<td></td>
-											</tr>
-											<tr>
-												<td>Ayran</td>
-												<td>3TL</td>
-												<td><input type="text" id="qty-ayran" name="quantity"></td>
-												<td></td>
-											</tr>
-											<tr>
-												<td>Tea</td>
-												<td>4TL</td>
-												<td><input type="text" id="qty-tea" name="quantity"></td>
-												<td></td>
-											</tr>
-											<tr>
-												<td>Coffee</td>
-												<td>4TL</td>
-												<td><input type="text" id="qty-coffee" name="quantity"></td>
-												<td></td>
-											</tr>
-										</table>
-									</center>
-								</div>		
-								<div class="div-table-dessert">
-									<p>Dessert:</p>
-									<center>
-										<table>
-											<tr>
-												<th>Desserts</th>
-												<th>Price</th>
-												<th>Quantity</th>
-												<th>Availability</th>
-											</tr>
-											<tr>
-												<td>Apple Pie</td>
-												<td>2TL</td>
-												<td><input type="text" id="qty-apple-pie" name="quantity"></td>
-												<td></td>
-											</tr>
-											<tr>
-												<td>Chocolate Cake</td>
-												<td>4TL</td>
-												<td><input type="text" id="qty-chocolate-cake" name="quantity"></td>
-												<td></td>
-											</tr>
-											<tr>
-												<td>Banana Pudding</td>
-												<td>6TL</td>
-												<td><input type="text" id="qty-banana-pudding" name="quantity"></td>
-												<td></td>
-											</tr>
-											<tr>
-												<td>Ice Cream</td>
-												<td>3TL</td>
-												<td><input type="text" id="qty-ice-cream" name="quantity"></td>
-												<td></td>
-											</tr>
-											<tr>
-												<td>Cookie</td>
-												<td>4TL</td>
-												<td><input type="text" id="qty-cookie" name="quantity"></td>
-												<td></td>
-											</tr>
-											<tr>
-												<td>Stroopwafel</td>
-												<td>4TL</td>
-												<td><input type="text" id="qty-stroopwafel" name="quantity"></td>
-												<td></td>
-											</tr>
-										</table>
-									</center>
-								</div>
-							</form>
-						</div>
-					</body>
-					</html>
+									</table>
+								</center>
+							</div>
+							<div class="div-table-beverage">
+								<p>Beverage:</p>
+								<center>
+									<table>
+										<tr>
+											<th>Beverages</th>
+											<th>Price</th>
+											<th>Quantity</th>
+											<th>Availability</th>
+										</tr>
+										<tr>
+											<td>Water</td>
+											<td>2TL</td>
+											<td><input type="text" id="qty-water" name="quantity"></td>
+											<td></td>
+										</tr>
+										<tr>
+											<td>Cola</td>
+											<td>4TL</td>
+											<td><input type="text" id="qty-cola" name="quantity"></td>
+											<td></td>
+										</tr>
+										<tr>
+											<td>Beer</td>
+											<td>6TL</td>
+											<td><input type="text" id="qty-beer" name="quantity"></td>
+											<td></td>
+										</tr>
+										<tr>
+											<td>Ayran</td>
+											<td>3TL</td>
+											<td><input type="text" id="qty-ayran" name="quantity"></td>
+											<td></td>
+										</tr>
+										<tr>
+											<td>Tea</td>
+											<td>4TL</td>
+											<td><input type="text" id="qty-tea" name="quantity"></td>
+											<td></td>
+										</tr>
+										<tr>
+											<td>Coffee</td>
+											<td>4TL</td>
+											<td><input type="text" id="qty-coffee" name="quantity"></td>
+											<td></td>
+										</tr>
+									</table>
+								</center>
+							</div>		
+							<div class="div-table-dessert">
+								<p>Dessert:</p>
+								<center>
+									<table>
+										<tr>
+											<th>Desserts</th>
+											<th>Price</th>
+											<th>Quantity</th>
+											<th>Availability</th>
+										</tr>
+										<tr>
+											<td>Apple Pie</td>
+											<td>2TL</td>
+											<td><input type="text" id="qty-apple-pie" name="quantity"></td>
+											<td></td>
+										</tr>
+										<tr>
+											<td>Chocolate Cake</td>
+											<td>4TL</td>
+											<td><input type="text" id="qty-chocolate-cake" name="quantity"></td>
+											<td></td>
+										</tr>
+										<tr>
+											<td>Banana Pudding</td>
+											<td>6TL</td>
+											<td><input type="text" id="qty-banana-pudding" name="quantity"></td>
+											<td></td>
+										</tr>
+										<tr>
+											<td>Ice Cream</td>
+											<td>3TL</td>
+											<td><input type="text" id="qty-ice-cream" name="quantity"></td>
+											<td></td>
+										</tr>
+										<tr>
+											<td>Cookie</td>
+											<td>4TL</td>
+											<td><input type="text" id="qty-cookie" name="quantity"></td>
+											<td></td>
+										</tr>
+										<tr>
+											<td>Stroopwafel</td>
+											<td>4TL</td>
+											<td><input type="text" id="qty-stroopwafel" name="quantity"></td>
+											<td></td>
+										</tr>
+									</table>
+								</center>
+							</div>
+						</form>
+					</div>
+				</body>
+				</html>

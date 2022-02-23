@@ -8,8 +8,8 @@ $query = "SELECT * FROM tbl_pizza";
 $result = $conn->query($query);
 ?>
 <?php
-function get_availability(){
-	echo "Stay Safe";
+function get_pizza_quantity(){
+	//YOU MAY WISH TO DEVELOP THIS FUNCTION IN THE FUTURE TO GET AVAILABILITY OF PIZZAS INSTEAD OF GETTING FROM LABEL.
 }
 ?>
 <html>
@@ -37,14 +37,22 @@ function get_availability(){
 		}
 	</style>
 	<script type="text/javascript">
-		function calculateAvailabilityById(quantityId){
-			var result ="<?php get_availability(); ?>";
-			var quantityByUser=document.getElementById(quantityId);
-			var quantityTest=document.getElementById('qty-1');
-			document.write('QuantityId Parameter= '+quantityId+"<br><br>");
+		function calculateAvailabilityById(idQuantity,idAvailability, idAvailabilityConst){
+			/*
+			//var quantityTest=document.getElementById('qty-1');
+			document.write("idQuantity Parameter= "+idQuantity+"<br><br>");
 			document.write("Quantity by User= "+quantityByUser.value+"<br><br>");
-			document.write("Quantity Test= "+quantityTest.value+"<br><br>");
-			document.write(result);
+			//document.write("Type of Menu= "+typeMenu+"<br><br>");
+			//document.write("Quantity Test= "+quantityTest.value+"<br><br>");
+			document.write("idAvailability Parameter= "+idAvailability+"<br><br>");
+			document.write("Availability= "+availabilityInStock.innerHTML);
+			*/
+			var quantityByUser=document.getElementById(idQuantity);
+			var availabilityNew=document.getElementById(idAvailability);
+			var availabilityInStock=document.getElementById(idAvailabilityConst);
+			availabilityNew.innerHTML=availabilityInStock.innerHTML;//Value from DB every trigger to calculate new availability.
+			availabilityNew.innerHTML=availabilityNew.innerHTML-quantityByUser.value;
+			//document.write("Availability= "+availabilityInStock.innerHTML);
 			
 		}
 	</script>
@@ -85,60 +93,64 @@ function get_availability(){
 				<label for="dessert">Dessert</label>		
 			</div>
 
-				<br>
+			<br>
 
-				<div class="div-table-pizza">
-					<p>Pizza:</p>
-					<center>
-						<table>
-							<tr>
-								<th></th>
-								<th></th>
-								<th colspan="3" class="th-price">Price</th>
-								<th colspan="2"></th>
-							</tr>
-							<tr>
-								<th></th>
-								<th>Pizzas</th>
-								<th>Small</th>
-								<th>Medium</th>
-								<th>Large</th>
-								<th>Quantity</th>
-								<th>Availability</th>
-							</tr>
-							<?php
-							if ($result->num_rows > 0) 
+			<div class="div-table-pizza">
+				<p>Pizza:</p>
+				<center>
+					<table>
+						<tr>
+							<th></th>
+							<th></th>
+							<th colspan="3" class="th-price">Price</th>
+							<th colspan="2"></th>
+						</tr>
+						<tr>
+							<th></th>
+							<th>Pizzas</th>
+							<th>Small</th>
+							<th>Medium</th>
+							<th>Large</th>
+							<th>Quantity</th>
+							<th>Availability</th>
+						</tr>
+						<?php
+						if ($result->num_rows > 0) 
+						{
+							$sn=1;
+							while($data = $result->fetch_assoc()) 
 							{
-								$sn=1;
-								while($data = $result->fetch_assoc()) 
-								{
+								?>
+								<tr>
+									<td><?php echo $sn; ?></td>
+									<td><?php echo $data['name']; ?></td>
+									<td><?php echo $data['price_small']; ?></td>
+									<td><?php echo $data['price_medium']; ?></td>
+									<td><?php echo $data['price_large']; ?></td>
+									<td>
+										<input onkeyup="calculateAvailabilityById('qty-<?php echo $data['id'];?>', 'availability-<?php echo $data['id'];?>','availability-const-<?php echo $data['id'];?>')" type="text" id="qty-<?php echo $data['id'];?>" name="pizza">
+									</td>
+									<td id="availability-<?php echo $data['id'];?>">
+										<?php echo $data['availability']; ?> 
+									</td>
+									<!--This is a constant value only for calculating new availability.-->
+									<td style="display:none;" id="availability-const-<?php echo $data['id'];?>">
+										<?php echo $data['availability']; ?> 
+									</td>
+									<tr>
+										<?php
+										$sn++;
+									}
+								} 
+								else 
+								{ 
 									?>
 									<tr>
-										<td><?php echo $sn; ?></td>
-										<td><?php echo $data['name']; ?></td>
-										<td><?php echo $data['price_small']; ?></td>
-										<td><?php echo $data['price_medium']; ?></td>
-										<td><?php echo $data['price_large']; ?></td>
-										<td>
-											<input onkeyup="calculateAvailabilityById('qty-<?php echo $data['id'];?>')" type="text" id="qty-<?php echo $data['id'];?>" name="input-quantity">
-										</td>
-										<td>
-											<?php echo $data['availability']; ?> 
-										</td>
-										<tr>
-											<?php
-											$sn++;
-										}
-									} 
-									else 
-									{ 
-										?>
-										<tr>
-											<td colspan="8">No data found</td>
-										</tr>
-										<?php 
-									} 
-									?>
+										<td colspan="8">No data found</td>
+									</tr>
+									<?php 
+								} 
+								?>
 										<!--
 											<tr>
 												<td>Vegetarian Pizza</td>

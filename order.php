@@ -40,8 +40,12 @@ function get_availability(){
 		function calculateAvailabilityById(quantityId){
 			var result ="<?php get_availability(); ?>";
 			var quantityByUser=document.getElementById(quantityId);
-			document.write(quantityByUser.value);
-			//document.write(quantityId);
+			var quantityTest=document.getElementById('qty-1');
+			document.write('QuantityId Parameter= '+quantityId+"<br><br>");
+			document.write("Quantity by User= "+quantityByUser.value+"<br><br>");
+			document.write("Quantity Test= "+quantityTest.value+"<br><br>");
+			document.write(result);
+			
 		}
 	</script>
 </head>
@@ -78,7 +82,8 @@ function get_availability(){
 				<label for="beverage">Beverage</label>
 				<br>
 				<input type="checkbox" id="chk-dessert" name="chk-type-of-ordering" value="Dessert">
-				<label for="dessert">Dessert</label>		</div>
+				<label for="dessert">Dessert</label>		
+			</div>
 
 				<br>
 
@@ -115,7 +120,7 @@ function get_availability(){
 										<td><?php echo $data['price_medium']; ?></td>
 										<td><?php echo $data['price_large']; ?></td>
 										<td>
-											<input onkeydown="calculateAvailabilityById('qty-<?php echo $data['id'];?>')" type="text" id="qty-<?php echo $data['id']; ?>" name="input-quantity">
+											<input onkeyup="calculateAvailabilityById('qty-<?php echo $data['id'];?>')" type="text" id="qty-<?php echo $data['id'];?>" name="input-quantity">
 										</td>
 										<td>
 											<?php echo $data['availability']; ?> 

@@ -4,8 +4,11 @@ include "session.php";
 ?>
 <?php
 include('config.php');
-$query = "SELECT * FROM tbl_pizza";
-$result = $conn->query($query);
+$query_pizza = "SELECT * FROM tbl_pizza";
+$result_pizza = $conn->query($query_pizza);
+
+$query_beverage = "SELECT * FROM tbl_beverage";
+$result_beverage = $conn->query($query_beverage);
 ?>
 <?php
 function get_pizza_quantity(){
@@ -92,9 +95,7 @@ function get_pizza_quantity(){
 				<input type="checkbox" id="chk-dessert" name="chk-type-of-ordering" value="Dessert">
 				<label for="dessert">Dessert</label>		
 			</div>
-
 			<br>
-
 			<div class="div-table-pizza">
 				<p>Pizza:</p>
 				<center>
@@ -115,10 +116,10 @@ function get_pizza_quantity(){
 							<th>Availability</th>
 						</tr>
 						<?php
-						if ($result->num_rows > 0) 
+						if ($result_pizza->num_rows > 0) 
 						{
 							$sn=1;
-							while($data = $result->fetch_assoc()) 
+							while($data = $result_pizza->fetch_assoc()) 
 							{
 								?>
 								<tr>
@@ -128,181 +129,173 @@ function get_pizza_quantity(){
 									<td><?php echo $data['price_medium']; ?></td>
 									<td><?php echo $data['price_large']; ?></td>
 									<td>
-										<input onkeyup="calculateAvailabilityById('qty-<?php echo $data['id'];?>', 'availability-<?php echo $data['id'];?>','availability-const-<?php echo $data['id'];?>')" type="text" id="qty-<?php echo $data['id'];?>" name="pizza">
+										<input onkeyup="calculateAvailabilityById('qty-pizza-<?php echo $data['id'];?>', 'availability-pizza-<?php echo $data['id'];?>','availability-pizza-const-<?php echo $data['id'];?>')" type="text" id="qty-pizza-<?php echo $data['id'];?>" name="pizza">
 									</td>
-									<td id="availability-<?php echo $data['id'];?>">
+									<td id="availability-pizza-<?php echo $data['id'];?>">
 										<?php echo $data['availability']; ?> 
 									</td>
 									<!--This is a constant value only for calculating new availability.-->
-									<td style="display:none;" id="availability-const-<?php echo $data['id'];?>">
+									<td style="display:none;" id="availability-pizza-const-<?php echo $data['id'];?>">
 										<?php echo $data['availability']; ?> 
 									</td>
-									<tr>
-										<?php
-										$sn++;
-									}
-								} 
-								else 
-								{ 
-									?>
-									<tr>
-										<td colspan="8">No data found</td>
-									</tr>
-									<?php 
-								} 
+								</tr>
+								<?php
+								$sn++;
+							}
+						} 
+						else 
+						{ 
+							?>
+							<tr>
+								<td colspan="8">No data found</td>
+							</tr>
+							<?php 
+						} 
+						?>
+					</table>
+				</center>
+			</div>
+			<div class="div-table-beverage">
+				<p>Beverage:</p>
+				<center>
+					<table>
+						<tr>
+							<th></th>
+							<th></th>
+							<th class="th-price">Price</th>
+							<th colspan="2"></th>
+						</tr>
+						<tr>
+							<th></th>
+							<th>Beverages</th>
+							<th>Price</th>
+							<th>Quantity</th>
+							<th>Availability</th>
+						</tr>
+						<?php
+						if ($result_beverage->num_rows > 0) 
+						{
+							$sn=1;
+							while($data_beverage = $result_beverage->fetch_assoc()) 
+							{
 								?>
-										<!--
-											<tr>
-												<td>Vegetarian Pizza</td>
-												<td>15TL</td>
-												<td>17TL</td>
-												<td>20TL</td>
-												<td><input type="text" id="qty-pizza-vegetarian" name="quantity"></td>
-												<td><label></label></td>
-											</tr>
-											<tr>
-												<td>Chicken Pizza</td>
-												<td>18TL</td>
-												<td>20TL</td>
-												<td>22TL</td>
-												<td><input type="text" id="qty-pizza-chicken" name="quantity"></td>
-												<td></td>
-											</tr>
-											<tr>
-												<td>Meat Pizza</td>
-												<td>18TL</td>
-												<td>20TL</td>
-												<td>22TL</td>
-												<td><input type="text" id="qty-pizza-meat" name="quantity"></td>
-												<td></td>
-											</tr>
-											<tr>
-												<td>Pepperoni Pizza</td>
-												<td>19TL</td>
-												<td>21TL</td>
-												<td>23TL</td>
-												<td><input type="text" id="qty-pizza-pepperoni" name="quantity"></td>
-												<td></td>
-											</tr>
-											<tr>
-												<td>Mix Pizza</td>
-												<td>20TL</td>
-												<td>22TL</td>
-												<td>24TL</td>
-												<td><input type="text" id="qty-pizza-mix" name="quantity"></td>
-												<td></td>
-											</tr>
-											<tr>
-												<td>COME308 Special Pizza</td>
-												<td>22TL</td>
-												<td>23TL</td>
-												<td>26TL</td>
-												<td><input type="text" id="qty-pizza-come308-special" name="quantity"></td>
-												<td></td>
-											</tr>
-										-->
-									</table>
-								</center>
-							</div>
-							<div class="div-table-beverage">
-								<p>Beverage:</p>
-								<center>
-									<table>
-										<tr>
-											<th>Beverages</th>
-											<th>Price</th>
-											<th>Quantity</th>
-											<th>Availability</th>
-										</tr>
-										<tr>
-											<td>Water</td>
-											<td>2TL</td>
-											<td><input type="text" id="qty-water" name="quantity"></td>
-											<td></td>
-										</tr>
-										<tr>
-											<td>Cola</td>
-											<td>4TL</td>
-											<td><input type="text" id="qty-cola" name="quantity"></td>
-											<td></td>
-										</tr>
-										<tr>
-											<td>Beer</td>
-											<td>6TL</td>
-											<td><input type="text" id="qty-beer" name="quantity"></td>
-											<td></td>
-										</tr>
-										<tr>
-											<td>Ayran</td>
-											<td>3TL</td>
-											<td><input type="text" id="qty-ayran" name="quantity"></td>
-											<td></td>
-										</tr>
-										<tr>
-											<td>Tea</td>
-											<td>4TL</td>
-											<td><input type="text" id="qty-tea" name="quantity"></td>
-											<td></td>
-										</tr>
-										<tr>
-											<td>Coffee</td>
-											<td>4TL</td>
-											<td><input type="text" id="qty-coffee" name="quantity"></td>
-											<td></td>
-										</tr>
-									</table>
-								</center>
-							</div>		
-							<div class="div-table-dessert">
-								<p>Dessert:</p>
-								<center>
-									<table>
-										<tr>
-											<th>Desserts</th>
-											<th>Price</th>
-											<th>Quantity</th>
-											<th>Availability</th>
-										</tr>
-										<tr>
-											<td>Apple Pie</td>
-											<td>2TL</td>
-											<td><input type="text" id="qty-apple-pie" name="quantity"></td>
-											<td></td>
-										</tr>
-										<tr>
-											<td>Chocolate Cake</td>
-											<td>4TL</td>
-											<td><input type="text" id="qty-chocolate-cake" name="quantity"></td>
-											<td></td>
-										</tr>
-										<tr>
-											<td>Banana Pudding</td>
-											<td>6TL</td>
-											<td><input type="text" id="qty-banana-pudding" name="quantity"></td>
-											<td></td>
-										</tr>
-										<tr>
-											<td>Ice Cream</td>
-											<td>3TL</td>
-											<td><input type="text" id="qty-ice-cream" name="quantity"></td>
-											<td></td>
-										</tr>
-										<tr>
-											<td>Cookie</td>
-											<td>4TL</td>
-											<td><input type="text" id="qty-cookie" name="quantity"></td>
-											<td></td>
-										</tr>
-										<tr>
-											<td>Stroopwafel</td>
-											<td>4TL</td>
-											<td><input type="text" id="qty-stroopwafel" name="quantity"></td>
-											<td></td>
-										</tr>
-									</table>
-								</center>
-							</div>
-						</form>
-					</div>
-				</body>
-				</html>
+								<tr>
+									<td><?php echo $sn; ?></td>
+									<td><?php echo $data_beverage['name']; ?></td>
+									<td><?php echo $data_beverage['price_small']; ?></td>
+									<td>
+										<input onkeyup="calculateAvailabilityById('qty-beverage-<?php echo $data_beverage['id'];?>', 'availability-beverage-<?php echo $data_beverage['id'];?>','availability-beverage-const-<?php echo $data_beverage['id'];?>')" type="text" id="qty-beverage-<?php echo $data_beverage['id'];?>" name="beverage">
+									</td>
+									<td id="availability-beverage-<?php echo $data_beverage['id'];?>">
+										<?php echo $data_beverage['availability']; ?> 
+									</td>
+									<!--This is a constant value only for calculating new availability.-->
+									<td style="display:none;" id="availability-beverage-const-<?php echo $data_beverage['id'];?>">
+										<?php echo $data_beverage['availability']; ?>
+									</td>
+								</tr>
+								<?php
+								$sn++;
+							}
+						} 
+						else 
+						{ 
+							?>
+							<tr>
+								<td colspan="8">No data found</td>
+							</tr>
+							<?php 
+						} 
+						?>
+						<tr>
+							<td>Water</td>
+							<td>2TL</td>
+							<td><input type="text" id="qty-water" name="quantity"></td>
+							<td></td>
+						</tr>
+						<tr>
+							<td>Cola</td>
+							<td>4TL</td>
+							<td><input type="text" id="qty-cola" name="quantity"></td>
+							<td></td>
+						</tr>
+						<tr>
+							<td>Beer</td>
+							<td>6TL</td>
+							<td><input type="text" id="qty-beer" name="quantity"></td>
+							<td></td>
+						</tr>
+						<tr>
+							<td>Ayran</td>
+							<td>3TL</td>
+							<td><input type="text" id="qty-ayran" name="quantity"></td>
+							<td></td>
+						</tr>
+						<tr>
+							<td>Tea</td>
+							<td>4TL</td>
+							<td><input type="text" id="qty-tea" name="quantity"></td>
+							<td></td>
+						</tr>
+						<tr>
+							<td>Coffee</td>
+							<td>4TL</td>
+							<td><input type="text" id="qty-coffee" name="quantity"></td>
+							<td></td>
+						</tr>
+					</table>
+				</center>
+			</div>		
+			<div class="div-table-dessert">
+				<p>Dessert:</p>
+				<center>
+					<table>
+						<tr>
+							<th>Desserts</th>
+							<th>Price</th>
+							<th>Quantity</th>
+							<th>Availability</th>
+						</tr>
+						<tr>
+							<td>Apple Pie</td>
+							<td>2TL</td>
+							<td><input type="text" id="qty-apple-pie" name="quantity"></td>
+							<td></td>
+						</tr>
+						<tr>
+							<td>Chocolate Cake</td>
+							<td>4TL</td>
+							<td><input type="text" id="qty-chocolate-cake" name="quantity"></td>
+							<td></td>
+						</tr>
+						<tr>
+							<td>Banana Pudding</td>
+							<td>6TL</td>
+							<td><input type="text" id="qty-banana-pudding" name="quantity"></td>
+							<td></td>
+						</tr>
+						<tr>
+							<td>Ice Cream</td>
+							<td>3TL</td>
+							<td><input type="text" id="qty-ice-cream" name="quantity"></td>
+							<td></td>
+						</tr>
+						<tr>
+							<td>Cookie</td>
+							<td>4TL</td>
+							<td><input type="text" id="qty-cookie" name="quantity"></td>
+							<td></td>
+						</tr>
+						<tr>
+							<td>Stroopwafel</td>
+							<td>4TL</td>
+							<td><input type="text" id="qty-stroopwafel" name="quantity"></td>
+							<td></td>
+						</tr>
+					</table>
+				</center>
+			</div>
+		</form>
+	</div>
+</body>
+</html>

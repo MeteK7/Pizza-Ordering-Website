@@ -9,6 +9,9 @@ $result_pizza = $conn->query($query_pizza);
 
 $query_beverage = "SELECT * FROM tbl_beverage";
 $result_beverage = $conn->query($query_beverage);
+
+$query_dessert = "SELECT * FROM tbl_dessert";
+$result_dessert = $conn->query($query_dessert);
 ?>
 <?php
 function get_pizza_quantity(){
@@ -118,29 +121,29 @@ function get_pizza_quantity(){
 						<?php
 						if ($result_pizza->num_rows > 0) 
 						{
-							$sn=1;
-							while($data = $result_pizza->fetch_assoc()) 
+							$counter=1;
+							while($data_pizza = $result_pizza->fetch_assoc()) 
 							{
 								?>
 								<tr>
-									<td><?php echo $sn; ?></td>
-									<td><?php echo $data['name']; ?></td>
-									<td><?php echo $data['price_small']; ?></td>
-									<td><?php echo $data['price_medium']; ?></td>
-									<td><?php echo $data['price_large']; ?></td>
+									<td><?php echo $counter; ?></td>
+									<td><?php echo $data_pizza['name']; ?></td>
+									<td><?php echo $data_pizza['price_small']; ?></td>
+									<td><?php echo $data_pizza['price_medium']; ?></td>
+									<td><?php echo $data_pizza['price_large']; ?></td>
 									<td>
-										<input onkeyup="calculateAvailabilityById('qty-pizza-<?php echo $data['id'];?>', 'availability-pizza-<?php echo $data['id'];?>','availability-pizza-const-<?php echo $data['id'];?>')" type="text" id="qty-pizza-<?php echo $data['id'];?>" name="pizza">
+										<input onkeyup="calculateAvailabilityById('qty-pizza-<?php echo $data_pizza['id'];?>', 'availability-pizza-<?php echo $data_pizza['id'];?>','availability-pizza-const-<?php echo $data_pizza['id'];?>')" type="text" id="qty-pizza-<?php echo $data_pizza['id'];?>" name="pizza">
 									</td>
-									<td id="availability-pizza-<?php echo $data['id'];?>">
-										<?php echo $data['availability']; ?> 
+									<td id="availability-pizza-<?php echo $data_pizza['id'];?>">
+										<?php echo $data_pizza['availability']; ?> 
 									</td>
 									<!--This is a constant value only for calculating new availability.-->
-									<td style="display:none;" id="availability-pizza-const-<?php echo $data['id'];?>">
-										<?php echo $data['availability']; ?> 
+									<td style="display:none;" id="availability-pizza-const-<?php echo $data_pizza['id'];?>">
+										<?php echo $data_pizza['availability']; ?> 
 									</td>
 								</tr>
 								<?php
-								$sn++;
+								$counter++;
 							}
 						} 
 						else 
@@ -175,12 +178,12 @@ function get_pizza_quantity(){
 						<?php
 						if ($result_beverage->num_rows > 0) 
 						{
-							$sn=1;
+							$counter=1;
 							while($data_beverage = $result_beverage->fetch_assoc()) 
 							{
 								?>
 								<tr>
-									<td><?php echo $sn; ?></td>
+									<td><?php echo $counter; ?></td>
 									<td><?php echo $data_beverage['name']; ?></td>
 									<td><?php echo $data_beverage['price_small']; ?></td>
 									<td>
@@ -195,7 +198,7 @@ function get_pizza_quantity(){
 									</td>
 								</tr>
 								<?php
-								$sn++;
+								$counter++;
 							}
 						} 
 						else 
@@ -207,42 +210,6 @@ function get_pizza_quantity(){
 							<?php 
 						} 
 						?>
-						<tr>
-							<td>Water</td>
-							<td>2TL</td>
-							<td><input type="text" id="qty-water" name="quantity"></td>
-							<td></td>
-						</tr>
-						<tr>
-							<td>Cola</td>
-							<td>4TL</td>
-							<td><input type="text" id="qty-cola" name="quantity"></td>
-							<td></td>
-						</tr>
-						<tr>
-							<td>Beer</td>
-							<td>6TL</td>
-							<td><input type="text" id="qty-beer" name="quantity"></td>
-							<td></td>
-						</tr>
-						<tr>
-							<td>Ayran</td>
-							<td>3TL</td>
-							<td><input type="text" id="qty-ayran" name="quantity"></td>
-							<td></td>
-						</tr>
-						<tr>
-							<td>Tea</td>
-							<td>4TL</td>
-							<td><input type="text" id="qty-tea" name="quantity"></td>
-							<td></td>
-						</tr>
-						<tr>
-							<td>Coffee</td>
-							<td>4TL</td>
-							<td><input type="text" id="qty-coffee" name="quantity"></td>
-							<td></td>
-						</tr>
 					</table>
 				</center>
 			</div>		
@@ -251,47 +218,53 @@ function get_pizza_quantity(){
 				<center>
 					<table>
 						<tr>
+							<th></th>
+							<th></th>
+							<th class="th-price">Price</th>
+							<th colspan="2"></th>
+						</tr>
+						<tr>
+							<th></th>
 							<th>Desserts</th>
 							<th>Price</th>
 							<th>Quantity</th>
 							<th>Availability</th>
 						</tr>
-						<tr>
-							<td>Apple Pie</td>
-							<td>2TL</td>
-							<td><input type="text" id="qty-apple-pie" name="quantity"></td>
-							<td></td>
-						</tr>
-						<tr>
-							<td>Chocolate Cake</td>
-							<td>4TL</td>
-							<td><input type="text" id="qty-chocolate-cake" name="quantity"></td>
-							<td></td>
-						</tr>
-						<tr>
-							<td>Banana Pudding</td>
-							<td>6TL</td>
-							<td><input type="text" id="qty-banana-pudding" name="quantity"></td>
-							<td></td>
-						</tr>
-						<tr>
-							<td>Ice Cream</td>
-							<td>3TL</td>
-							<td><input type="text" id="qty-ice-cream" name="quantity"></td>
-							<td></td>
-						</tr>
-						<tr>
-							<td>Cookie</td>
-							<td>4TL</td>
-							<td><input type="text" id="qty-cookie" name="quantity"></td>
-							<td></td>
-						</tr>
-						<tr>
-							<td>Stroopwafel</td>
-							<td>4TL</td>
-							<td><input type="text" id="qty-stroopwafel" name="quantity"></td>
-							<td></td>
-						</tr>
+						<?php
+						if ($result_dessert->num_rows > 0) 
+						{
+							$counter=1;
+							while($data_dessert = $result_dessert->fetch_assoc()) 
+							{
+								?>
+								<tr>
+									<td><?php echo $counter; ?></td>
+									<td><?php echo $data_dessert['name']; ?></td>
+									<td><?php echo $data_dessert['price_small']; ?></td>
+									<td>
+										<input onkeyup="calculateAvailabilityById('qty-dessert-<?php echo $data_dessert['id'];?>', 'availability-dessert-<?php echo $data_dessert['id'];?>','availability-beverage-const-<?php echo $data_dessert['id'];?>')" type="text" id="qty-dessert-<?php echo $data_dessert['id'];?>" name="dessert">
+									</td>
+									<td id="availability-dessert-<?php echo $data_dessert['id'];?>">
+										<?php echo $data_dessert['availability']; ?> 
+									</td>
+									<!--This is a constant value only for calculating new availability.-->
+									<td style="display:none;" id="availability-dessert-const-<?php echo $data_dessert['id'];?>">
+										<?php echo $data_dessert['availability']; ?>
+									</td>
+								</tr>
+								<?php
+								$counter++;
+							}
+						} 
+						else 
+						{ 
+							?>
+							<tr>
+								<td colspan="8">No data found</td>
+							</tr>
+							<?php 
+						} 
+						?>
 					</table>
 				</center>
 			</div>

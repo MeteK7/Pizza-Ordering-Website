@@ -69,7 +69,7 @@ function get_pizza_quantity(){
 		<input type="submit" value="Logout" name="submit-logout">
 	</form>
 	<div>
-		<form action="payment-summary">
+		<form method="post" action="payment-summary">
 			<div>
 				<p>Welcome to CSE216 Pizza Ordering Website. Please choose your region and type of ordering.</p>
 				<br>
@@ -268,6 +268,7 @@ function get_pizza_quantity(){
 					</table>
 				</center>
 			</div>
+		<input type="submit" value="Order" name="submit-order">
 		</form>
 	</div>
 </body>

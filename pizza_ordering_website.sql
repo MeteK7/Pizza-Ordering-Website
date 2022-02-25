@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Feb 20, 2022 at 03:35 PM
+-- Generation Time: Feb 25, 2022 at 09:28 PM
 -- Server version: 5.7.36
 -- PHP Version: 7.4.26
 
@@ -20,6 +20,35 @@ SET time_zone = "+00:00";
 --
 -- Database: `pizza_ordering_website`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tbl_beverage`
+--
+
+DROP TABLE IF EXISTS `tbl_beverage`;
+CREATE TABLE IF NOT EXISTS `tbl_beverage` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(100) NOT NULL,
+  `price_small` decimal(10,2) NOT NULL,
+  `price_medium` decimal(10,2) NOT NULL,
+  `price_large` decimal(10,2) NOT NULL,
+  `availability` int(11) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=13 DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `tbl_beverage`
+--
+
+INSERT INTO `tbl_beverage` (`id`, `name`, `price_small`, `price_medium`, `price_large`, `availability`) VALUES
+(1, 'Water', '2.00', '4.00', '5.50', 100),
+(2, 'Cola', '4.00', '6.00', '7.50', 100),
+(3, 'Beer', '6.00', '8.00', '9.50', 100),
+(4, 'Ayran', '3.00', '5.00', '6.50', 100),
+(5, 'Tea', '4.00', '6.00', '7.50', 100),
+(6, 'Coffee', '4.00', '6.00', '7.50', 100);
 
 -- --------------------------------------------------------
 
@@ -43,6 +72,35 @@ CREATE TABLE IF NOT EXISTS `tbl_customer` (
 INSERT INTO `tbl_customer` (`id`, `username`, `password`, `address`) VALUES
 (1, 'Mete', '12345', 'Hatay'),
 (2, 'Omid', '', 'Mersin');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tbl_dessert`
+--
+
+DROP TABLE IF EXISTS `tbl_dessert`;
+CREATE TABLE IF NOT EXISTS `tbl_dessert` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(100) NOT NULL,
+  `price_small` decimal(10,2) NOT NULL,
+  `price_medium` decimal(10,2) NOT NULL,
+  `price_large` decimal(10,2) NOT NULL,
+  `availability` int(11) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `tbl_dessert`
+--
+
+INSERT INTO `tbl_dessert` (`id`, `name`, `price_small`, `price_medium`, `price_large`, `availability`) VALUES
+(1, 'Apple Pie', '2.00', '4.00', '5.50', 100),
+(2, 'Chocolate Cake', '4.00', '6.00', '7.50', 100),
+(3, 'Banana Pudding', '6.00', '8.00', '9.50', 100),
+(4, 'Ice Cream', '3.00', '5.00', '6.50', 100),
+(5, 'Cookie', '4.00', '6.00', '7.50', 100),
+(6, 'Stroopwafel', '4.00', '6.00', '7.50', 100);
 
 -- --------------------------------------------------------
 
@@ -76,7 +134,19 @@ CREATE TABLE IF NOT EXISTS `tbl_pizza` (
   `price_large` decimal(10,2) NOT NULL,
   `availability` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `tbl_pizza`
+--
+
+INSERT INTO `tbl_pizza` (`id`, `name`, `price_small`, `price_medium`, `price_large`, `availability`) VALUES
+(1, 'Vegetarian Pizza', '15.00', '17.00', '20.00', 100),
+(2, 'Chicken Pizza', '18.00', '20.00', '22.00', 100),
+(3, 'Meat Pizza', '18.00', '20.00', '22.00', 100),
+(4, 'Pepperoni Pizza', '19.00', '21.00', '23.00', 100),
+(5, 'Mix Pizza', '20.00', '22.00', '24.00', 100),
+(6, 'COME308 Special Pizza', '22.00', '23.00', '26.00', 100);
 
 -- --------------------------------------------------------
 

@@ -69,7 +69,7 @@ function get_pizza_quantity(){
 		<input type="submit" value="Logout" name="submit-logout">
 	</form>
 	<div>
-		<form method="post" action="payment-summary">
+		<form method="post" action="order-summary.php">
 			<div>
 				<p>Welcome to CSE216 Pizza Ordering Website. Please choose your region and type of ordering.</p>
 				<br>

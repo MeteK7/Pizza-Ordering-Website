@@ -3,18 +3,75 @@
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" type="text/css" href="css/style-order.css">
 	<title>Order Summary</title>
 </head>
 <body>
+	<?php 
+	//Use $_GET but if you want same thing in many pages according to user then use $_SESSION
+	include "session.php";
+		echo $_SESSION['username'];
+		echo "<br><br>";
+
+		$id_customer =  $_GET['id-customer'];
+		echo "Customer: ".$id_customer;
+		echo "<br><br>";
+
+	    $region =  $_GET['rb-region'];
+		echo $region;
+		echo "<br><br>";
+
+		$typesOfMenu=$_GET['chk-type-menu'];
+
+		if (is_array($typesOfMenu) || is_object($typesOfMenu)) {
+        	foreach ($typesOfMenu as $selected) {
+        		echo $selected."<br>";
+        	}
+		}
+		else // If $typesOfMenu was not an array, then this block is executed. 
+		{
+		  echo "Unfortunately, an error occured.";
+		}
+
+		echo "<br>";
+
+        if (!empty($typesOfMenu)) {
+        	foreach ($typesOfMenu as $selected) {
+        		echo $selected."<br>";
+        	}
+        }
+	?>
 	<div class="div-table-order-summary">
 		<p>Order Summary:</p>
 		<center>
 			<table>
 				<tr>
 					<th>Customer Id</th>
-					<th>Total Price</th>
+					<th>Region</th>
+					<th>Menu Types</th>
+					<th>Gross Price</th>
 					<th>Discount</th>
-					<th>Date</th>
+					<th>Grand Price</th>
+					<th>Estimated Time</th>
+				</tr>
+				<tr>
+					<th><?php echo $_SESSION['username'] ?></th>
+					<th><?php echo $region ?></th>
+					<th>
+						<?php
+						if(!empty($typesOfMenu))
+						{
+							foreach ($typesOfMenu as $selected)
+							{
+        						echo $selected."<br>";
+        					}
+        				}
+        				?>
+        			</th>
+					<th><?php   ?></th>
+					<th><?php   ?></th>
+					<th><?php   ?></th>
+					<th><?php   ?></th>
 				</tr>
 			</table>
 		</center>

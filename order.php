@@ -23,25 +23,7 @@ function get_pizza_quantity(){
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>Order</title>
-	<style type="text/css">
-		table {
-			font-family: arial, sans-serif;
-			border-collapse: collapse;
-			width: 70%;
-		}
-		td, th {
-			border: 1px solid #dddddd;
-			text-align: left;
-			padding: 8px;
-		}
-
-		tr:nth-child(even) {
-			background-color: #dddddd;
-		}
-		.th-price{
-			text-align: center;
-		}
-	</style>
+	<link rel="stylesheet" type="text/css" href="css/style-order.css">
 	<script type="text/javascript">
 		function calculateAvailabilityById(idQuantity,idAvailability, idAvailabilityConst){
 			/*
@@ -69,7 +51,9 @@ function get_pizza_quantity(){
 		<input type="submit" value="Logout" name="submit-logout">
 	</form>
 	<div>
-		<form method="post" action="order-summary.php">
+		<form method="get" action="order-summary.php">
+			<p>Welcome</p>
+			<input type="hidden" name="id-customer"><?php echo $_SESSION['username']; ?></input> 
 			<div>
 				<p>Welcome to CSE216 Pizza Ordering Website. Please choose your region and type of ordering.</p>
 				<br>
@@ -81,21 +65,21 @@ function get_pizza_quantity(){
 				<label for="mezitli">Mezitli</label>
 				<br>
 				<input type="radio" id="rb-toros-university" name="rb-region" value="Toros University">
-				<label for="toros-university">Pozcu</label>
+				<label for="toros-university">Toros University</label>
 				<br>
 				<input type="radio" id="rb-others" name="rb-region" value="Others">
 				<label for="others">Others</label>
 
 				<br>
 
-				<p>Type of Ordering:</p>
-				<input type="checkbox" id="chk-pizza" name="chk-type-of-ordering" value="Pizza">
+				<p>Type of Menu:</p>
+				<input type="checkbox" id="chk-pizza" name="chk-type-menu[]" value="Pizza">
 				<label for="pizza">Pizza</label>
 				<br>
-				<input type="checkbox" id="chk-beverage" name="chk-type-of-ordering" value="Beverage">
+				<input type="checkbox" id="chk-beverage" name="chk-type-menu[]" value="Beverage">
 				<label for="beverage">Beverage</label>
 				<br>
-				<input type="checkbox" id="chk-dessert" name="chk-type-of-ordering" value="Dessert">
+				<input type="checkbox" id="chk-dessert" name="chk-type-menu[]" value="Dessert">
 				<label for="dessert">Dessert</label>		
 			</div>
 			<br>

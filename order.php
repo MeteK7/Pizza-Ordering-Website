@@ -43,18 +43,35 @@ function get_pizza_quantity(){
 			//document.write("Availability= "+availabilityInStock.innerHTML);
 			
 		}
-		function calculateTotal(){
+		function calculateGrandTotal(idQuantity, oldPrice){
 			var price=document.getElementsByName('rb-price-pizza');
+			var quantityByUser=document.getElementById(idQuantity);
+			var newPrice=0;
+			var totalPrice=document.getElementById('grand-total-price-pizza');
 
 			for (var sizePrice of price)
 			{
 				if (sizePrice.checked) {
-					document.getElementById('total-price-pizza').innerHTML=sizePrice.value;
+					newPrice=(sizePrice.value*quantityByUser.value);
 				}
 			}
-			
+			totalPrice.innerHTML=(totalPrice-oldPrice)+newPrice;
 		}
 
+		function calculateTotal(idQuantity,idTotalPrice){
+			var sizePrice=document.getElementsByName('rb-price-pizza');
+			var quantityByUser=document.getElementById(idQuantity);
+			var totalPrice=document.getElementById(idTotalPrice);
+			var newPrice=0;
+
+			for (var rbPrice of sizePrice)
+			{
+				if (rbPrice.checked) {
+					newPrice=(rbPrice.value*quantityByUser.value);
+				}
+			}
+			totalPrice.innerHTML=newPrice;
+		}
 		/*function doSomething(){
 			document.getElementById('total-price-pizza').innerHTML="TEST";
 		}
@@ -114,7 +131,7 @@ function get_pizza_quantity(){
 							<th></th>
 							<th></th>
 							<th colspan="3" class="th-price">Price</th>
-							<th colspan="2"></th>
+							<th colspan="3"></th>
 						</tr>
 						<tr>
 							<th></th>
@@ -124,6 +141,7 @@ function get_pizza_quantity(){
 							<th>Large</th>
 							<th>Quantity</th>
 							<th>Availability</th>
+							<th>Total Price</th>
 						</tr>
 						<?php
 						if ($result_pizza->num_rows > 0) 
@@ -140,15 +158,20 @@ function get_pizza_quantity(){
 									<td><input type="radio" id="rb-pizza-price-large" name="rb-price-pizza" value="<?php echo $data_pizza['price_large']; ?>"><?php echo $data_pizza['price_large']; ?></td>
 									<td>
 										<input
-										onkeyup="calculateAvailabilityById(
+										onkeyup="
+										calculateAvailabilityById(
 											'qty-pizza-<?php echo $data_pizza['id'];?>',
 											'availability-pizza-<?php echo $data_pizza['id'];?>',
 											'availability-pizza-const-<?php echo $data_pizza['id'];?>'
-											);calculateTotal();"
+											);
+										calculateTotal('qty-pizza-<?php echo $data_pizza['id'];?>',
+											'total-price-pizza-<?php echo $data_pizza['id'];?>'
+											);"
 											type="text"
 											id="qty-pizza-<?php echo $data_pizza['id'];?>"
 											name="pizza">
 										</td>
+									
 										<td id="availability-pizza-<?php echo $data_pizza['id'];?>">
 											<?php echo $data_pizza['availability']; ?> 
 										</td>
@@ -156,6 +179,7 @@ function get_pizza_quantity(){
 										<td style="display:none;" id="availability-pizza-const-<?php echo $data_pizza['id'];?>">
 											<?php echo $data_pizza['availability']; ?> 
 										</td>
+										<td id="total-price-pizza-<?php echo $data_pizza['id'];?>"></td>
 									</tr>
 									<?php
 									$counter++;
@@ -171,7 +195,7 @@ function get_pizza_quantity(){
 							} 
 							?>
 							<tr>
-								<td>Total:<strong id="total-price-pizza">fgjgfjhnhfgh</strong></td>
+								<td>Total:<strong id="grand-total-price-pizza">fgjgfjhnhfgh</strong></td>
 							</tr>
 						</table>
 					</center>

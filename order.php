@@ -43,7 +43,8 @@ function get_pizza_quantity(){
 			//document.write("Availability= "+availabilityInStock.innerHTML);
 			
 		}
-		function calculateGrandTotal(idQuantity, oldPrice){
+
+		/*function calculateGrandTotal(idQuantity, oldPrice){
 			var price=document.getElementsByName('rb-price-pizza');
 			var quantityByUser=document.getElementById(idQuantity);
 			var newPrice=0;
@@ -56,21 +57,28 @@ function get_pizza_quantity(){
 				}
 			}
 			totalPrice.innerHTML=(totalPrice-oldPrice)+newPrice;
-		}
+		}*/
 
-		function calculateTotal(idQuantity,idTotalPrice,nameSizePrice){
+		function calculateTotal(idQuantity,idTotalPrice, grandTotalPrice, nameSizePrice){
 			var sizePrice=document.getElementsByName(nameSizePrice);
 			var quantityByUser=document.getElementById(idQuantity);
 			var totalPrice=document.getElementById(idTotalPrice);
-			var newPrice=0;
+			var grandTotalPrice=document.getElementById(grandTotalPrice);
+			var newTotalPrice;
+			var newGrandTotalPrice;
 
 			for (var rbPrice of sizePrice)
 			{
 				if (rbPrice.checked) {
-					newPrice=(rbPrice.value*quantityByUser.value);
+					newTotalPrice=(rbPrice.value*quantityByUser.value);
 				}
 			}
-			totalPrice.innerHTML=newPrice;
+
+			//Calculate the new grand total price: New Grand Total=(New Grand Total-oldMenuTotal)+newMenuTotal
+			grandTotalPrice.innerHTML=(grandTotalPrice.innerHTML-totalPrice.innerHTML)+newTotalPrice;
+
+			//Calculate the new menu total price;
+			totalPrice.innerHTML=newTotalPrice;
 		}
 		/*function doSomething(){
 			document.getElementById('total-price-pizza').innerHTML="TEST";
@@ -166,6 +174,7 @@ function get_pizza_quantity(){
 											);
 										calculateTotal('qty-pizza-<?php echo $data_pizza['id'];?>',
 											'total-price-pizza-<?php echo $data_pizza['id'];?>',
+											'grand-total-price-pizza',
 											'rb-size-price-pizza-<?php echo $data_pizza['id']?>'
 											);"
 											type="text"
@@ -196,7 +205,14 @@ function get_pizza_quantity(){
 							} 
 							?>
 							<tr>
-								<td>Total:<strong id="grand-total-price-pizza">fgjgfjhnhfgh</strong></td>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td>Total:<strong id="grand-total-price-pizza"></strong></td>
 							</tr>
 						</table>
 					</center>

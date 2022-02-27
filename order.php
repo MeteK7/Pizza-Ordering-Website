@@ -58,8 +58,8 @@ function get_pizza_quantity(){
 			totalPrice.innerHTML=(totalPrice-oldPrice)+newPrice;
 		}
 
-		function calculateTotal(idQuantity,idTotalPrice){
-			var sizePrice=document.getElementsByName('rb-price-pizza');
+		function calculateTotal(idQuantity,idTotalPrice,nameSizePrice){
+			var sizePrice=document.getElementsByName(nameSizePrice);
 			var quantityByUser=document.getElementById(idQuantity);
 			var totalPrice=document.getElementById(idTotalPrice);
 			var newPrice=0;
@@ -153,9 +153,9 @@ function get_pizza_quantity(){
 								<tr>
 									<td><?php echo $counter; ?></td>
 									<td><?php echo $data_pizza['name']; ?></td>
-									<td><input type="radio" id="rb-pizza-price-small" name="rb-price-pizza" value="<?php echo $data_pizza['price_small']; ?>"><?php echo $data_pizza['price_small']; ?></td>
-									<td><input type="radio" id="rb-pizza-price-medium" name="rb-price-pizza" value="<?php echo $data_pizza['price_medium']; ?>"><?php echo $data_pizza['price_medium']; ?></td>
-									<td><input type="radio" id="rb-pizza-price-large" name="rb-price-pizza" value="<?php echo $data_pizza['price_large']; ?>"><?php echo $data_pizza['price_large']; ?></td>
+									<td><input type="radio" id="rb-pizza-price-small" name="rb-size-price-pizza-<?php echo $data_pizza['id'];?>" value="<?php echo $data_pizza['price_small']; ?>"><?php echo $data_pizza['price_small']; ?></td>
+									<td><input type="radio" id="rb-pizza-price-medium" name="rb-size-price-pizza-<?php echo $data_pizza['id'];?>" value="<?php echo $data_pizza['price_medium']; ?>"><?php echo $data_pizza['price_medium']; ?></td>
+									<td><input type="radio" id="rb-pizza-price-large" name="rb-size-price-pizza-<?php echo $data_pizza['id'];?>" value="<?php echo $data_pizza['price_large']; ?>"><?php echo $data_pizza['price_large']; ?></td>
 									<td>
 										<input
 										onkeyup="
@@ -165,7 +165,8 @@ function get_pizza_quantity(){
 											'availability-pizza-const-<?php echo $data_pizza['id'];?>'
 											);
 										calculateTotal('qty-pizza-<?php echo $data_pizza['id'];?>',
-											'total-price-pizza-<?php echo $data_pizza['id'];?>'
+											'total-price-pizza-<?php echo $data_pizza['id'];?>',
+											'rb-size-price-pizza-<?php echo $data_pizza['id']?>'
 											);"
 											type="text"
 											id="qty-pizza-<?php echo $data_pizza['id'];?>"

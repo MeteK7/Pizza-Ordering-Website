@@ -220,7 +220,7 @@ function get_pizza_quantity(){
 								<td></td>
 								<td>
 									Total:<strong id="grand-total-price-pizza"></strong>
-									<input type="hidden" id="input-grand-total-price-pizza">
+									<input type="hidden" id="input-grand-total-price-pizza" name="grand-total-price[]">
 								</td>
 							</tr>
 						</table>
@@ -303,7 +303,7 @@ function get_pizza_quantity(){
 									<td></td>
 									<td>
 										Total:<strong id="grand-total-price-beverage"></strong>
-										<input type="hidden" id="input-grand-total-price-beverage">
+										<input type="hidden" id="input-grand-total-price-beverage" name="grand-total-price[]">
 									</td>
 								</tr>
 							</table>
@@ -386,7 +386,7 @@ function get_pizza_quantity(){
 									<td></td>
 									<td>
 										Total:<strong id="grand-total-price-dessert"></strong>
-										<input type="hidden" id="input-grand-total-price-dessert">
+										<input type="hidden" id="input-grand-total-price-dessert" name="grand-total-price[]">
 									</td>
 								</tr>
 								</table>

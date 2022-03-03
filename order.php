@@ -25,6 +25,18 @@ function get_pizza_quantity(){
 	<title>Order</title>
 	<link rel="stylesheet" type="text/css" href="css/style-order.css">
 	<script type="text/javascript">
+		function toggleTables(checkBox){
+			var divTable=document.getElementById('div-menu-'+checkBox.value);
+			/*document.write(checkBox.id);
+			document.write(checkBox.checked);*/
+			if (checkBox.checked) {
+				divTable.style.display='block';
+			}
+			else{
+				divTable.style.display='none';
+			}
+		}
+
 		function calculateAvailabilityById(idQuantity,idAvailability, idAvailabilityConst){
 			var quantityByUser=document.getElementById(idQuantity);
 			var availabilityNew=document.getElementById(idAvailability);
@@ -100,17 +112,17 @@ function get_pizza_quantity(){
 				<br>
 
 				<p>Type of Menu:</p>
-				<input type="checkbox" id="chk-pizza" name="chk-type-menu[]" value="Pizza">
+				<input type="checkbox" id="chk-pizza" name="chk-type-menu[]" value="pizza" onclick="toggleTables(this)"><!--Passing the element itself using "this" keyword-->
 				<label for="pizza">Pizza</label>
 				<br>
-				<input type="checkbox" id="chk-beverage" name="chk-type-menu[]" value="Beverage">
+				<input type="checkbox" id="chk-beverage" name="chk-type-menu[]" value="beverage" onclick="toggleTables(this)">
 				<label for="beverage">Beverage</label>
 				<br>
-				<input type="checkbox" id="chk-dessert" name="chk-type-menu[]" value="Dessert">
+				<input type="checkbox" id="chk-dessert" name="chk-type-menu[]" value="dessert" onclick="toggleTables(this)">
 				<label for="dessert">Dessert</label>		
 			</div>
 			<br>
-			<div class="div-table-pizza">
+			<div id="div-menu-pizza" class="div-menu">
 				<p>Pizza:</p>
 				<center>
 					<table>
@@ -200,7 +212,7 @@ function get_pizza_quantity(){
 						</table>
 					</center>
 				</div>
-				<div class="div-table-beverage">
+				<div id="div-menu-beverage" class="div-menu">
 					<p>Beverage:</p>
 					<center>
 						<table>
@@ -232,29 +244,103 @@ function get_pizza_quantity(){
 										<td>
 											<input
 											onkeyup="
+											calculateAvailabilityById('qty-beverage-<?php echo $data_beverage['id'];?>','availability-beverage-<?php echo $data_beverage['id'];?>','availability-beverage-const-<?php echo $data_beverage['id'];?>');
+											calculateTotal('qty-beverage-<?php echo $data_beverage['id'];?>','total-price-beverage-<?php echo $data_beverage['id'];?>','grand-total-price-beverage','input-grand-total-price-beverage','rb-size-price-beverage-<?php echo $data_beverage['id']?>');"
+											type="text"
+											id="qty-beverage-<?php echo $data_beverage['id'];?>"
+											name="beverage">
+										</td>
+										<td id="availability-beverage-<?php echo $data_beverage['id'];?>">
+											<?php echo $data_beverage['availability']; ?> 
+										</td>
+										<!--This is a constant value only for calculating new availability.-->
+										<td style="display:none;" id="availability-beverage-const-<?php echo $data_beverage['id'];?>">
+											<?php echo $data_beverage['availability']; ?>
+										</td>
+										<td id="total-price-beverage-<?php echo $data_beverage['id'];?>"></td>
+									</tr>
+									<?php
+									$counter++;
+								}
+							} 
+							else 
+							{ 
+								?>
+								<tr>
+									<td colspan="8">No data found</td>
+								</tr>
+								<?php 
+							} 
+							?>
+							<tr>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td>
+									Total:<strong id="grand-total-price-beverage"></strong>
+									<input type="hidden" id="input-grand-total-price-beverage" name="grand-total-price[]">
+								</td>
+							</tr>
+						</table>
+					</center>
+				</div>		
+				<div id="div-menu-dessert" class="div-menu">
+					<p>Dessert:</p>
+					<center>
+						<table>
+							<tr>
+								<th></th>
+								<th></th>
+								<th class="th-price">Price</th>
+								<th colspan="3"></th>
+							</tr>
+							<tr>
+								<th></th>
+								<th>Desserts</th>
+								<th>Small</th>
+								<th>Quantity</th>
+								<th>Availability</th>
+								<th>Total Price</th>
+							</tr>
+							<?php
+							if ($result_dessert->num_rows > 0) 
+							{
+								$counter=1;
+								while($data_dessert = $result_dessert->fetch_assoc()) 
+								{
+									?>
+									<tr>
+										<td><?php echo $counter; ?></td>
+										<td><?php echo $data_dessert['name']; ?></td>
+										<td><input type="radio" id="rb-price-small-dessert" name="rb-size-price-dessert-<?php echo $data_dessert['id'];?>" value="<?php echo $data_dessert['price_small']; ?>"><?php echo $data_dessert['price_small']; ?></td>
+										<td>
+											<input 
+											onkeyup="
 											calculateAvailabilityById(
-												'qty-beverage-<?php echo $data_beverage['id'];?>',
-												'availability-beverage-<?php echo $data_beverage['id'];?>',
-												'availability-beverage-const-<?php echo $data_beverage['id'];?>'
+												'qty-dessert-<?php echo $data_dessert['id'];?>', 
+												'availability-dessert-<?php echo $data_dessert['id'];?>',
+												'availability-dessert-const-<?php echo $data_dessert['id'];?>'
 												);
-											calculateTotal('qty-beverage-<?php echo $data_beverage['id'];?>',
-												'total-price-beverage-<?php echo $data_beverage['id'];?>',
-												'grand-total-price-beverage',
-												'input-grand-total-price-beverage',
-												'rb-size-price-beverage-<?php echo $data_beverage['id']?>'
-												);"
-												type="text"
-												id="qty-beverage-<?php echo $data_beverage['id'];?>"
-												name="beverage">
+											calculateTotal('qty-dessert-<?php echo $data_dessert['id'];?>',
+												'total-price-dessert-<?php echo $data_dessert['id'];?>',
+												'grand-total-price-dessert',
+												'input-grand-total-price-dessert',
+												'rb-size-price-dessert-<?php echo $data_dessert['id']?>'
+												);" 
+												type="text" 
+												id="qty-dessert-<?php echo $data_dessert['id'];?>" 
+												name="dessert">
 											</td>
-											<td id="availability-beverage-<?php echo $data_beverage['id'];?>">
-												<?php echo $data_beverage['availability']; ?> 
+											<td id="availability-dessert-<?php echo $data_dessert['id'];?>">
+												<?php echo $data_dessert['availability']; ?> 
 											</td>
 											<!--This is a constant value only for calculating new availability.-->
-											<td style="display:none;" id="availability-beverage-const-<?php echo $data_beverage['id'];?>">
-												<?php echo $data_beverage['availability']; ?>
+											<td style="display:none;" id="availability-dessert-const-<?php echo $data_dessert['id'];?>">
+												<?php echo $data_dessert['availability']; ?>
 											</td>
-											<td id="total-price-beverage-<?php echo $data_beverage['id'];?>"></td>
+											<td id="total-price-dessert-<?php echo $data_dessert['id'];?>"></td>
 										</tr>
 										<?php
 										$counter++;
@@ -276,98 +362,15 @@ function get_pizza_quantity(){
 									<td></td>
 									<td></td>
 									<td>
-										Total:<strong id="grand-total-price-beverage"></strong>
-										<input type="hidden" id="input-grand-total-price-beverage" name="grand-total-price[]">
-									</td>
-								</tr>
-							</table>
-						</center>
-					</div>		
-					<div class="div-table-dessert">
-						<p>Dessert:</p>
-						<center>
-							<table>
-								<tr>
-									<th></th>
-									<th></th>
-									<th class="th-price">Price</th>
-									<th colspan="3"></th>
-								</tr>
-								<tr>
-									<th></th>
-									<th>Desserts</th>
-									<th>Small</th>
-									<th>Quantity</th>
-									<th>Availability</th>
-									<th>Total Price</th>
-								</tr>
-								<?php
-								if ($result_dessert->num_rows > 0) 
-								{
-									$counter=1;
-									while($data_dessert = $result_dessert->fetch_assoc()) 
-									{
-										?>
-										<tr>
-											<td><?php echo $counter; ?></td>
-											<td><?php echo $data_dessert['name']; ?></td>
-											<td><input type="radio" id="rb-price-small-dessert" name="rb-size-price-dessert-<?php echo $data_dessert['id'];?>" value="<?php echo $data_dessert['price_small']; ?>"><?php echo $data_dessert['price_small']; ?></td>
-											<td>
-												<input 
-												onkeyup="
-												calculateAvailabilityById(
-													'qty-dessert-<?php echo $data_dessert['id'];?>', 
-													'availability-dessert-<?php echo $data_dessert['id'];?>',
-													'availability-dessert-const-<?php echo $data_dessert['id'];?>'
-													);
-												calculateTotal('qty-dessert-<?php echo $data_dessert['id'];?>',
-													'total-price-dessert-<?php echo $data_dessert['id'];?>',
-													'grand-total-price-dessert',
-													'input-grand-total-price-dessert',
-													'rb-size-price-dessert-<?php echo $data_dessert['id']?>'
-													);" 
-													type="text" 
-													id="qty-dessert-<?php echo $data_dessert['id'];?>" 
-													name="dessert">
-												</td>
-												<td id="availability-dessert-<?php echo $data_dessert['id'];?>">
-													<?php echo $data_dessert['availability']; ?> 
-												</td>
-												<!--This is a constant value only for calculating new availability.-->
-												<td style="display:none;" id="availability-dessert-const-<?php echo $data_dessert['id'];?>">
-													<?php echo $data_dessert['availability']; ?>
-												</td>
-												<td id="total-price-dessert-<?php echo $data_dessert['id'];?>"></td>
-											</tr>
-											<?php
-											$counter++;
-										}
-									} 
-									else 
-									{ 
-										?>
-										<tr>
-											<td colspan="8">No data found</td>
-										</tr>
-										<?php 
-									} 
-									?>
-								<tr>
-									<td></td>
-									<td></td>
-									<td></td>
-									<td></td>
-									<td></td>
-									<td>
 										Total:<strong id="grand-total-price-dessert"></strong>
 										<input type="hidden" id="input-grand-total-price-dessert" name="grand-total-price[]">
 									</td>
 								</tr>
-								</table>
-							</center>
-						</div>
-						<input type="submit" value="Order" name="submit-order">
-					</form>
-				</div>
-			</body>
-			</html>
+							</table>
+						</center>
+					</div>
+					<input type="submit" value="Order" name="submit-order">
+				</form>
+			</div>
+		</body>
+		</html>

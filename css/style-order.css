@@ -15,3 +15,7 @@ tr:nth-child(even) {
 .th-price{
 	text-align: center;
 }
+
+.div-menu{
+	display:none;
+}

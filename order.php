@@ -26,38 +26,12 @@ function get_pizza_quantity(){
 	<link rel="stylesheet" type="text/css" href="css/style-order.css">
 	<script type="text/javascript">
 		function calculateAvailabilityById(idQuantity,idAvailability, idAvailabilityConst){
-			/*
-			//var quantityTest=document.getElementById('qty-1');
-			document.write("idQuantity Parameter= "+idQuantity+"<br><br>");
-			document.write("Quantity by User= "+quantityByUser.value+"<br><br>");
-			//document.write("Type of Menu= "+typeMenu+"<br><br>");
-			//document.write("Quantity Test= "+quantityTest.value+"<br><br>");
-			document.write("idAvailability Parameter= "+idAvailability+"<br><br>");
-			document.write("Availability= "+availabilityInStock.innerHTML);
-			*/
 			var quantityByUser=document.getElementById(idQuantity);
 			var availabilityNew=document.getElementById(idAvailability);
 			var availabilityInStock=document.getElementById(idAvailabilityConst);
 			availabilityNew.innerHTML=availabilityInStock.innerHTML;//Value from DB every trigger to calculate new availability.
 			availabilityNew.innerHTML=availabilityNew.innerHTML-quantityByUser.value;
-			//document.write("Availability= "+availabilityInStock.innerHTML);
-			
 		}
-
-		/*function calculateGrandTotal(idQuantity, oldPrice){
-			var price=document.getElementsByName('rb-price-pizza');
-			var quantityByUser=document.getElementById(idQuantity);
-			var newPrice=0;
-			var totalPrice=document.getElementById('grand-total-price-pizza');
-
-			for (var sizePrice of price)
-			{
-				if (sizePrice.checked) {
-					newPrice=(sizePrice.value*quantityByUser.value);
-				}
-			}
-			totalPrice.innerHTML=(totalPrice-oldPrice)+newPrice;
-		}*/
 
 		function calculateTotal(idQuantity,idTotalPrice, idGrandTotalPrice, inputGrandTotalPrice, nameSizePrice){
 

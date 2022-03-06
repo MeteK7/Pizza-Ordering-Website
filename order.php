@@ -12,6 +12,9 @@ $result_beverage = $conn->query($query_beverage);
 
 $query_dessert = "SELECT * FROM tbl_dessert";
 $result_dessert = $conn->query($query_dessert);
+
+$query_region = "SELECT * FROM tbl_region";
+$result_region = $conn->query($query_region);
 ?>
 <?php
 function get_pizza_quantity(){
@@ -97,18 +100,25 @@ function get_pizza_quantity(){
 				<p>Welcome to CSE216 Pizza Ordering Website. Please choose your region and type of ordering.</p>
 				<br>
 				<p>Regions:</p>
-				<input type="radio" id="rb-pozcu" name="rb-region" value="Pozcu">
-				<label for="pozcu">Pozcu</label>
-				<br>
-				<input type="radio" id="rb-mezitli" name="rb-region" value="Mezitli">
-				<label for="mezitli">Mezitli</label>
-				<br>
-				<input type="radio" id="rb-toros-university" name="rb-region" value="Toros University">
-				<label for="toros-university">Toros University</label>
-				<br>
-				<input type="radio" id="rb-others" name="rb-region" value="Others">
-				<label for="others">Others</label>
-
+				<?php
+				if ($result_region->num_rows > 0) 
+				{
+					while($data_region = $result_region->fetch_assoc()) 
+					{
+						?>
+						<input type="radio" id="rb-region-<?php echo $data_region['id']; ?>" name="rb-region" value="<?php echo $data_region['name']; ?>">
+						<label for="pozcu"><?php echo $data_region['name']; ?></label>
+						<br>
+						<?php
+					}
+				} 
+				else 
+				{ 
+					?>
+					<p>No data found</p>
+					<?php 
+				} 
+				?>
 				<br>
 
 				<p>Type of Menu:</p>
@@ -145,12 +155,11 @@ function get_pizza_quantity(){
 						<?php
 						if ($result_pizza->num_rows > 0) 
 						{
-							$counter=1;
 							while($data_pizza = $result_pizza->fetch_assoc()) 
 							{
 								?>
 								<tr>
-									<td><?php echo $counter; ?></td>
+									<td><?php echo $data_pizza['id']; ?></td>
 									<td><?php echo $data_pizza['name']; ?></td>
 									<td><input type="radio" id="rb-price-small-pizza" name="rb-size-price-pizza-<?php echo $data_pizza['id'];?>" value="<?php echo $data_pizza['price_small']; ?>"><?php echo $data_pizza['price_small']; ?></td>
 									<td><input type="radio" id="rb-pizza-price-medium" name="rb-size-price-pizza-<?php echo $data_pizza['id'];?>" value="<?php echo $data_pizza['price_medium']; ?>"><?php echo $data_pizza['price_medium']; ?></td>
@@ -184,7 +193,6 @@ function get_pizza_quantity(){
 										<td id="total-price-pizza-<?php echo $data_pizza['id'];?>"></td>
 									</tr>
 									<?php
-									$counter++;
 								}
 							} 
 							else 
@@ -233,12 +241,11 @@ function get_pizza_quantity(){
 							<?php
 							if ($result_beverage->num_rows > 0) 
 							{
-								$counter=1;
 								while($data_beverage = $result_beverage->fetch_assoc()) 
 								{
 									?>
 									<tr>
-										<td><?php echo $counter; ?></td>
+										<td><?php echo $data_beverage['id']; ?></td>
 										<td><?php echo $data_beverage['name']; ?></td>
 										<td><input type="radio" id="rb-price-small-beverage" name="rb-size-price-beverage-<?php echo $data_beverage['id'];?>" value="<?php echo $data_beverage['price_small']; ?>"><?php echo $data_beverage['price_small']; ?></td>
 										<td>
@@ -260,7 +267,6 @@ function get_pizza_quantity(){
 										<td id="total-price-beverage-<?php echo $data_beverage['id'];?>"></td>
 									</tr>
 									<?php
-									$counter++;
 								}
 							} 
 							else 
@@ -307,12 +313,11 @@ function get_pizza_quantity(){
 							<?php
 							if ($result_dessert->num_rows > 0) 
 							{
-								$counter=1;
 								while($data_dessert = $result_dessert->fetch_assoc()) 
 								{
 									?>
 									<tr>
-										<td><?php echo $counter; ?></td>
+										<td><?php echo $data_dessert['id']; ?></td>
 										<td><?php echo $data_dessert['name']; ?></td>
 										<td><input type="radio" id="rb-price-small-dessert" name="rb-size-price-dessert-<?php echo $data_dessert['id'];?>" value="<?php echo $data_dessert['price_small']; ?>"><?php echo $data_dessert['price_small']; ?></td>
 										<td>
@@ -343,7 +348,6 @@ function get_pizza_quantity(){
 											<td id="total-price-dessert-<?php echo $data_dessert['id'];?>"></td>
 										</tr>
 										<?php
-										$counter++;
 									}
 								} 
 								else 

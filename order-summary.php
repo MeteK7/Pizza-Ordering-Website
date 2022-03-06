@@ -21,7 +21,7 @@
 	echo $region;
 	echo "<br><br>";
 
-	$types_of_menu=$_GET['chk-type-menu'];
+	$types_of_menu=$_GET['chk-menu'];
 
 	if (is_array($types_of_menu) || is_object($types_of_menu)) {
 		foreach ($types_of_menu as $selected) {

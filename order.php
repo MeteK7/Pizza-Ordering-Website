@@ -15,6 +15,9 @@ $result_dessert = $conn->query($query_dessert);
 
 $query_region = "SELECT * FROM tbl_region";
 $result_region = $conn->query($query_region);
+
+$query_menu = "SELECT * FROM tbl_menu";
+$result_menu = $conn->query($query_menu);
 ?>
 <?php
 function get_pizza_quantity(){
@@ -28,8 +31,8 @@ function get_pizza_quantity(){
 	<title>Order</title>
 	<link rel="stylesheet" type="text/css" href="css/style-order.css">
 	<script type="text/javascript">
-		function toggleTables(checkBox){
-			var divTable=document.getElementById('div-menu-'+checkBox.value);
+		function toggleTables(checkBox, idMenu){
+			var divTable=document.getElementById('div-menu-'+idMenu);
 			/*document.write(checkBox.id);
 			document.write(checkBox.checked);*/
 			if (checkBox.checked) {
@@ -120,19 +123,29 @@ function get_pizza_quantity(){
 				} 
 				?>
 				<br>
-
 				<p>Type of Menu:</p>
-				<input type="checkbox" id="chk-pizza" name="chk-type-menu[]" value="pizza" onclick="toggleTables(this)"><!--Passing the element itself using "this" keyword-->
-				<label for="pizza">Pizza</label>
-				<br>
-				<input type="checkbox" id="chk-beverage" name="chk-type-menu[]" value="beverage" onclick="toggleTables(this)">
-				<label for="beverage">Beverage</label>
-				<br>
-				<input type="checkbox" id="chk-dessert" name="chk-type-menu[]" value="dessert" onclick="toggleTables(this)">
-				<label for="dessert">Dessert</label>		
+				<?php
+				if ($result_menu->num_rows > 0) 
+				{
+					while($data_menu = $result_menu->fetch_assoc()) 
+					{
+						?>
+						<input type="checkbox" id="chk-menu-<?php echo $data_menu['id']; ?>" name="chk-menu[]" value="<?php echo $data_menu['name']; ?>" onclick="toggleTables(this, <?php echo $data_menu['id']; ?>)">
+						<label for="<?php echo $data_menu['id']; ?>"><?php echo $data_menu['name']; ?></label>
+						<br>
+						<?php
+					}
+				} 
+				else 
+				{ 
+					?>
+					<p>No data found</p>
+					<?php 
+				} 
+				?>		
 			</div>
 			<br>
-			<div id="div-menu-pizza" class="div-menu">
+			<div id="div-menu-1" class="div-menu"><!--Try defining ID dynamically!!!-->
 				<p>Pizza:</p>
 				<center>
 					<table>
@@ -220,7 +233,7 @@ function get_pizza_quantity(){
 						</table>
 					</center>
 				</div>
-				<div id="div-menu-beverage" class="div-menu">
+				<div id="div-menu-2" class="div-menu"><!--Try defining ID dynamically!!!-->
 					<p>Beverage:</p>
 					<center>
 						<table>
@@ -292,7 +305,7 @@ function get_pizza_quantity(){
 						</table>
 					</center>
 				</div>		
-				<div id="div-menu-dessert" class="div-menu">
+				<div id="div-menu-3" class="div-menu"><!--Try defining ID dynamically!!!-->
 					<p>Dessert:</p>
 					<center>
 						<table>

@@ -17,66 +17,85 @@
 	echo "Customer: ".$id_customer;
 	echo "<br><br>";
 
+	//GETTING REGION INFO
 	$region =  $_GET['rb-region'];
-	echo $region;
-	echo "<br><br>";
+	$query_region = "SELECT * FROM tbl_region WHERE id=$region";
+	$result_region = $conn->query($query_region);
 
-	$types_of_menu=$_GET['chk-menu'];
+	$name_region;
+	$time_estimated_region;
 
-	if (is_array($types_of_menu) || is_object($types_of_menu)) {
-		foreach ($types_of_menu as $selected) {
+	if ($result_region->num_rows > 0) {
+  		// output data of each row
+		while($row = $result_region->fetch_assoc()) {
+			$name_region=$row["name"];
+			$time_estimated_region=$row["time_estimated"];
+			//echo "id: " . $row["id"]. " - Name: " . $row["name"]. " " . $row["time_estimated"]."<br>";
+		}
+	} else {
+		echo "0 results";
+	}
+	$conn->close();
+
+	//GETTING MENU INFO
+	$menu=$_GET['chk-menu'];
+
+	if (is_array($menu) || is_object($menu)) {
+		foreach ($menu as $selected) {
 			echo $selected."<br>";
 		}
 	}
-		else // If $types_of_menu was not an array, then this block is executed. 
-		{
-			echo "Unfortunately, an error occured.";
+
+	// If $menu was not an array, then this block is executed.
+	else
+	{
+		echo "Unfortunately, an error occured.";
+	}
+
+	echo "<br>";
+
+	if (!empty($menu)) {
+		foreach ($menu as $selected) {
+			echo $selected."<br>";
 		}
+	}
 
-		echo "<br>";
-
-		if (!empty($types_of_menu)) {
-			foreach ($types_of_menu as $selected) {
-				echo $selected."<br>";
-			}
-		}
-
-		?>
-		<div class="div-table-order-summary">
-			<p>Order Summary:</p>
-			<center>
-				<table>
-					<tr>
-						<th>Customer Id</th>
-						<th>Region</th>
-						<th>Menu Types</th>
-						<th>Gross Price</th>
-						<th>Discount</th>
-						<th>Grand Price</th>
-						<th>Estimated Time</th>
-					</tr>
-					<tr>
-						<th><?php echo $_SESSION['username'] ?></th>
-						<th><?php echo $region ?></th>
-						<th>
-							<?php
-							if(!empty($types_of_menu))
+	?>
+	<div class="div-table-order-summary">
+		<p>Order Summary:</p>
+		<center>
+			<table>
+				<tr>
+					<th>Customer</th>
+					<th>Region</th>
+					<th>Menu Types</th>
+					<th>Gross Price</th>
+					<th>Discount</th>
+					<th>Grand Price</th>
+					<th>Estimated Time</th>
+				</tr>
+				<tr>
+					<th><?php echo $_SESSION['username'] ?></th>
+					<th><?php echo $name_region; ?></th>
+					<th>
+						<?php
+						if(!empty($menu))
+						{
+							foreach ($menu as $selected)
 							{
-								foreach ($types_of_menu as $selected)
-								{
-									echo $selected."<br>";
-								}
+								echo $selected."<br>";
 							}
-							?>
-						</th>
-						<th>
-							<?php
-							$grand_total_price=$_GET['grand-total-price'];
+						}
+						?>
+					</th>
+					<th>
+						<?php
+						$grand_total_price=$_GET['grand-total-price'];
 
-							if (is_array($grand_total_price) || is_object($grand_total_price)) {
-								echo array_sum($grand_total_price);
-							}
-		else // If $types_of_menu was not an array, then this block is executed. 
+						if (is_array($grand_total_price) || is_object($grand_total_price)) {
+							echo array_sum($grand_total_price);
+						}
+		else // If $menu was not an array, then this block is executed. 
 		{
 			echo "Unfortunately, an error occured.";
 		}
@@ -84,7 +103,7 @@
 	</th>
 	<th><?php   ?></th>
 	<th><?php   ?></th>
-	<th><?php   ?></th>
+	<th><?php echo $time_estimated_region;  ?></th>
 </tr>
 </table>
 </center>

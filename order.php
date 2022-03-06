@@ -109,7 +109,7 @@ function get_pizza_quantity(){
 					while($data_region = $result_region->fetch_assoc()) 
 					{
 						?>
-						<input type="radio" id="rb-region-<?php echo $data_region['id']; ?>" name="rb-region" value="<?php echo $data_region['name']; ?>">
+						<input type="radio" id="rb-region-<?php echo $data_region['id']; ?>" name="rb-region" value="<?php echo $data_region['id']; ?>">
 						<label for="pozcu"><?php echo $data_region['name']; ?></label>
 						<br>
 						<?php

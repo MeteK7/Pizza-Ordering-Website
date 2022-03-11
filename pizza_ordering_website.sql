@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Feb 25, 2022 at 09:28 PM
+-- Generation Time: Mar 11, 2022 at 08:58 PM
 -- Server version: 5.7.36
 -- PHP Version: 7.4.26
 
@@ -105,11 +105,25 @@ INSERT INTO `tbl_dessert` (`id`, `name`, `price_small`, `price_medium`, `price_l
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tbl_history_sale`
+-- Table structure for table `tbl_discount_rate`
 --
 
-DROP TABLE IF EXISTS `tbl_history_sale`;
-CREATE TABLE IF NOT EXISTS `tbl_history_sale` (
+DROP TABLE IF EXISTS `tbl_discount_rate`;
+CREATE TABLE IF NOT EXISTS `tbl_discount_rate` (
+  `id` int(11) NOT NULL,
+  `price_min` decimal(10,0) NOT NULL,
+  `price_max` decimal(10,0) NOT NULL,
+  `discount` decimal(10,0) NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tbl_history_order`
+--
+
+DROP TABLE IF EXISTS `tbl_history_order`;
+CREATE TABLE IF NOT EXISTS `tbl_history_order` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `id_customer` int(11) NOT NULL,
   `total_price` decimal(10,2) NOT NULL,
@@ -118,6 +132,28 @@ CREATE TABLE IF NOT EXISTS `tbl_history_sale` (
   PRIMARY KEY (`id`),
   KEY `id_customer` (`id_customer`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tbl_menu`
+--
+
+DROP TABLE IF EXISTS `tbl_menu`;
+CREATE TABLE IF NOT EXISTS `tbl_menu` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(100) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `tbl_menu`
+--
+
+INSERT INTO `tbl_menu` (`id`, `name`) VALUES
+(1, 'Pizza'),
+(2, 'Beverage'),
+(3, 'Dessert');
 
 -- --------------------------------------------------------
 
@@ -156,17 +192,17 @@ INSERT INTO `tbl_pizza` (`id`, `name`, `price_small`, `price_medium`, `price_lar
 
 DROP TABLE IF EXISTS `tbl_region`;
 CREATE TABLE IF NOT EXISTS `tbl_region` (
-  `id_region` int(11) NOT NULL AUTO_INCREMENT,
-  `name_region` varchar(100) NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(100) NOT NULL,
   `time_estimated` int(11) NOT NULL,
-  UNIQUE KEY `id_region` (`id_region`)
+  UNIQUE KEY `id_region` (`id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `tbl_region`
 --
 
-INSERT INTO `tbl_region` (`id_region`, `name_region`, `time_estimated`) VALUES
+INSERT INTO `tbl_region` (`id`, `name`, `time_estimated`) VALUES
 (1, 'Toros University', 10),
 (2, 'Pozcu', 20),
 (3, 'Mezitli', 30),
@@ -177,10 +213,10 @@ INSERT INTO `tbl_region` (`id_region`, `name_region`, `time_estimated`) VALUES
 --
 
 --
--- Constraints for table `tbl_history_sale`
+-- Constraints for table `tbl_history_order`
 --
-ALTER TABLE `tbl_history_sale`
-  ADD CONSTRAINT `tbl_history_sale_ibfk_1` FOREIGN KEY (`id_customer`) REFERENCES `tbl_customer` (`id`);
+ALTER TABLE `tbl_history_order`
+  ADD CONSTRAINT `tbl_history_order_ibfk_1` FOREIGN KEY (`id_customer`) REFERENCES `tbl_customer` (`id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

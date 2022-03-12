@@ -22,11 +22,10 @@
 	$query_region = "SELECT * FROM tbl_region WHERE id=$region";
 	$result_region = $conn->query($query_region);
 
-	$name_region;
-	$time_estimated_region;
-
 	if ($result_region->num_rows > 0) {
   		// output data of each row
+		$name_region;
+		$time_estimated_region;
 		while($row = $result_region->fetch_assoc()) {
 			$name_region=$row["name"];
 			$time_estimated_region=$row["time_estimated"];
@@ -60,6 +59,20 @@
 		}
 	}
 
+	//MAKE A FUNCTION FOR THE CODE BELOW OR ALIGN IT IN THE CODE STRUCTURE.
+	$query_discount_rate = "SELECT * FROM tbl_discount_rate";
+	$result_discount_rate = $conn->query($query_discount_rate);
+
+	if ($result_discount_rate->num_rows > 0) {
+  		// output data of each row
+		while($row = $result_discount_rate->fetch_assoc()) {
+			$id=$row["id"];
+			$discount=$row["discount"];
+			echo "id: " .$id. " - Discount: " .$discount."<br>";
+		}
+	} else {
+		echo "0 results";
+	}
 	?>
 	<div class="div-table-order-summary">
 		<p>Order Summary:</p>
@@ -101,10 +114,31 @@
 		}
 		?>
 	</th>
-	<th><?php   ?></th>
-	<th><?php   ?></th>
-	<th><?php echo $time_estimated_region;  ?></th>
-</tr>
+	<th>
+		<?php
+		if ($result_discount_rate->num_rows > 0) 
+		{
+			while($data_discount_rate = $result_discount_rate->fetch_assoc()) 
+			{
+
+				?>
+				<label type="text" id="lbl-discount-rate-<?php echo $data_discount_rate['id']; ?>" name="lbl-discount-rate" value="<?php echo $data_discount_rate['id']; ?>">
+					<label for="discount"><?php echo $data_discount_rate['discount']; ?></label>
+					<br>
+					<?php
+				}
+			} 
+			else 
+			{ 
+				?>
+				<p>No data found</p>
+				<?php 
+			} 
+			?>
+		</th>
+		<th><?php   ?></th>
+		<th><?php echo $time_estimated_region;  ?></th>
+	</tr>
 </table>
 </center>
 </div>

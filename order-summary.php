@@ -34,7 +34,6 @@
 	} else {
 		echo "0 results";
 	}
-	$conn->close();
 
 	//GETTING MENU INFO
 	$menu=$_GET['chk-menu'];
@@ -62,17 +61,6 @@
 	//MAKE A FUNCTION FOR THE CODE BELOW OR ALIGN IT IN THE CODE STRUCTURE.
 	$query_discount_rate = "SELECT * FROM tbl_discount_rate";
 	$result_discount_rate = $conn->query($query_discount_rate);
-
-	if ($result_discount_rate->num_rows > 0) {
-  		// output data of each row
-		while($row = $result_discount_rate->fetch_assoc()) {
-			$id=$row["id"];
-			$discount=$row["discount"];
-			echo "id: " .$id. " - Discount: " .$discount."<br>";
-		}
-	} else {
-		echo "0 results";
-	}
 	?>
 	<div class="div-table-order-summary">
 		<p>Order Summary:</p>
@@ -103,44 +91,68 @@
 					</th>
 					<th>
 						<?php
-						$grand_total_price=$_GET['grand-total-price'];
+						$total_gross_price=$_GET['total-gross-price'];
 
-						if (is_array($grand_total_price) || is_object($grand_total_price)) {
-							echo array_sum($grand_total_price);
+						if (is_array($total_gross_price) || is_object($total_gross_price)) {
+							echo array_sum($total_gross_price);
 						}
-		else // If $menu was not an array, then this block is executed. 
-		{
-			echo "Unfortunately, an error occured.";
-		}
-		?>
-	</th>
-	<th>
-		<?php
-		if ($result_discount_rate->num_rows > 0) 
-		{
-			while($data_discount_rate = $result_discount_rate->fetch_assoc()) 
-			{
+						else
+						{
+							// If $menu was not an array, then this block is executed. 
+							echo "Unfortunately, an error occured.";
+						}
+						?>
+					</th>
+					<th>
+						<?php
+						if ($result_discount_rate->num_rows > 0) 
+						{
+							while($data_discount_rate = $result_discount_rate->fetch_assoc()) 
+							{
+								$id=$data_discount_rate["id"];
+								$price_min=$data_discount_rate["price_min"];
+								$price_max=$data_discount_rate["price_max"];
+								
 
-				?>
-				<label type="text" id="lbl-discount-rate-<?php echo $data_discount_rate['id']; ?>" name="lbl-discount-rate" value="<?php echo $data_discount_rate['id']; ?>">
-					<label for="discount"><?php echo $data_discount_rate['discount']; ?></label>
-					<br>
-					<?php
-				}
-			} 
-			else 
-			{ 
-				?>
-				<p>No data found</p>
-				<?php 
-			} 
-			?>
-		</th>
-		<th><?php   ?></th>
-		<th><?php echo $time_estimated_region;  ?></th>
-	</tr>
-</table>
-</center>
-</div>
+								$total_gross_price=$_GET['total-gross-price'];
+
+								if (is_array($total_gross_price) || is_object($total_gross_price)) {
+									$grand_total_gross_price=array_sum($total_gross_price);
+
+									if ($grand_total_gross_price>=$price_min && $grand_total_gross_price<=$price_max) {
+										$discount=$data_discount_rate["discount"];
+										echo "%".$discount;
+										break;
+									}
+									elseif ($grand_total_gross_price>=$price_min && is_null($price_max)) {
+										$discount=$data_discount_rate["discount"];
+										echo "%".$discount;
+										break;
+									}
+								}
+
+								//echo "id: " .$id. " - Discount: " .$discount."<br>";
+							}
+						} 
+						else 
+						{ 
+							echo "No data found";
+						} 
+						?>
+					</th>
+					<th>
+						<?php
+						$total_gross_price=$_GET['total-gross-price'];
+						$grand_total_gross_price=array_sum($total_gross_price);
+
+						$grand_total_price=$grand_total_gross_price-(($grand_total_gross_price*$discount)/100);
+						echo $grand_total_price."TL";  
+						?>
+					</th>
+					<th><?php echo $time_estimated_region;  ?></th>
+				</tr>
+			</table>
+		</center>
+	</div>
 </body>
 </html>

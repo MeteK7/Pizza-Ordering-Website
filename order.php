@@ -110,7 +110,7 @@ function get_pizza_quantity(){
 					{
 						?>
 						<input type="radio" id="rb-region-<?php echo $data_region['id']; ?>" name="rb-region" value="<?php echo $data_region['id']; ?>">
-						<label for="pozcu"><?php echo $data_region['name']; ?></label>
+						<label for="rb-region-<?php echo $data_region['id']; ?>"><?php echo $data_region['name']; ?></label>
 						<br>
 						<?php
 					}
@@ -131,7 +131,7 @@ function get_pizza_quantity(){
 					{
 						?>
 						<input type="checkbox" id="chk-menu-<?php echo $data_menu['id']; ?>" name="chk-menu[]" value="<?php echo $data_menu['name']; ?>" onclick="toggleTables(this, <?php echo $data_menu['id']; ?>)">
-						<label for="<?php echo $data_menu['id']; ?>"><?php echo $data_menu['name']; ?></label>
+						<label for="chk-menu-<?php echo $data_menu['id']; ?>"><?php echo $data_menu['name']; ?></label>
 						<br>
 						<?php
 					}
@@ -186,9 +186,9 @@ function get_pizza_quantity(){
 											'availability-pizza-const-<?php echo $data_pizza['id'];?>'
 											);
 										calculateTotal('qty-pizza-<?php echo $data_pizza['id'];?>',
-											'total-price-pizza-<?php echo $data_pizza['id'];?>',
-											'grand-total-price-pizza',
-											'input-grand-total-price-pizza',
+											'gross-price-pizza-<?php echo $data_pizza['id'];?>',
+											'total-gross-price-pizza',
+											'input-total-gross-price-pizza',
 											'rb-size-price-pizza-<?php echo $data_pizza['id']?>'
 											);"
 											type="text"
@@ -203,7 +203,7 @@ function get_pizza_quantity(){
 										<td style="display:none;" id="availability-pizza-const-<?php echo $data_pizza['id'];?>">
 											<?php echo $data_pizza['availability']; ?> 
 										</td>
-										<td id="total-price-pizza-<?php echo $data_pizza['id'];?>"></td>
+										<td id="gross-price-pizza-<?php echo $data_pizza['id'];?>"></td>
 									</tr>
 									<?php
 								}
@@ -226,8 +226,8 @@ function get_pizza_quantity(){
 								<td></td>
 								<td></td>
 								<td>
-									Total:<strong id="grand-total-price-pizza"></strong>
-									<input type="hidden" id="input-grand-total-price-pizza" name="grand-total-price[]">
+									Total:<strong id="total-gross-price-pizza"></strong>
+									<input type="hidden" id="input-total-gross-price-pizza" name="total-gross-price[]">
 								</td>
 							</tr>
 						</table>
@@ -265,7 +265,7 @@ function get_pizza_quantity(){
 											<input
 											onkeyup="
 											calculateAvailabilityById('qty-beverage-<?php echo $data_beverage['id'];?>','availability-beverage-<?php echo $data_beverage['id'];?>','availability-beverage-const-<?php echo $data_beverage['id'];?>');
-											calculateTotal('qty-beverage-<?php echo $data_beverage['id'];?>','total-price-beverage-<?php echo $data_beverage['id'];?>','grand-total-price-beverage','input-grand-total-price-beverage','rb-size-price-beverage-<?php echo $data_beverage['id']?>');"
+											calculateTotal('qty-beverage-<?php echo $data_beverage['id'];?>','gross-price-beverage-<?php echo $data_beverage['id'];?>','total-gross-price-beverage','input-total-gross-price-beverage','rb-size-price-beverage-<?php echo $data_beverage['id']?>');"
 											type="text"
 											id="qty-beverage-<?php echo $data_beverage['id'];?>"
 											name="beverage">
@@ -277,7 +277,7 @@ function get_pizza_quantity(){
 										<td style="display:none;" id="availability-beverage-const-<?php echo $data_beverage['id'];?>">
 											<?php echo $data_beverage['availability']; ?>
 										</td>
-										<td id="total-price-beverage-<?php echo $data_beverage['id'];?>"></td>
+										<td id="gross-price-beverage-<?php echo $data_beverage['id'];?>"></td>
 									</tr>
 									<?php
 								}
@@ -298,8 +298,8 @@ function get_pizza_quantity(){
 								<td></td>
 								<td></td>
 								<td>
-									Total:<strong id="grand-total-price-beverage"></strong>
-									<input type="hidden" id="input-grand-total-price-beverage" name="grand-total-price[]">
+									Total:<strong id="total-gross-price-beverage"></strong>
+									<input type="hidden" id="input-total-gross-price-beverage" name="total-gross-price[]">
 								</td>
 							</tr>
 						</table>
@@ -342,9 +342,9 @@ function get_pizza_quantity(){
 												'availability-dessert-const-<?php echo $data_dessert['id'];?>'
 												);
 											calculateTotal('qty-dessert-<?php echo $data_dessert['id'];?>',
-												'total-price-dessert-<?php echo $data_dessert['id'];?>',
-												'grand-total-price-dessert',
-												'input-grand-total-price-dessert',
+												'gross-price-dessert-<?php echo $data_dessert['id'];?>',
+												'total-gross-price-dessert',
+												'input-total-gross-price-dessert',
 												'rb-size-price-dessert-<?php echo $data_dessert['id']?>'
 												);" 
 												type="text" 
@@ -358,7 +358,7 @@ function get_pizza_quantity(){
 											<td style="display:none;" id="availability-dessert-const-<?php echo $data_dessert['id'];?>">
 												<?php echo $data_dessert['availability']; ?>
 											</td>
-											<td id="total-price-dessert-<?php echo $data_dessert['id'];?>"></td>
+											<td id="gross-price-dessert-<?php echo $data_dessert['id'];?>"></td>
 										</tr>
 										<?php
 									}
@@ -379,8 +379,8 @@ function get_pizza_quantity(){
 									<td></td>
 									<td></td>
 									<td>
-										Total:<strong id="grand-total-price-dessert"></strong>
-										<input type="hidden" id="input-grand-total-price-dessert" name="grand-total-price[]">
+										Total:<strong id="total-gross-price-dessert"></strong>
+										<input type="hidden" id="input-total-gross-price-dessert" name="total-gross-price[]">
 									</td>
 								</tr>
 							</table>

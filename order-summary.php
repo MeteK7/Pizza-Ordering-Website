@@ -23,12 +23,14 @@
 	$result_region = $conn->query($query_region);
 
 	if ($result_region->num_rows > 0) {
-  		// output data of each row
 		$name_region;
-		$time_estimated_region;
+		$id_time_estimated;
+		$id_time_unit;
+
 		while($row = $result_region->fetch_assoc()) {
 			$name_region=$row["name"];
-			$time_estimated_region=$row["time_estimated"];
+			$id_time_estimated=$row["id_time_estimated"];
+			$id_time_unit=$row["id_time_unit"];
 			//echo "id: " . $row["id"]. " - Name: " . $row["name"]. " " . $row["time_estimated"]."<br>";
 		}
 	} else {
@@ -149,7 +151,26 @@
 						echo $grand_total_price."TL";  
 						?>
 					</th>
-					<th><?php echo $time_estimated_region;  ?></th>
+					<th>
+						<?php
+						$query_time_estimated_region = "SELECT * FROM tbl_time_estimated WHERE id=$id_time_estimated";
+						$result_time_estimated_region = $conn->query($query_time_estimated_region);
+						while($row = $result_time_estimated_region->fetch_assoc()) {
+							$time_estimated=$row["time"];
+						}
+
+						$query_time_unit_region = "SELECT * FROM tbl_time_unit WHERE id=$id_time_unit";
+						$result_time_unit_region = $conn->query($query_time_unit_region);
+						while($row = $result_time_unit_region->fetch_assoc()) {
+							$time_unit=$row["name"];
+						}
+						echo $time_estimated.$time_unit;
+
+						/*$test="SELECT tbl_region.id_time_estimated, tbl_time_estimated.time
+						FROM `tbl_region`
+						INNER JOIN tbl_time_estimated ON tbl_region.id_time_estimated=tbl_time_estimated.id";*/
+						?>
+					</th>
 				</tr>
 			</table>
 		</center>

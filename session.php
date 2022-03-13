@@ -1,6 +1,8 @@
 <?php
 include "config.php";
 
+session_start();
+
 // Check user login or not
 if(!isset($_SESSION['username'])){
     header('Location: login-customer.php');

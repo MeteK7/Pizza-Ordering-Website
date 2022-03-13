@@ -91,14 +91,14 @@ function get_pizza_quantity(){
 	</script>
 </head>
 <body>
-	<h1>Welcome <?php echo $_SESSION['username']; ?></h1> 
+	<h1>Welcome <?php echo $_SESSION['userid']; ?></h1> 
 	<form method='post' action="">
 		<input type="submit" value="Logout" name="submit-logout">
 	</form>
 	<div>
 		<form method="get" action="order-summary.php">
 			<p>Welcome</p>
-			<input type="hidden" name="id-customer"><?php echo $_SESSION['username']; ?></input> 
+			<input type="hidden" name="id-customer"><?php echo $_SESSION['userid']; ?></input> 
 			<div>
 				<p>Welcome to CSE216 Pizza Ordering Website. Please choose your region and type of ordering.</p>
 				<br>

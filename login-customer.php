@@ -2,28 +2,30 @@
 <?php
 include "config.php";
 
+session_start();
+
 if(isset($_POST['submit-login'])){
-	 $username = $_POST['username'];  
+	$userid = $_POST['userid'];  
     $password = $_POST['password'];  
 
 	 //to prevent from mysqli injection
-    $username = stripcslashes($username);
+    $userid = stripcslashes($userid);
     $password = stripcslashes($password);
-    $username = mysqli_real_escape_string($conn, $username);  
+    $userid = mysqli_real_escape_string($conn, $userid);  
     $password = mysqli_real_escape_string($conn, $password);  
 
-    if ($username != "" && $password != ""){
+    if ($userid != "" && $password != ""){
 
-        $sql = "select count(*) from tbl_customer where username='".$username."' and password='".$password."'";
+        $sql = "select count(*) from tbl_customer where id='".$userid."' and password='".$password."'";
         $result = mysqli_query($conn,$sql);
         $row = mysqli_fetch_array($result, MYSQLI_ASSOC);
         $count =mysqli_num_rows($result); 
 
         if($count > 0){
-            $_SESSION['username'] = $username;
+            $_SESSION['userid'] = $userid;
             header('Location: order.php');
         }else{
-            echo "Invalid username and password";
+            echo "Invalid userid and password";
         }
 
     }
@@ -31,7 +33,7 @@ if(isset($_POST['submit-login'])){
 }
 /*
 OLD QUERY
-        $sql_query = "select count(*) as cntUser from tbl_customer where username='".$username."' and password='".$password."'";
+        $sql_query = "select count(*) as cntUser from tbl_customer where userid='".$userid."' and password='".$password."'";
         $result = mysqli_query($conn,$sql_query);
         $row = mysqli_fetch_array($result);
         $count = $row['cntUser'];
@@ -53,7 +55,7 @@ OLD QUERY
 	<div>
 		<form action="" method="post">
 			<label>Customer Number:</label>
-			<input type="text" name="username">
+			<input type="text" name="userid">
 			<label>Password:</label>
 			<input type="Password" name="password">
 			<input type="submit" value="Log in" name="submit-login" id="submit-login">

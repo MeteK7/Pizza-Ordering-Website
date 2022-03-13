@@ -1,6 +1,5 @@
 <!--MySQLi Object-Oriented Connection-->
 <?php
-	session_start();
 	$servername = "localhost";
 	$username = "root";
 	$password = "mg9R7psU";

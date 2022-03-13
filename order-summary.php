@@ -18,8 +18,8 @@
 	echo "<br><br>";
 
 	//GETTING REGION INFO
-	$region =  $_GET['rb-region'];
-	$query_region = "SELECT * FROM tbl_region WHERE id=$region";
+	$id_region =  $_GET['rb-region'];
+	$query_region = "SELECT * FROM tbl_region WHERE id=$id_region";
 	$result_region = $conn->query($query_region);
 
 	if ($result_region->num_rows > 0) {
@@ -64,7 +64,7 @@
 	$query_discount_rate = "SELECT * FROM tbl_discount_rate";
 	$result_discount_rate = $conn->query($query_discount_rate);
 	?>
-	<form method='post' action="">
+	<form method='post' action="order-summary-insert.php">
 		<div class="div-table-order-summary">
 			<p>Order Summary:</p>
 			<center>
@@ -79,9 +79,11 @@
 						<th>Estimated Time</th>
 					</tr>
 					<tr>
+						<th style="display:none;" id="th-hidden"><input type="hidden" name="id-customer"><?php echo $_SESSION['username']; ?></input></th> 
 						<th><?php echo $_SESSION['username'] ?></th>
+						<th><input type="hidden" name="id-customer"><?php echo $id_region; ?></input></th>
 						<th><?php echo $name_region; ?></th>
-						<th>
+						<th><input type="text" name="menu">
 							<?php
 							if(!empty($menu))
 							{
@@ -91,13 +93,15 @@
 								}
 							}
 							?>
-						</th>
+						</input></th>
 						<th>
 							<?php
 							$total_gross_price=$_GET['total-gross-price'];
 
 							if (is_array($total_gross_price) || is_object($total_gross_price)) {
-								echo array_sum($total_gross_price);
+								?>
+								<input type="hidden" name="total-gross-price"><?php echo array_sum($total_gross_price); ?></input>
+								<?php
 							}
 							else
 							{
@@ -106,7 +110,7 @@
 							}
 							?>
 						</th>
-						<th>
+						<th id="th-hidden"><input type="text" name="discount-rate">
 							<?php
 							if ($result_discount_rate->num_rows > 0) 
 							{
@@ -115,19 +119,19 @@
 									$id=$data_discount_rate["id"];
 									$price_min=$data_discount_rate["price_min"];
 									$price_max=$data_discount_rate["price_max"];
-									
+
 
 									$total_gross_price=$_GET['total-gross-price'];
 
 									if (is_array($total_gross_price) || is_object($total_gross_price)) {
-										$grand_total_gross_price=array_sum($total_gross_price);
+										$summed_total_gross_price=array_sum($total_gross_price);
 
-										if ($grand_total_gross_price>=$price_min && $grand_total_gross_price<=$price_max) {
+										if ($summed_total_gross_price>=$price_min && $summed_total_gross_price<=$price_max) {
 											$discount=$data_discount_rate["discount"];
 											echo "%".$discount;
 											break;
 										}
-										elseif ($grand_total_gross_price>=$price_min && is_null($price_max)) {
+										elseif ($summed_total_gross_price>=$price_min && is_null($price_max)) {
 											$discount=$data_discount_rate["discount"];
 											echo "%".$discount;
 											break;
@@ -142,16 +146,17 @@
 								echo "No data found";
 							} 
 							?>
-						</th>
-						<th>
+						</input></th>
+						<th><input type="text" name="total-price">
 							<?php
 							$total_gross_price=$_GET['total-gross-price'];
-							$grand_total_gross_price=array_sum($total_gross_price);
+							$summed_total_gross_price=array_sum($total_gross_price);
 
-							$grand_total_price=$grand_total_gross_price-(($grand_total_gross_price*$discount)/100);
-							echo $grand_total_price."TL";  
+							$total_price=$summed_total_gross_price-(($summed_total_gross_price*$discount)/100);
+							echo $total_price."TL";  
 							?>
-						</th>
+						</input></th>
+						<th id="th-hidden"><input type="hidden" name="id-time-estimated"><?php $id_time_estimated; ?></input></th>
 						<th>
 							<?php
 							$query_time_estimated_region = "SELECT * FROM tbl_time_estimated WHERE id=$id_time_estimated";

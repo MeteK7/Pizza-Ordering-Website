@@ -79,11 +79,10 @@
 						<th>Estimated Time</th>
 					</tr>
 					<tr>
-						<th style="display:none;" id="th-hidden"><input type="hidden" name="id-customer"><?php echo $_SESSION['username']; ?></input></th> 
-						<th><?php echo $_SESSION['username'] ?></th>
-						<th><input type="hidden" name="id-customer"><?php echo $id_region; ?></input></th>
+						<th id="th-hidden"><input type="hidden" name="id-customer"><?php echo $_SESSION['userid']; ?></input></th>
+						<input type="hidden" name="id-region"><?php echo $id_region; ?></input>
 						<th><?php echo $name_region; ?></th>
-						<th><input type="text" name="menu">
+						<th>
 							<?php
 							if(!empty($menu))
 							{
@@ -93,7 +92,7 @@
 								}
 							}
 							?>
-						</input></th>
+						</th>
 						<th>
 							<?php
 							$total_gross_price=$_GET['total-gross-price'];
@@ -110,7 +109,7 @@
 							}
 							?>
 						</th>
-						<th id="th-hidden"><input type="text" name="discount-rate">
+						<th id="th-hidden">
 							<?php
 							if ($result_discount_rate->num_rows > 0) 
 							{
@@ -128,12 +127,14 @@
 
 										if ($summed_total_gross_price>=$price_min && $summed_total_gross_price<=$price_max) {
 											$discount=$data_discount_rate["discount"];
-											echo "%".$discount;
+											echo "%"; ?><input type="hidden" name="discount-rate"><?php echo $discount; ?></input>
+											<?php
 											break;
 										}
 										elseif ($summed_total_gross_price>=$price_min && is_null($price_max)) {
 											$discount=$data_discount_rate["discount"];
-											echo "%".$discount;
+											echo "%"; ?><input type="hidden" name="discount-rate"><?php echo $discount; ?></input>
+											<?php
 											break;
 										}
 									}
@@ -147,16 +148,16 @@
 							} 
 							?>
 						</input></th>
-						<th><input type="text" name="total-price">
+						<th>
 							<?php
 							$total_gross_price=$_GET['total-gross-price'];
 							$summed_total_gross_price=array_sum($total_gross_price);
 
 							$total_price=$summed_total_gross_price-(($summed_total_gross_price*$discount)/100);
-							echo $total_price."TL";  
 							?>
-						</input></th>
-						<th id="th-hidden"><input type="hidden" name="id-time-estimated"><?php $id_time_estimated; ?></input></th>
+							<input type="hidden" name="total-price"> <?php echo $total_price; ?></input><?php echo "TL"; ?>
+						</th>
+						<input type="hidden" name="id-time-estimated"><?php $id_time_estimated; ?></input>
 						<th>
 							<?php
 							$query_time_estimated_region = "SELECT * FROM tbl_time_estimated WHERE id=$id_time_estimated";
@@ -181,6 +182,7 @@
 			</table>
 		</center>
 	</div>
+	<input type="submit" value="Insert" name="submit-order-summary">
 </form>
 </body>
 </html>

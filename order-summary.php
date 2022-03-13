@@ -64,107 +64,108 @@
 	$query_discount_rate = "SELECT * FROM tbl_discount_rate";
 	$result_discount_rate = $conn->query($query_discount_rate);
 	?>
-	<div class="div-table-order-summary">
-		<p>Order Summary:</p>
-		<center>
-			<table>
-				<tr>
-					<th>Customer</th>
-					<th>Region</th>
-					<th>Menu Types</th>
-					<th>Gross Price</th>
-					<th>Discount</th>
-					<th>Grand Price</th>
-					<th>Estimated Time</th>
-				</tr>
-				<tr>
-					<th><?php echo $_SESSION['username'] ?></th>
-					<th><?php echo $name_region; ?></th>
-					<th>
-						<?php
-						if(!empty($menu))
-						{
-							foreach ($menu as $selected)
+	<form method='post' action="">
+		<div class="div-table-order-summary">
+			<p>Order Summary:</p>
+			<center>
+				<table>
+					<tr>
+						<th>Customer</th>
+						<th>Region</th>
+						<th>Menu Types</th>
+						<th>Gross Price</th>
+						<th>Discount</th>
+						<th>Grand Price</th>
+						<th>Estimated Time</th>
+					</tr>
+					<tr>
+						<th><?php echo $_SESSION['username'] ?></th>
+						<th><?php echo $name_region; ?></th>
+						<th>
+							<?php
+							if(!empty($menu))
 							{
-								echo $selected."<br>";
-							}
-						}
-						?>
-					</th>
-					<th>
-						<?php
-						$total_gross_price=$_GET['total-gross-price'];
-
-						if (is_array($total_gross_price) || is_object($total_gross_price)) {
-							echo array_sum($total_gross_price);
-						}
-						else
-						{
-							// If $menu was not an array, then this block is executed. 
-							echo "Unfortunately, an error occured.";
-						}
-						?>
-					</th>
-					<th>
-						<?php
-						if ($result_discount_rate->num_rows > 0) 
-						{
-							while($data_discount_rate = $result_discount_rate->fetch_assoc()) 
-							{
-								$id=$data_discount_rate["id"];
-								$price_min=$data_discount_rate["price_min"];
-								$price_max=$data_discount_rate["price_max"];
-								
-
-								$total_gross_price=$_GET['total-gross-price'];
-
-								if (is_array($total_gross_price) || is_object($total_gross_price)) {
-									$grand_total_gross_price=array_sum($total_gross_price);
-
-									if ($grand_total_gross_price>=$price_min && $grand_total_gross_price<=$price_max) {
-										$discount=$data_discount_rate["discount"];
-										echo "%".$discount;
-										break;
-									}
-									elseif ($grand_total_gross_price>=$price_min && is_null($price_max)) {
-										$discount=$data_discount_rate["discount"];
-										echo "%".$discount;
-										break;
-									}
+								foreach ($menu as $selected)
+								{
+									echo $selected."<br>";
 								}
+							}
+							?>
+						</th>
+						<th>
+							<?php
+							$total_gross_price=$_GET['total-gross-price'];
+
+							if (is_array($total_gross_price) || is_object($total_gross_price)) {
+								echo array_sum($total_gross_price);
+							}
+							else
+							{
+							// If $menu was not an array, then this block is executed. 
+								echo "Unfortunately, an error occured.";
+							}
+							?>
+						</th>
+						<th>
+							<?php
+							if ($result_discount_rate->num_rows > 0) 
+							{
+								while($data_discount_rate = $result_discount_rate->fetch_assoc()) 
+								{
+									$id=$data_discount_rate["id"];
+									$price_min=$data_discount_rate["price_min"];
+									$price_max=$data_discount_rate["price_max"];
+									
+
+									$total_gross_price=$_GET['total-gross-price'];
+
+									if (is_array($total_gross_price) || is_object($total_gross_price)) {
+										$grand_total_gross_price=array_sum($total_gross_price);
+
+										if ($grand_total_gross_price>=$price_min && $grand_total_gross_price<=$price_max) {
+											$discount=$data_discount_rate["discount"];
+											echo "%".$discount;
+											break;
+										}
+										elseif ($grand_total_gross_price>=$price_min && is_null($price_max)) {
+											$discount=$data_discount_rate["discount"];
+											echo "%".$discount;
+											break;
+										}
+									}
 
 								//echo "id: " .$id. " - Discount: " .$discount."<br>";
+								}
+							} 
+							else 
+							{ 
+								echo "No data found";
+							} 
+							?>
+						</th>
+						<th>
+							<?php
+							$total_gross_price=$_GET['total-gross-price'];
+							$grand_total_gross_price=array_sum($total_gross_price);
+
+							$grand_total_price=$grand_total_gross_price-(($grand_total_gross_price*$discount)/100);
+							echo $grand_total_price."TL";  
+							?>
+						</th>
+						<th>
+							<?php
+							$query_time_estimated_region = "SELECT * FROM tbl_time_estimated WHERE id=$id_time_estimated";
+							$result_time_estimated_region = $conn->query($query_time_estimated_region);
+							while($row = $result_time_estimated_region->fetch_assoc()) {
+								$time_estimated=$row["time"];
 							}
-						} 
-						else 
-						{ 
-							echo "No data found";
-						} 
-						?>
-					</th>
-					<th>
-						<?php
-						$total_gross_price=$_GET['total-gross-price'];
-						$grand_total_gross_price=array_sum($total_gross_price);
 
-						$grand_total_price=$grand_total_gross_price-(($grand_total_gross_price*$discount)/100);
-						echo $grand_total_price."TL";  
-						?>
-					</th>
-					<th>
-						<?php
-						$query_time_estimated_region = "SELECT * FROM tbl_time_estimated WHERE id=$id_time_estimated";
-						$result_time_estimated_region = $conn->query($query_time_estimated_region);
-						while($row = $result_time_estimated_region->fetch_assoc()) {
-							$time_estimated=$row["time"];
-						}
-
-						$query_time_unit_region = "SELECT * FROM tbl_time_unit WHERE id=$id_time_unit";
-						$result_time_unit_region = $conn->query($query_time_unit_region);
-						while($row = $result_time_unit_region->fetch_assoc()) {
-							$time_unit=$row["name"];
-						}
-						echo $time_estimated.$time_unit;
+							$query_time_unit_region = "SELECT * FROM tbl_time_unit WHERE id=$id_time_unit";
+							$result_time_unit_region = $conn->query($query_time_unit_region);
+							while($row = $result_time_unit_region->fetch_assoc()) {
+								$time_unit=$row["name"];
+							}
+							echo $time_estimated.$time_unit;
 
 						/*$test="SELECT tbl_region.id_time_estimated, tbl_time_estimated.time
 						FROM `tbl_region`
@@ -175,5 +176,6 @@
 			</table>
 		</center>
 	</div>
+</form>
 </body>
 </html>

@@ -179,6 +179,7 @@
 			</table>
 		</center>
 	</div>
+	<input type="hidden" name="date-added" value="<?php echo date("Y-m-d H:i:s") ?>">
 	<input type="submit" value="Insert" name="submit-order-summary">
 </form>
 </body>

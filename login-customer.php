@@ -2,13 +2,16 @@
 <?php
 include "config.php";
 
+// Initialize the session
 session_start();
+echo "fhyfdhdh";
 
 if(isset($_POST['submit-login'])){
+	echo $_POST['userid'];
 	$userid = $_POST['userid'];  
     $password = $_POST['password'];  
-
-	 //to prevent from mysqli injection
+    echo "fhyfdhdh";
+	//to prevent from mysqli injection
     $userid = stripcslashes($userid);
     $password = stripcslashes($password);
     $userid = mysqli_real_escape_string($conn, $userid);  
@@ -53,7 +56,7 @@ OLD QUERY
 	}
 	?>
 	<div>
-		<form action="" method="post">
+		<form action="" method="POST">
 			<label>Customer Number:</label>
 			<input type="text" name="userid">
 			<label>Password:</label>
@@ -61,7 +64,7 @@ OLD QUERY
 			<input type="submit" value="Log in" name="submit-login" id="submit-login">
 		</form>
 		<p>If you visit our website for the first time, please register:</p>
-		<form action="register.php" method="post">
+		<form action="register.php" method="POST">
 			<label>User Name:</label>
 			<input type="text" name="username">
 			<label>Password:</label>

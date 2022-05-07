@@ -9,25 +9,15 @@
     <center>
         <!--MySQLi Data Insertion Object-oriented-->
         <?php
-        $servername = "localhost";
-        $username = "root";
-        $password = "mg9R7psU";
-        $database='pizza_ordering_website';
+        include "config.php";
 
-        // Create connection
-        $conn = new mysqli($servername, $username, $password, $database);
-        // Check connection
-        if ($conn->connect_error) {
-          die("Connection failed: " . $conn->connect_error);
-        }
-
-          
-        // Taking all 2 values from the form data(input)
+        // Taking all 3 values from the form data(input)
         $username =  $_REQUEST['username'];
+        $password =  $_REQUEST['password'];
         $address = $_REQUEST['address'];
 
-        $sql = "INSERT INTO tbl_customer (username, address)
-VALUES ('$username','$address')";
+        $sql = "INSERT INTO tbl_customer (username, password, address)
+VALUES ('$username','$password','$address')";
           
         if ($conn->query($sql) === TRUE) {
           echo "New record created successfully";

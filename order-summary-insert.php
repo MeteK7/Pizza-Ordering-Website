@@ -8,7 +8,7 @@ echo $_REQUEST['total-gross-price'];
 echo $_REQUEST['discount-rate'];
 echo $_REQUEST['total-price'];
 echo $_REQUEST['id-time-estimated'];
-echo $_POST['date-added'];
+echo $_REQUEST['date-added'];
 
 if (isset($_REQUEST['id-customer']) && isset($_REQUEST['id-region']) && isset($_REQUEST['total-gross-price']) && isset($_REQUEST['discount-rate']) && isset($_REQUEST['total-price']) && isset($_REQUEST['id-time-estimated']))
 {

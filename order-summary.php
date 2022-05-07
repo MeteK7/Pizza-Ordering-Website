@@ -10,11 +10,8 @@
 	<?php 
 	//Use $_GET but if you want same thing in many pages according to user then use $_SESSION
 	include "session.php";
-	echo $_SESSION['username'];
-	echo "<br><br>";
 
-	$id_customer =  $_GET['id-customer'];
-	echo "Customer: ".$id_customer;
+	echo "Customer: ".$_SESSION['userid'];
 	echo "<br><br>";
 
 	//GETTING REGION INFO

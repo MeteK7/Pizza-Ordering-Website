@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Mar 13, 2022 at 10:42 AM
+-- Generation Time: May 08, 2022 at 12:20 AM
 -- Server version: 5.7.36
 -- PHP Version: 7.4.26
 
@@ -63,7 +63,7 @@ CREATE TABLE IF NOT EXISTS `tbl_customer` (
   `password` varchar(10) NOT NULL,
   `address` text NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `tbl_customer`
@@ -71,7 +71,8 @@ CREATE TABLE IF NOT EXISTS `tbl_customer` (
 
 INSERT INTO `tbl_customer` (`id`, `username`, `password`, `address`) VALUES
 (1, 'Mete', '12345', 'Hatay'),
-(2, 'Omid', '', 'Mersin');
+(2, 'Omid', '12345', 'Mersin'),
+(3, 'metekaba96@gmail.com', '34634353', 'sdfghdfsdfghf');
 
 -- --------------------------------------------------------
 
@@ -137,13 +138,25 @@ DROP TABLE IF EXISTS `tbl_history_order`;
 CREATE TABLE IF NOT EXISTS `tbl_history_order` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `id_customer` int(11) NOT NULL,
-  `grand_total_gross_price` decimal(10,2) NOT NULL,
-  `grand_total_price` decimal(10,2) NOT NULL,
-  `discount` decimal(10,2) NOT NULL,
-  `date` date NOT NULL,
+  `id_region` int(11) NOT NULL,
+  `total_gross_price` decimal(10,2) NOT NULL,
+  `discount_rate` decimal(10,2) NOT NULL,
+  `total_price` decimal(10,2) NOT NULL,
+  `id_time_estimated` int(11) NOT NULL,
+  `date_added` datetime NOT NULL,
   PRIMARY KEY (`id`),
-  KEY `id_customer` (`id_customer`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  KEY `id_customer` (`id_customer`),
+  KEY `id_time_estimated` (`id_time_estimated`)
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `tbl_history_order`
+--
+
+INSERT INTO `tbl_history_order` (`id`, `id_customer`, `id_region`, `total_gross_price`, `discount_rate`, `total_price`, `id_time_estimated`, `date_added`) VALUES
+(4, 1, 1, '100.00', '20.00', '80.00', 2, '2022-03-15 22:21:14'),
+(5, 1, 1, '100.00', '20.00', '80.00', 2, '2022-03-15 22:23:21'),
+(6, 1, 1, '40.00', '0.00', '40.00', 2, '2022-05-07 15:55:30');
 
 -- --------------------------------------------------------
 
@@ -292,7 +305,8 @@ INSERT INTO `tbl_time_unit` (`id`, `name`) VALUES
 -- Constraints for table `tbl_history_order`
 --
 ALTER TABLE `tbl_history_order`
-  ADD CONSTRAINT `tbl_history_order_ibfk_1` FOREIGN KEY (`id_customer`) REFERENCES `tbl_customer` (`id`);
+  ADD CONSTRAINT `tbl_history_order_ibfk_1` FOREIGN KEY (`id_customer`) REFERENCES `tbl_customer` (`id`),
+  ADD CONSTRAINT `tbl_history_order_ibfk_2` FOREIGN KEY (`id_time_estimated`) REFERENCES `tbl_time_estimated` (`id`);
 
 --
 -- Constraints for table `tbl_region`

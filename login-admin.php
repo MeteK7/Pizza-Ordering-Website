@@ -18,14 +18,14 @@ if(isset($_POST['submit-login'])){
 
     if ($userid != "" && $password != ""){
 
-        $sql = "select count(*) from tbl_customer where id='".$userid."' and password='".$password."'";
+        $sql = "select count(*) from tbl_admin where id='".$userid."' and password='".$password."'";
         $result = mysqli_query($conn,$sql);
         $row = mysqli_fetch_array($result, MYSQLI_ASSOC);
         $count =mysqli_num_rows($result); 
 
         if($count > 0){
             $_SESSION['userid'] = $userid;
-            header('Location: order.php');
+            header('Location: index-admin.php');
         }else{
             echo "Invalid userid and password";
         }
@@ -45,7 +45,7 @@ OLD QUERY
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>Login as Customer</title>
+	<title>Login as Admin</title>
 
 </head>
 <body>
@@ -56,13 +56,13 @@ OLD QUERY
 	?>
 	<div>
 		<form action="" method="POST">
-			<label>Customer Number:</label>
+			<label>Admin Number:</label>
 			<input type="text" name="userid">
 			<label>Password:</label>
 			<input type="Password" name="password">
 			<input type="submit" value="Log in" name="submit-login" id="submit-login">
 		</form>
-		<p>If you visit our website for the first time, please register:</p>
+		<!--<p>If you visit our website for the first time, please register:</p>
 		<form action="register.php" method="POST">
 			<label>User Name:</label>
 			<input type="text" name="username">
@@ -71,7 +71,7 @@ OLD QUERY
 			<label>Address:</label>
 			<input type="text" name="address">
 			<input type="submit" value="Register">
-		</form>
+		</form>-->
 	</div>
 </body>
 </html>

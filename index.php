@@ -24,6 +24,7 @@
 	?>
 </head>
 <body>
+	<br>
 	<a href="https://toros.edu.tr">Toros University</a>
 	<div id="div-customer"><a href="login-customer.php">Customer</a></div>
 	<div id="div-admin"><a href="login-admin.php">Administrator</a></div>

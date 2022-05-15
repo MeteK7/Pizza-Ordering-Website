@@ -92,6 +92,7 @@ function get_pizza_quantity(){
 </head>
 <body>
 	<h1>Welcome <?php echo $_SESSION['userid']; ?></h1> 
+	<h1>Welcome <?php echo $_SESSION['username']; ?></h1> 
 	<form method='post' action="">
 		<input type="submit" value="Logout" name="submit-logout">
 	</form>

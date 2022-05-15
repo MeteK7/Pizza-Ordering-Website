@@ -5,6 +5,19 @@ include "config.php";
 // Initialize the session
 session_start();
 
+function GetUsernameById($userid, $password) {
+	include "config.php";
+	$query_customer = "SELECT * FROM tbl_customer WHERE id='".$userid."' and password='".$password."'";
+	$result_customer = $conn->query($query_customer);
+	if ($result_customer->num_rows > 0) 
+	{
+		while($data_customer = $result_customer->fetch_assoc()) 
+			{
+				$_SESSION['username']= $data_customer['username'];
+			}
+	}
+}
+
 if(isset($_POST['submit-login'])){
 	echo $_POST['userid'];
 	$userid = $_POST['userid'];  
@@ -24,22 +37,20 @@ if(isset($_POST['submit-login'])){
         $count =mysqli_num_rows($result); 
 
         if($count > 0){
-            $_SESSION['userid'] = $userid;
-            header('Location: order.php');
-        }else{
+            $_SESSION['userid'] = $userid; //Adding the user id to the session
+            
+            GetUsernameById($userid, $password); //Getting the username by id
+
+            header('Location: order.php'); //Routing to the ordering page
+        }
+
+        else{
             echo "Invalid userid and password";
         }
 
     }
 
 }
-/*
-OLD QUERY
-        $sql_query = "select count(*) as cntUser from tbl_customer where userid='".$userid."' and password='".$password."'";
-        $result = mysqli_query($conn,$sql_query);
-        $row = mysqli_fetch_array($result);
-        $count = $row['cntUser'];
-*/
 ?>
 <html>
 <head>
@@ -49,11 +60,6 @@ OLD QUERY
 
 </head>
 <body>
-	<?php
-	function register(){
-
-	}
-	?>
 	<div>
 		<form action="" method="POST">
 			<label>Customer Number:</label>

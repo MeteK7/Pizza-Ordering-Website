@@ -3,21 +3,40 @@
 include "session.php";
 ?>
 <?php
-include('config.php');
-$query_pizza = "SELECT * FROM tbl_pizza";
-$result_pizza = $conn->query($query_pizza);
+function GetRegion(){
+	include('config.php');
+	$query_region = "SELECT * FROM tbl_region";
+	$result_region = $conn->query($query_region);
+	return $result_region;
+}
 
-$query_beverage = "SELECT * FROM tbl_beverage";
-$result_beverage = $conn->query($query_beverage);
+function GetMenu(){
+	include('config.php');
+	$query_menu = "SELECT * FROM tbl_menu";
+	$result_menu = $conn->query($query_menu);
+	return $result_menu;
+}
 
-$query_dessert = "SELECT * FROM tbl_dessert";
-$result_dessert = $conn->query($query_dessert);
+function GetProductPizza(){
+	include('config.php');
+	$query_pizza = "SELECT * FROM tbl_pizza";
+	$result_pizza = $conn->query($query_pizza);	
+	return $result_pizza;
+}
 
-$query_region = "SELECT * FROM tbl_region";
-$result_region = $conn->query($query_region);
+function GetProductBeverage(){
+	include('config.php');
+	$query_beverage = "SELECT * FROM tbl_beverage";
+	$result_beverage = $conn->query($query_beverage);
+	return $result_beverage;
+}
 
-$query_menu = "SELECT * FROM tbl_menu";
-$result_menu = $conn->query($query_menu);
+function GetProductDessert(){
+	include('config.php');
+	$query_dessert = "SELECT * FROM tbl_dessert";
+	$result_dessert = $conn->query($query_dessert);
+	return $result_dessert;
+}
 ?>
 <?php
 function get_pizza_quantity(){
@@ -105,6 +124,7 @@ function get_pizza_quantity(){
 				<br>
 				<p>Regions:</p>
 				<?php
+				$result_region=GetRegion();
 				if ($result_region->num_rows > 0) 
 				{
 					while($data_region = $result_region->fetch_assoc()) 
@@ -126,6 +146,7 @@ function get_pizza_quantity(){
 				<br>
 				<p>Type of Menu:</p>
 				<?php
+				$result_menu=GetMenu();
 				if ($result_menu->num_rows > 0) 
 				{
 					while($data_menu = $result_menu->fetch_assoc()) 
@@ -167,6 +188,7 @@ function get_pizza_quantity(){
 							<th>Total Price</th>
 						</tr>
 						<?php
+						$result_pizza=GetProductPizza();
 						if ($result_pizza->num_rows > 0) 
 						{
 							while($data_pizza = $result_pizza->fetch_assoc()) 
@@ -253,6 +275,7 @@ function get_pizza_quantity(){
 								<th>Total Price</th>
 							</tr>
 							<?php
+							$result_beverage=GetProductBeverage();
 							if ($result_beverage->num_rows > 0) 
 							{
 								while($data_beverage = $result_beverage->fetch_assoc()) 
@@ -325,6 +348,7 @@ function get_pizza_quantity(){
 								<th>Total Price</th>
 							</tr>
 							<?php
+							$result_dessert=GetProductDessert();
 							if ($result_dessert->num_rows > 0) 
 							{
 								while($data_dessert = $result_dessert->fetch_assoc()) 

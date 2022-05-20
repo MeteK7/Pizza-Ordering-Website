@@ -1,4 +1,7 @@
 <!DOCTYPE html>
+<?php
+include "session.php";
+?>
 <html>
 <head>
 	<meta charset="utf-8">
@@ -60,11 +63,11 @@
                 <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                 Customer Management
             </a>
-            <a class="nav-link">
+            <a class="nav-link" href="products.php">
                 <div class="sb-nav-link-icon"><i class="fas fa-user-edit"></i></div>
                 Products
             </a>
-            <a class="nav-link">
+            <a class="nav-link" href="profit.php">
                 <div class="sb-nav-link-icon"><i class="fas fa-user-edit"></i></div>
                 Profit
             </a>
@@ -76,7 +79,7 @@
     </div>
     <div class="sb-sidenav-footer">
         <div class="small">Logged in as:</div>
-        <!--GET USER NAME HERE-->
+        <?php echo $_SESSION['username']; ?>
     </div>
 </nav>
         </div>

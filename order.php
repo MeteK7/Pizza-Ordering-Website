@@ -127,8 +127,14 @@ function get_pizza_quantity(){
 					while($data_region = $result_region->fetch_assoc()) 
 					{
 						?>
-						<input type="radio" id="rb-region-<?php echo $data_region['id']; ?>" name="rb-region" value="<?php echo $data_region['id']; ?>">
-						<label for="rb-region-<?php echo $data_region['id']; ?>"><?php echo $data_region['name']; ?></label>
+						<input 
+						type="radio" 
+						id="rb-region-<?php echo $data_region['id']; ?>" 
+						name="rb-region" 
+						value="<?php echo $data_region['id']; ?>">
+						<label for="rb-region-<?php echo $data_region['id']; ?>">
+							<?php echo $data_region['name']; ?>
+						</label>
 						<br>
 						<?php
 					}
@@ -149,8 +155,15 @@ function get_pizza_quantity(){
 					while($data_menu = $result_menu->fetch_assoc()) 
 					{
 						?>
-						<input type="checkbox" id="chk-menu-<?php echo $data_menu['id']; ?>" name="chk-menu[]" value="<?php echo $data_menu['name']; ?>" onclick="toggleTables(this, <?php echo $data_menu['id']; ?>)">
-						<label for="chk-menu-<?php echo $data_menu['id']; ?>"><?php echo $data_menu['name']; ?></label>
+						<input 
+						type="checkbox" 
+						id="chk-menu-<?php echo $data_menu['id']; ?>" 
+						name="chk-menu[]" 
+						value="<?php echo $data_menu['name']; ?>" 
+						onclick="toggleTables(this, <?php echo $data_menu['id']; ?>)">
+						<label for="chk-menu-<?php echo $data_menu['id']; ?>">
+							<?php echo $data_menu['name']; ?>
+						</label>
 						<br>
 						<?php
 					}
@@ -164,7 +177,8 @@ function get_pizza_quantity(){
 				?>		
 			</div>
 			<br>
-			<div id="div-menu-1" class="div-menu"><!--Try defining ID dynamically!!!-->
+			<!--Try defining ID dynamically!!!-->
+			<div id="div-menu-1" class="div-menu">
 				<p>Pizza:</p>
 				<center>
 					<table>
@@ -192,12 +206,39 @@ function get_pizza_quantity(){
 							{
 								?>
 								<tr>
-									<td><?php echo $data_pizza['id']; ?></td>
-									<td><?php echo $data_pizza['name']; ?></td>
-									<td><input type="radio" id="rb-price-small-pizza" name="rb-size-price-pizza-<?php echo $data_pizza['id'];?>" value="<?php echo $data_pizza['price_small']; ?>"><?php echo $data_pizza['price_small']; ?></td>
-									<td><input type="radio" id="rb-pizza-price-medium" name="rb-size-price-pizza-<?php echo $data_pizza['id'];?>" value="<?php echo $data_pizza['price_medium']; ?>"><?php echo $data_pizza['price_medium']; ?></td>
-									<td><input type="radio" id="rb-pizza-price-large" name="rb-size-price-pizza-<?php echo $data_pizza['id'];?>" value="<?php echo $data_pizza['price_large']; ?>"><?php echo $data_pizza['price_large']; ?></td>
 									<td>
+										<input 
+										type="checkbox" 
+										name="chk-product[]" 
+										value="<?php echo $data_pizza['id']; ?>">
+										<?php echo $data_pizza['id'];?>
+									</td>
+									<td><?php echo $data_pizza['name']; ?></td>
+									<td>
+										<input 
+										type="radio" 
+										id="rb-price-pizza-small" 
+										name="rb-size-price-pizza-<?php echo $data_pizza['id'];?>" 
+										value="<?php echo $data_pizza['price_small']; ?>">
+										<?php echo $data_pizza['price_small'];?>
+									</td>
+									<td>
+										<input 
+										type="radio" 
+										id="rb-pizza-price-medium" 
+										name="rb-size-price-pizza-<?php echo $data_pizza['id'];?>" 
+										value="<?php echo $data_pizza['price_medium']; ?>">
+										<?php echo $data_pizza['price_medium'];?>
+									</td>
+									<td>
+										<input 
+										type="radio" 
+										id="rb-pizza-price-large" 
+										name="rb-size-price-pizza-<?php echo $data_pizza['id'];?>" 
+										value="<?php echo $data_pizza['price_large']; ?>">
+										<?php echo $data_pizza['price_large'];?>
+									</td>
+									<td><!--THERE IS A PROBLEM WITH THE HIERARCHY!!!-->
 										<input
 										onkeyup="
 										calculateAvailabilityById(
@@ -223,7 +264,8 @@ function get_pizza_quantity(){
 										<td style="display:none;" id="availability-pizza-const-<?php echo $data_pizza['id'];?>">
 											<?php echo $data_pizza['availability']; ?> 
 										</td>
-										<td id="gross-price-pizza-<?php echo $data_pizza['id'];?>"></td>
+										<td id="gross-price-pizza-<?php echo $data_pizza['id'];?>">
+										</td>
 									</tr>
 									<?php
 								}
@@ -253,7 +295,8 @@ function get_pizza_quantity(){
 						</table>
 					</center>
 				</div>
-				<div id="div-menu-2" class="div-menu"><!--Try defining ID dynamically!!!-->
+				<!--Try defining ID dynamically!!!-->
+				<div id="div-menu-2" class="div-menu">
 					<p>Beverage:</p>
 					<center>
 						<table>
@@ -326,7 +369,8 @@ function get_pizza_quantity(){
 						</table>
 					</center>
 				</div>		
-				<div id="div-menu-3" class="div-menu"><!--Try defining ID dynamically!!!-->
+				<!--Try defining ID dynamically!!!-->
+				<div id="div-menu-3" class="div-menu">
 					<p>Dessert:</p>
 					<center>
 						<table>

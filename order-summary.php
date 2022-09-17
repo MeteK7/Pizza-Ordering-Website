@@ -51,16 +51,81 @@
 
 	echo "<br>";
 
-	if (!empty($menu)) {
-		foreach ($menu as $selected) {
-			echo $selected."<br>";
+	//GETTING CHOSEN PRODUCT INFO <WILL BE IMPROVED!!!>
+	$id_product=$_GET['chk-product'];
+	
+	if (is_array($id_product) || is_object($id_product)) {
+		foreach ($id_product as $id_product_selected) {
+			echo $id_product_selected."<br>";
+			$query_pizza = "SELECT * FROM tbl_pizza WHERE id=$id_product_selected";
+			$result_pizza = $conn->query($query_pizza);
+
+			if ($result_pizza->num_rows > 0) {
+				$name;
+
+				while($row = $result_pizza->fetch_assoc()) {
+					$name_pizza=$row["name"];
+					echo $name_pizza."<br>";
+				}
+			} else {
+				echo "0 results";
+			}
 		}
 	}
 
+	// If $id_product was not an array, then this block is executed.
+	else
+	{
+		echo "Unfortunately, an error occured.";
+	}
+	?>
+
+	<!--Try defining ID dynamically!!!-->
+	<div id="div-order-detail" class="div-menu">
+		<p>Order Detail:</p>
+		<center>
+			<table>
+				<tr>
+					<th></th>
+					<th>Product</th>
+					<th>Quantity</th>
+					<th>Price</th>
+				</tr>
+				<?php
+				$result_pizza=GetProductPizza();
+				if ($result_pizza->num_rows > 0) 
+				{
+					while($data_pizza = $result_pizza->fetch_assoc()) 
+					{
+						?>
+						<tr>
+							<td><?php echo $data_pizza['id']; ?></td>
+							<td><?php echo $data_pizza['name']; ?></td>
+							<td><input type="radio" id="rb-price-small-pizza" name="rb-size-price-pizza">
+							</td>
+						</tr>
+						<?php
+					}
+				} 
+				else 
+				{ 
+					?>
+					<tr>
+						<td colspan="4">No data found</td>
+					</tr>
+					<?php 
+				} 
+				?>
+			</table>
+		</center>
+	</div>
+
+	<?php 
 	//MAKE A FUNCTION FOR THE CODE BELOW OR ALIGN IT IN THE CODE STRUCTURE.
 	$query_discount_rate = "SELECT * FROM tbl_discount_rate";
 	$result_discount_rate = $conn->query($query_discount_rate);
-	?>
+	?>	
+
 	<form method='post' action="order-summary-insert.php">
 		<div class="div-table-order-summary">
 			<p>Order Summary:</p>
@@ -70,13 +135,14 @@
 						<th>Customer</th>
 						<th>Region</th>
 						<th>Menu Types</th>
+						<th>Quantity</th>
 						<th>Gross Price</th>
 						<th>Discount</th>
 						<th>Grand Price</th>
 						<th>Estimated Time</th>
 					</tr>
 					<tr>
-						<th><input type="hidden" name="id-customer" value="<?php echo $_SESSION['userid']; ?>"><?php echo $_SESSION['userid']; ?></th>
+						<th><input type="hidden" name="id-customer" value="<?php echo $_SESSION['userid']; ?>"><?php echo $_SESSION['username']; ?></th>
 						<input type="hidden" name="id-region" value="<?php echo $id_region; ?>">
 						<th><?php echo $name_region; ?></th>
 						<th>
@@ -90,6 +156,17 @@
 							}
 							?>
 						</th>
+						<th>
+							<?php
+							if(!empty($menu))
+							{
+								foreach ($menu as $selected)
+								{
+									echo $selected."<br>";
+								}
+							}
+							?>
+						</th>					
 						<th>
 							<?php
 							$total_gross_price=$_GET['total-gross-price'];

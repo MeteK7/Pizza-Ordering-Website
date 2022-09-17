@@ -51,70 +51,54 @@
 
 	echo "<br>";
 
-	//GETTING CHOSEN PRODUCT INFO <WILL BE IMPROVED!!!>
-	$id_product=$_GET['chk-product'];
-	
-	if (is_array($id_product) || is_object($id_product)) {
-		foreach ($id_product as $id_product_selected) {
-			echo $id_product_selected."<br>";
-			$query_pizza = "SELECT * FROM tbl_pizza WHERE id=$id_product_selected";
-			$result_pizza = $conn->query($query_pizza);
-
-			if ($result_pizza->num_rows > 0) {
-				$name;
-
-				while($row = $result_pizza->fetch_assoc()) {
-					$name_pizza=$row["name"];
-					echo $name_pizza."<br>";
-				}
-			} else {
-				echo "0 results";
-			}
-		}
-	}
-
-	// If $id_product was not an array, then this block is executed.
-	else
-	{
-		echo "Unfortunately, an error occured.";
-	}
 	?>
 
 	<!--Try defining ID dynamically!!!-->
-	<div id="div-order-detail" class="div-menu">
+	<div>
 		<p>Order Detail:</p>
 		<center>
 			<table>
 				<tr>
-					<th></th>
-					<th>Product</th>
-					<th>Quantity</th>
-					<th>Price</th>
+					<th>Id</th>
+					<th>Product Name</th>
 				</tr>
 				<?php
-				$result_pizza=GetProductPizza();
-				if ($result_pizza->num_rows > 0) 
-				{
-					while($data_pizza = $result_pizza->fetch_assoc()) 
-					{
-						?>
-						<tr>
-							<td><?php echo $data_pizza['id']; ?></td>
-							<td><?php echo $data_pizza['name']; ?></td>
-							<td><input type="radio" id="rb-price-small-pizza" name="rb-size-price-pizza">
-							</td>
-						</tr>
-						<?php
+				//GETTING CHOSEN PRODUCT INFO <WILL BE IMPROVED!!!>
+				$id_product=$_GET['chk-product'];
+				
+				if (is_array($id_product) || is_object($id_product)) {
+					foreach ($id_product as $id_product_selected) {
+						$query_pizza = "SELECT * FROM tbl_pizza WHERE id=$id_product_selected";
+						$result_pizza = $conn->query($query_pizza);
+
+						if ($result_pizza->num_rows > 0) {
+							while($data_pizza = $result_pizza->fetch_assoc()) {
+								?>
+								<tr>
+									<td><?php echo $id_product_selected."<br>" ?></td>
+									<td>
+										<?php 
+										$name_pizza=$data_pizza["name"];
+										echo $name_pizza."<br>"; ?>
+									</td>
+								</tr>
+								<?php
+							}
+						} else {
+							?>
+							<tr>
+								<td colspan="4">No data found</td>
+							</tr>
+						<?php 
+						}
 					}
-				} 
-				else 
-				{ 
-					?>
-					<tr>
-						<td colspan="4">No data found</td>
-					</tr>
-					<?php 
-				} 
+				}
+
+				// If $id_product was not an array, then this block is executed.
+				else
+				{
+					echo "Unfortunately, an error occured.";
+				}
 				?>
 			</table>
 		</center>

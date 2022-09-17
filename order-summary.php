@@ -72,6 +72,7 @@
 						$result_pizza = $conn->query($query_pizza);
 
 						if ($result_pizza->num_rows > 0) {
+							$qty_pizza=$_GET["availability-pizza-".$id_product_selected];
 							while($data_pizza = $result_pizza->fetch_assoc()) {
 								?>
 								<tr>
@@ -81,6 +82,7 @@
 										$name_pizza=$data_pizza["name"];
 										echo $name_pizza."<br>"; ?>
 									</td>
+									<td><?php echo $qty_pizza ?></td>
 								</tr>
 								<?php
 							}

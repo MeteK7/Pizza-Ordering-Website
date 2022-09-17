@@ -66,8 +66,8 @@ function get_pizza_quantity(){
 			var quantityByUser=document.getElementById(idQuantity);
 			var availabilityNew=document.getElementById(idAvailability);
 			var availabilityInStock=document.getElementById(idAvailabilityConst);
-			availabilityNew.innerHTML=availabilityInStock.innerHTML;//Value from DB every trigger to calculate new availability.
-			availabilityNew.innerHTML=availabilityNew.innerHTML-quantityByUser.value;
+			availabilityNew.value=availabilityInStock.innerHTML;//Value from DB every trigger to calculate new availability.
+			availabilityNew.value=availabilityNew.value-quantityByUser.value;
 		}
 
 		function calculateTotal(idQuantity,idTotalPrice, idGrandTotalPrice, inputGrandTotalPrice, nameSizePrice){
@@ -257,7 +257,15 @@ function get_pizza_quantity(){
 											name="pizza">
 										</td>
 
-										<td id="availability-pizza-<?php echo $data_pizza['id'];?>">
+										<td 
+										
+										>
+										<input
+											id="availability-pizza-<?php echo $data_pizza['id'];?>"
+											type="text"
+											name="availability-pizza-<?php echo $data_pizza['id'];?>"
+											value="<?php echo $data_pizza['availability']; ?>"
+											>
 											<?php echo $data_pizza['availability']; ?> 
 										</td>
 										<!--This is a constant value only for calculating new availability.-->

@@ -64,25 +64,29 @@
 				</tr>
 				<?php
 				//GETTING CHOSEN PRODUCT INFO <WILL BE IMPROVED!!!>
-				$id_product=$_GET['chk-product'];
+				$id_products=$_GET['chk-product'];
 				
-				if (is_array($id_product) || is_object($id_product)) {
-					foreach ($id_product as $id_product_selected) {
-						$query_pizza = "SELECT * FROM tbl_pizza WHERE id=$id_product_selected";
+				if (is_array($id_products) || is_object($id_products)) {
+					foreach ($id_products as $id_product) {
+						$query_pizza = "SELECT * FROM tbl_pizza WHERE id=$id_product";
 						$result_pizza = $conn->query($query_pizza);
 
 						if ($result_pizza->num_rows > 0) {
-							$qty_pizza=$_GET["availability-pizza-".$id_product_selected];
+							$qty_pizza=$_GET["availability-pizza-".$id_product];
 							while($data_pizza = $result_pizza->fetch_assoc()) {
 								?>
 								<tr>
-									<td><?php echo $id_product_selected."<br>" ?></td>
 									<td>
-										<?php 
-										$name_pizza=$data_pizza["name"];
-										echo $name_pizza."<br>"; ?>
+										<input type="hidden" name="id-product-<?php echo $id_product;?>" value="<?php echo $id_product ?>">
+										<?php echo $id_product."<br>" ?>
 									</td>
-									<td><?php echo $qty_pizza ?></td>
+									<td>
+										<?php echo $data_pizza["name"]."<br>"; ?>
+									</td>
+									<td>
+										<input type="hidden" name="qty-pizza-<?php echo $id_product;?>" value="<?php echo $qty_pizza ?>">
+										<?php echo $qty_pizza ?>
+									</td>
 								</tr>
 								<?php
 							}
@@ -96,7 +100,7 @@
 					}
 				}
 
-				// If $id_product was not an array, then this block is executed.
+				// If $id_products was not an array, then this block is executed.
 				else
 				{
 					echo "Unfortunately, an error occured.";

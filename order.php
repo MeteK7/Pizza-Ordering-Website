@@ -254,7 +254,7 @@ function get_pizza_quantity(){
 											);"
 											type="text"
 											id="qty-pizza-<?php echo $data_pizza['id'];?>"
-											name="pizza">
+											name="qty-pizza-<?php echo $data_pizza['id'];?>">
 										</td>
 
 										<td 

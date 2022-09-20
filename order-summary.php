@@ -53,63 +53,6 @@
 
 	?>
 
-	<!--Try defining ID dynamically!!!-->
-	<div>
-		<p>Order Detail:</p>
-		<center>
-			<table>
-				<tr>
-					<th>Id</th>
-					<th>Product Name</th>
-				</tr>
-				<?php
-				//GETTING CHOSEN PRODUCT INFO <WILL BE IMPROVED!!!>
-				$id_products=$_GET['chk-product'];
-				
-				if (is_array($id_products) || is_object($id_products)) {
-					foreach ($id_products as $id_product) {
-						$query_pizza = "SELECT * FROM tbl_pizza WHERE id=$id_product";
-						$result_pizza = $conn->query($query_pizza);
-
-						if ($result_pizza->num_rows > 0) {
-							$qty_pizza=$_GET["availability-pizza-".$id_product];
-							while($data_pizza = $result_pizza->fetch_assoc()) {
-								?>
-								<tr>
-									<td>
-										<input type="hidden" name="id-product-<?php echo $id_product;?>" value="<?php echo $id_product ?>">
-										<?php echo $id_product."<br>" ?>
-									</td>
-									<td>
-										<?php echo $data_pizza["name"]."<br>"; ?>
-									</td>
-									<td>
-										<input type="hidden" name="qty-pizza-<?php echo $id_product;?>" value="<?php echo $qty_pizza ?>">
-										<?php echo $qty_pizza ?>
-									</td>
-								</tr>
-								<?php
-							}
-						} else {
-							?>
-							<tr>
-								<td colspan="4">No data found</td>
-							</tr>
-						<?php 
-						}
-					}
-				}
-
-				// If $id_products was not an array, then this block is executed.
-				else
-				{
-					echo "Unfortunately, an error occured.";
-				}
-				?>
-			</table>
-		</center>
-	</div>
-
 	<?php 
 	//MAKE A FUNCTION FOR THE CODE BELOW OR ALIGN IT IN THE CODE STRUCTURE.
 	$query_discount_rate = "SELECT * FROM tbl_discount_rate";
@@ -117,6 +60,63 @@
 	?>	
 
 	<form method='post' action="order-summary-insert.php">
+		<!--Try defining ID dynamically!!!-->
+		<div>
+			<p>Order Detail:</p>
+			<center>
+				<table>
+					<tr>
+						<th>Id</th>
+						<th>Product Name</th>
+					</tr>
+					<?php
+					//GETTING CHOSEN PRODUCT INFO <WILL BE IMPROVED!!!>
+					$id_products=$_GET['chk-product'];
+					
+					if (is_array($id_products) || is_object($id_products)) {
+						foreach ($id_products as $id_product) {
+							$query_pizza = "SELECT * FROM tbl_pizza WHERE id=$id_product";
+							$result_pizza = $conn->query($query_pizza);
+
+							if ($result_pizza->num_rows > 0) {
+								$qty_pizza=$_GET["qty-pizza-".$id_product];
+								while($data_pizza = $result_pizza->fetch_assoc()) {
+									?>
+									<tr>
+										<td>
+											<input type="hidden" name="id-products[]" value="<?php echo $id_product ?>">
+											<?php echo $id_product."<br>" ?>
+										</td>
+										<td>
+											<?php echo $data_pizza["name"]."<br>"; ?>
+										</td>
+										<td>
+											<input type="hidden" name="qty-pizza-<?php echo $id_product;?>" value="<?php echo $qty_pizza ?>">
+											<?php echo $qty_pizza ?>
+										</td>
+									</tr>
+									<?php
+								}
+							} else {
+								?>
+								<tr>
+									<td colspan="4">No data found</td>
+								</tr>
+							<?php 
+							}
+						}
+					}
+
+					// If $id_products was not an array, then this block is executed.
+					else
+					{
+						echo "Unfortunately, an error occured.";
+					}
+					?>
+				</table>
+			</center>
+		</div>
+
 		<div class="div-table-order-summary">
 			<p>Order Summary:</p>
 			<center>

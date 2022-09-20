@@ -29,28 +29,19 @@ if (isset($_REQUEST['id-customer']) && isset($_REQUEST['id-region']) && isset($_
         echo "ERROR: Could not able to execute $sql. " . $conn->error;
     }
 
-    // Close connection
-    $conn->close();
 }
-
-if (isset($_REQUEST['id-customer']) && isset($_REQUEST['id-region']) && isset($_REQUEST['total-gross-price']) && isset($_REQUEST['discount-rate']) && isset($_REQUEST['total-price']) && isset($_REQUEST['id-time-estimated'])) {
-    // code...
-}
-
-
-
 ?>
+
 <?php
-echo $_REQUEST['id-product'];
-echo $_REQUEST['qty-pizza'];
 echo $_REQUEST['total-gross-price'];
 echo $_REQUEST['discount-rate'];
 
 //GETTING CHOSEN PRODUCT INFO <WILL BE IMPROVED!!!>
-$id_products=$_GET['chk-product'];
+$id_products=$_REQUEST['id-products'];
 
 if (is_array($id_products) || is_object($id_products)) {
     foreach ($id_products as $id_product) {
+        echo "TEST: ".$id_product;
         $query_pizza = "SELECT * FROM tbl_pizza WHERE id=$id_product";
         $result_pizza = $conn->query($query_pizza);
 
@@ -58,11 +49,13 @@ if (is_array($id_products) || is_object($id_products)) {
             while($data_pizza = $result_pizza->fetch_assoc()) {
                 $qty_pizza_from_db=$data_pizza["availability"];
                 $qty_pizza=$_REQUEST["qty-pizza-".$id_product];
+                echo "QTY From DB: ".$qty_pizza_from_db;
+                echo "QTY From Order: ".$qty_pizza;
                 $qty_pizza_new=$qty_pizza_from_db-$qty_pizza;
 
-                $query_update="UPDATE tbl_pizza SET availability='$qty_pizza_new' id ='$id_product'";
+                $query_update="UPDATE tbl_pizza SET availability='$qty_pizza_new' WHERE id =$id_product";
 
-                $result =$conn->query($mysql_query);
+                $result =$conn->query($query_update);
 
                 if ($result === TRUE) {
                   echo "Record updated successfully";
@@ -74,6 +67,9 @@ if (is_array($id_products) || is_object($id_products)) {
             echo "No data found";
         }
     }
+
+    // Close connection
+    $conn->close();
 }
 
 // If $id_products was not an array, then this block is executed.

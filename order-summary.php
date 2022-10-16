@@ -33,24 +33,6 @@
 	} else {
 		echo "0 results";
 	}
-
-	//GETTING MENU INFO
-	$name_tables=$_GET['chk-menu'];
-
-	if (is_array($name_tables) || is_object($name_tables)) {
-		foreach ($name_tables as $name_table) {
-			echo $name_table."<br>";
-		}
-	}
-
-	// If $menu was not an array, then this block is executed.
-	else
-	{
-		echo "Unfortunately, an error occured.";
-	}
-
-	echo "<br>";
-
 	?>
 
 	<?php 
@@ -71,43 +53,56 @@
 					</tr>
 					<?php
 					//GETTING CHOSEN PRODUCT INFO <WILL BE IMPROVED!!!>
-					$id_products=$_GET['chk-product'];
-					
-					if (is_array($id_products) || is_object($id_products)) {
-						foreach ($id_products as $id_product) {
-							$query_pizza = "SELECT * FROM tbl_pizza WHERE id=$id_product";
-							$result_pizza = $conn->query($query_pizza);
+					//GETTING MENU INFO
+					$name_tables=$_GET['chk-menu'];
 
-							if ($result_pizza->num_rows > 0) {
-								$qty_pizza=$_GET["qty-pizza-".$id_product];
-								while($data_pizza = $result_pizza->fetch_assoc()) {
-									?>
-									<tr>
-										<td>
-											<input type="hidden" name="id-products[]" value="<?php echo $id_product ?>">
-											<?php echo $id_product."<br>" ?>
-										</td>
-										<td>
-											<?php echo $data_pizza["name"]."<br>"; ?>
-										</td>
-										<td>
-											<input type="hidden" name="qty-pizza-<?php echo $id_product;?>" value="<?php echo $qty_pizza ?>">
-											<?php echo $qty_pizza ?>
-										</td>
-									</tr>
-									<?php
+					if (is_array($name_tables) || is_object($name_tables)) {
+						foreach ($name_tables as $name_table) {
+							$id_products=$_GET[$name_table];
+							
+							if (is_array($id_products) || is_object($id_products)) {
+								foreach ($id_products as $id_product) {
+									$query_menu = "SELECT * FROM $name_table WHERE id=$id_product";
+									$result_menu = $conn->query($query_menu);
+
+									if ($result_menu->num_rows > 0) {
+										$qty_menu=$_GET["qty-".$name_table."-".$id_product];
+										while($data_menu = $result_menu->fetch_assoc()) {
+											?>
+											<tr>
+												<td>
+													<input type="hidden" name="id-products[]" value="<?php echo $id_product ?>">
+													<?php echo $id_product."<br>" ?>
+												</td>
+												<td>
+													<?php echo $data_menu["name"]."<br>"; ?>
+												</td>
+												<td>
+													<input type="hidden" name="qty-<?php echo $name_table ?>-<?php echo $id_product;?>" value="<?php echo $qty_menu ?>">
+													<?php echo $qty_menu ?>
+												</td>
+											</tr>
+											<?php
+										}
+									} else {
+										?>
+										<tr>
+											<td colspan="4">No data found</td>
+										</tr>
+									<?php 
+									}
 								}
-							} else {
-								?>
-								<tr>
-									<td colspan="4">No data found</td>
-								</tr>
-							<?php 
+							}
+
+							// If $id_products was not an array, then this block is executed.
+							else
+							{
+								echo "Unfortunately, an error occured.";
 							}
 						}
 					}
 
-					// If $id_products was not an array, then this block is executed.
+					// If $menu was not an array, then this block is executed.
 					else
 					{
 						echo "Unfortunately, an error occured.";

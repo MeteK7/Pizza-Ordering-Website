@@ -35,11 +35,11 @@
 	}
 
 	//GETTING MENU INFO
-	$menu=$_GET['chk-menu'];
+	$name_tables=$_GET['chk-menu'];
 
-	if (is_array($menu) || is_object($menu)) {
-		foreach ($menu as $selected) {
-			echo $selected."<br>";
+	if (is_array($name_tables) || is_object($name_tables)) {
+		foreach ($name_tables as $name_table) {
+			echo $name_table."<br>";
 		}
 	}
 

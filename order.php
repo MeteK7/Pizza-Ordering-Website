@@ -159,7 +159,7 @@ function get_pizza_quantity(){
 						type="checkbox" 
 						id="chk-menu-<?php echo $data_menu['id']; ?>" 
 						name="chk-menu[]" 
-						value="<?php echo $data_menu['name']; ?>" 
+						value="<?php echo $data_menu['name_table']; ?>" 
 						onclick="toggleTables(this, <?php echo $data_menu['id']; ?>)">
 						<label for="chk-menu-<?php echo $data_menu['id']; ?>">
 							<?php echo $data_menu['name']; ?>
@@ -330,7 +330,13 @@ function get_pizza_quantity(){
 								{
 									?>
 									<tr>
-										<td><?php echo $data_beverage['id']; ?></td>
+										<td>
+											<input 
+											type="checkbox" 
+											name="chk-product[]" 
+											value="<?php echo $data_beverage['id']; ?>">
+											<?php echo $data_beverage['id']; ?>	
+										</td>
 										<td><?php echo $data_beverage['name']; ?></td>
 										<td><input type="radio" id="rb-price-small-beverage" name="rb-size-price-beverage-<?php echo $data_beverage['id'];?>" value="<?php echo $data_beverage['price_small']; ?>"><?php echo $data_beverage['price_small']; ?></td>
 										<td>
@@ -404,7 +410,13 @@ function get_pizza_quantity(){
 								{
 									?>
 									<tr>
-										<td><?php echo $data_dessert['id']; ?></td>
+										<td>
+											<input 
+											type="checkbox" 
+											name="chk-product[]" 
+											value="<?php echo $data_dessert['id']; ?>">
+											<?php echo $data_dessert['id']; ?>
+										</td>
 										<td><?php echo $data_dessert['name']; ?></td>
 										<td><input type="radio" id="rb-price-small-dessert" name="rb-size-price-dessert-<?php echo $data_dessert['id'];?>" value="<?php echo $data_dessert['price_small']; ?>"><?php echo $data_dessert['price_small']; ?></td>
 										<td>

@@ -65,9 +65,6 @@ if (is_array($name_tables) || is_object($name_tables)) {
                 else {
                     echo "No data found";
                 }
-
-                // Close connection
-                $conn->close();
             }
         }
 
@@ -77,6 +74,9 @@ if (is_array($name_tables) || is_object($name_tables)) {
             echo "Unfortunately, an error occured.";
         }
     }
+    
+    // Close connection
+    $conn->close();
 }
 
 // If $name_tables was not an array, then this block is executed.

@@ -48,38 +48,58 @@
 			<center>
 				<table>
 					<tr>
-						<th>Id</th>
-						<th>Product Name</th>
+						<th>Table Name</th>
 					</tr>
 					<?php
 					//GETTING CHOSEN PRODUCT INFO <WILL BE IMPROVED!!!>
 					//GETTING MENU INFO
-					$name_tables=$_GET['chk-menu'];
 
+					$name_tables=$_GET['chk-menu'];
+					$_SESSION["chk-menu"] = $name_tables;//Save it to session in order to use in every page.
+
+					if (is_array($name_tables) || is_object($name_tables)) {
+						foreach ($name_tables as $name_table) {
+					?>
+					<tr>
+						<td>
+							<input type="hidden" name="name-tables[]" value="<?php echo $name_table ?>">
+						</td>
+					</tr>
+					<?php
+						}
+					}
+					?>
+				</table>
+				<table>
+					<tr>
+						<th>Id</th>
+						<th>Product Name</th>
+					</tr>
+					<?php
 					if (is_array($name_tables) || is_object($name_tables)) {
 						foreach ($name_tables as $name_table) {
 							$id_products=$_GET[$name_table];
 							
 							if (is_array($id_products) || is_object($id_products)) {
 								foreach ($id_products as $id_product) {
-									$query_menu = "SELECT * FROM $name_table WHERE id=$id_product";
-									$result_menu = $conn->query($query_menu);
+									$query_product = "SELECT * FROM $name_table WHERE id=$id_product";
+									$result_product = $conn->query($query_product);
 
-									if ($result_menu->num_rows > 0) {
-										$qty_menu=$_GET["qty-".$name_table."-".$id_product];
-										while($data_menu = $result_menu->fetch_assoc()) {
+									if ($result_product->num_rows > 0) {
+										$qty_product=$_GET["qty-".$name_table."-".$id_product];
+										while($data_product = $result_product->fetch_assoc()) {
 											?>
-											<tr>
+											<tr>		
 												<td>
-													<input type="hidden" name="id-products[]" value="<?php echo $id_product ?>">
+													<input type="hidden" name="<?php echo $name_table ?>[]" value="<?php echo $id_product ?>">
 													<?php echo $id_product."<br>" ?>
 												</td>
 												<td>
-													<?php echo $data_menu["name"]."<br>"; ?>
+													<?php echo $data_product["name"]."<br>"; ?>
 												</td>
 												<td>
-													<input type="hidden" name="qty-<?php echo $name_table ?>-<?php echo $id_product;?>" value="<?php echo $qty_menu ?>">
-													<?php echo $qty_menu ?>
+													<input type="hidden" name="qty-<?php echo $name_table ?>-<?php echo $id_product;?>" value="<?php echo $qty_product ?>">
+													<?php echo $qty_product ?>
 												</td>
 											</tr>
 											<?php
@@ -132,11 +152,11 @@
 						<th><?php echo $name_region; ?></th>
 						<th>
 							<?php
-							if(!empty($menu))
+							if(!empty($name_tables))
 							{
-								foreach ($menu as $selected)
+								foreach ($name_tables as $name_table)
 								{
-									echo $selected."<br>";
+									echo $name_table."<br>";
 								}
 							}
 							?>

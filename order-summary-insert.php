@@ -1,6 +1,7 @@
 <?php
 //Attempt MySQL server connection.
 include('config.php');
+include "session.php";
 
 echo $_REQUEST['id-customer'];
 echo $_REQUEST['id-region'];
@@ -30,12 +31,62 @@ if (isset($_REQUEST['id-customer']) && isset($_REQUEST['id-region']) && isset($_
     }
 
 }
-?>
 
-<?php
-echo $_REQUEST['total-gross-price'];
-echo $_REQUEST['discount-rate'];
+//Calculation of the new quantity in DB.
+$name_tables=$_SESSION["chk-menu"];
 
+if (is_array($name_tables) || is_object($name_tables)) {
+    foreach ($name_tables as $name_table) {
+        $id_products=$_REQUEST[$name_table];
+
+        if (is_array($id_products) || is_object($id_products)) {
+            foreach ($id_products as $id_product) {
+                $query_product = "SELECT * FROM $name_table WHERE id=$id_product";
+                $result_product = $conn->query($query_product);
+
+                if ($result_product->num_rows > 0) {
+                    while($data_product = $result_product->fetch_assoc()) {
+                        $qty_pizza_from_db= $data_product["availability"];
+                        $qty_product=$_REQUEST["qty-".$name_table."-".$id_product];
+                        $qty_pizza_new=$qty_pizza_from_db-$qty_product;
+
+                        $query_update="UPDATE $name_table SET availability='$qty_pizza_new' WHERE id =$id_product";
+
+                        $result =$conn->query($query_update);
+
+                        if ($result === TRUE) {
+                          echo "Record updated successfully";
+                        } 
+                        else {
+                          echo "Error updating record: " . $conn->error;
+                        }
+                    }
+                } 
+                else {
+                    echo "No data found";
+                }
+
+                // Close connection
+                $conn->close();
+            }
+        }
+
+        // If $id_products was not an array, then this block is executed.
+        else
+        {
+            echo "Unfortunately, an error occured.";
+        }
+    }
+}
+
+// If $name_tables was not an array, then this block is executed.
+else
+{
+    echo "Unfortunately, an error occured.";
+}
+
+
+/*
 //GETTING CHOSEN PRODUCT INFO <WILL BE IMPROVED!!!>
 $id_products=$_REQUEST['id-products'];
 
@@ -59,17 +110,17 @@ if (is_array($id_products) || is_object($id_products)) {
 
                 if ($result === TRUE) {
                   echo "Record updated successfully";
-                } else {
+              } else {
                   echo "Error updating record: " . $conn->error;
-                }
-            }
-        } else {
-            echo "No data found";
-        }
+              }
+          }
+      } else {
+        echo "No data found";
     }
+}
 
-    // Close connection
-    $conn->close();
+// Close connection
+$conn->close();
 }
 
 // If $id_products was not an array, then this block is executed.
@@ -78,3 +129,4 @@ else
     echo "Unfortunately, an error occured.";
 }
 ?>
+*/

@@ -5,6 +5,12 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" type="text/css" href="css/style-order.css">
 	<title>Order Summary</title>
+	<script type="text/javascript">
+		function SumQuantity(idQuantityProduct,quantityProduct){
+			var quantityTotal=document.getElementById("qty-total");
+			quantityTotal.value=parseFloat(quantityTotal.value)+parseFloat(quantityProduct);
+		}		
+	</script>
 </head>
 <body>
 	<?php 
@@ -46,7 +52,7 @@
 		<div>
 			<p>Order Detail:</p>
 			<center>
-				<table>
+				<table hidden><!--DO YOU REALLY NEED A HIDDEN TABLE TO PASS VALUES? IMPROVE IT!-->
 					<tr>
 						<th>Table Name</th>
 					</tr>
@@ -98,8 +104,14 @@
 													<?php echo $data_product["name"]."<br>"; ?>
 												</td>
 												<td>
-													<input type="hidden" name="qty-<?php echo $name_table ?>-<?php echo $id_product;?>" value="<?php echo $qty_product ?>">
-													<?php echo $qty_product ?>
+													<input 
+													type="button" 
+													id="qty-<?php echo $name_table ?>-<?php echo $id_product;?>" 
+													value="<?php echo $qty_product ?>" 
+													onclick="SumQuantity('qty-<?php echo $name_table ?>-<?php echo $id_product;?>',<?php echo $qty_product ?>)">
+													<?php 
+													echo $qty_product; 
+													?>
 												</td>
 											</tr>
 											<?php
@@ -112,6 +124,16 @@
 									<?php 
 									}
 								}
+								?>
+										<tr>
+											<td></td>
+											<td></td>
+											<td>
+												<input type="text" id="qty-total" value="<?php echo 0 ?>">
+											</td>
+										</tr>
+							<?php
+
 							}
 
 							// If $id_products was not an array, then this block is executed.
@@ -160,6 +182,9 @@
 								}
 							}
 							?>
+						</th>
+						<th>
+
 						</th>
 						<th>
 							<?php

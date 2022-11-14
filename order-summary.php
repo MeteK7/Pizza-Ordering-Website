@@ -8,7 +8,7 @@
 	<script type="text/javascript">
 		function SumQuantity(idQuantityProduct,quantityProduct){
 			var quantityTotal=document.getElementById("qty-total");
-			quantityTotal.value=parseFloat(quantityTotal.value)+parseFloat(quantityProduct);
+			quantityTotal.innerHTML=parseFloat(quantityTotal.innerHTML)+parseFloat(quantityProduct);
 		}		
 	</script>
 </head>
@@ -109,9 +109,6 @@
 													id="qty-<?php echo $name_table ?>-<?php echo $id_product;?>" 
 													value="<?php echo $qty_product ?>" 
 													onclick="SumQuantity('qty-<?php echo $name_table ?>-<?php echo $id_product;?>',<?php echo $qty_product ?>)">
-													<?php 
-													echo $qty_product; 
-													?>
 												</td>
 											</tr>
 											<?php
@@ -124,15 +121,6 @@
 									<?php 
 									}
 								}
-								?>
-										<tr>
-											<td></td>
-											<td></td>
-											<td>
-												<input type="text" id="qty-total" value="<?php echo 0 ?>">
-											</td>
-										</tr>
-							<?php
 
 							}
 
@@ -184,19 +172,8 @@
 							?>
 						</th>
 						<th>
-
-						</th>
-						<th>
-							<?php
-							if(!empty($menu))
-							{
-								foreach ($menu as $selected)
-								{
-									echo $selected."<br>";
-								}
-							}
-							?>
-						</th>					
+							<label id="qty-total">0</label>
+						</th>				
 						<th>
 							<?php
 							$total_gross_price=$_GET['total-gross-price'];

@@ -104,11 +104,12 @@
 													<?php echo $data_product["name"]."<br>"; ?>
 												</td>
 												<td>
+													<input type="hidden" name="qty-<?php echo $name_table;?>-<?php echo $id_product;?>" value="<?php echo $qty_product;?>"> <!--Need to add this even you have an element below with the same name attribute. Otherwise, you will get an error like "Undefined Index".-->
 													<input 
 													type="button" 
-													id="qty-<?php echo $name_table ?>-<?php echo $id_product;?>" 
-													value="<?php echo $qty_product ?>" 
-													onclick="SumQuantity('qty-<?php echo $name_table ?>-<?php echo $id_product;?>',<?php echo $qty_product ?>)">
+													name="qty-<?php echo $name_table;?>-<?php echo $id_product;?>" 
+													value="<?php echo $qty_product; ?>" 
+													onclick="SumQuantity('qty-<?php echo $name_table;?>-<?php echo $id_product;?>',<?php echo $qty_product ?>)">
 												</td>
 											</tr>
 											<?php

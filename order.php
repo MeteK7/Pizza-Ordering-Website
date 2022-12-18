@@ -66,7 +66,7 @@ function get_pizza_quantity(){
 			var quantityByUser=document.getElementById(idQuantity);
 			var availabilityNew=document.getElementById(idAvailability);
 			var availabilityInStock=document.getElementById(idAvailabilityConst);
-			availabilityNew.value=availabilityInStock.innerHTML-quantityByUser.value;
+			availabilityNew.innerHTML=availabilityInStock.innerHTML-quantityByUser.value;
 		}
 
 		function calculateTotal(idQuantity,idTotalPrice, idGrandTotalPrice, inputGrandTotalPrice, nameSizePrice){
@@ -256,16 +256,8 @@ function get_pizza_quantity(){
 											name="qty-tbl_pizza-<?php echo $data_pizza['id'];?>">
 										</td>
 
-										<td 
-										
-										>
-										<input
-											id="availability-pizza-<?php echo $data_pizza['id'];?>"
-											type="text"
-											name="availability-pizza-<?php echo $data_pizza['id'];?>"
-											value="<?php echo $data_pizza['availability']; ?>"
-											>
-											<?php echo $data_pizza['availability']; ?> 
+										<td id="availability-pizza-<?php echo $data_pizza['id'];?>">
+											<?php echo $data_pizza['availability']; ?>
 										</td>
 										<!--This is a constant value only for calculating new availability.-->
 										<td style="display:none;" id="availability-pizza-const-<?php echo $data_pizza['id'];?>">
@@ -341,8 +333,16 @@ function get_pizza_quantity(){
 										<td>
 											<input
 											onkeyup="
-											calculateAvailabilityById('qty-tbl_beverage-<?php echo $data_beverage['id'];?>','availability-beverage-<?php echo $data_beverage['id'];?>','availability-beverage-const-<?php echo $data_beverage['id'];?>');
-											calculateTotal('qty-tbl_beverage-<?php echo $data_beverage['id'];?>','gross-price-beverage-<?php echo $data_beverage['id'];?>','total-gross-price-beverage','input-total-gross-price-beverage','rb-size-price-beverage-<?php echo $data_beverage['id']?>');"
+											calculateAvailabilityById(
+												'qty-tbl_beverage-<?php echo $data_beverage['id'];?>',
+												'availability-beverage-<?php echo $data_beverage['id'];?>',
+												'availability-beverage-const-<?php echo $data_beverage['id'];?>'
+												);
+											calculateTotal('qty-tbl_beverage-<?php echo $data_beverage['id'];?>',
+											'gross-price-beverage-<?php echo $data_beverage['id'];?>',
+											'total-gross-price-beverage','input-total-gross-price-beverage',
+											'rb-size-price-beverage-<?php echo $data_beverage['id']?>'
+											);"
 											type="text"
 											id="qty-tbl_beverage-<?php echo $data_beverage['id'];?>"
 											name="qty-tbl_beverage-<?php echo $data_beverage['id'];?>">

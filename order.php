@@ -66,8 +66,7 @@ function get_pizza_quantity(){
 			var quantityByUser=document.getElementById(idQuantity);
 			var availabilityNew=document.getElementById(idAvailability);
 			var availabilityInStock=document.getElementById(idAvailabilityConst);
-			availabilityNew.value=availabilityInStock.innerHTML;//Value from DB every trigger to calculate new availability.
-			availabilityNew.value=availabilityNew.value-quantityByUser.value;
+			availabilityNew.value=availabilityInStock.innerHTML-quantityByUser.value;
 		}
 
 		function calculateTotal(idQuantity,idTotalPrice, idGrandTotalPrice, inputGrandTotalPrice, nameSizePrice){

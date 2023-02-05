@@ -71,7 +71,7 @@
   <div class="row content">
     <div class="col-sm-2 sidenav">
       <p><a href="user-management.php">Users</a></p>
-      <p><a href="#">Foods</a></p>
+      <p><<a href="food.php">Foods</a></p>
       <p><a href="#">Beverages</a></p>
       <p><a href="#">Desserts</a></p>
     </div>

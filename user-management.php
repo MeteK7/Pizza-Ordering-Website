@@ -7,6 +7,7 @@
 	<title>User Management</title>
 	<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
 	<link rel="stylesheet" type="text/css" href="css/user-management.css">
+	<link rel="stylesheet" type="text/css" href="css/style-btn.css">
 </head>
 <body>
 <div class="container">
@@ -14,7 +15,7 @@
 	<div class="col-lg-12">
 		<div class="main-box clearfix">
 			<div class="table-responsive">
-				<table class="table user-list">
+				<table class="table data-list">
 					<thead>
 						<tr>
 							<th><span>User Id</span></th>
@@ -39,8 +40,8 @@
 									</td>			
 									<td>
 										<img src="https://bootdey.com/img/Content/avatar/avatar1.png" alt="">
-										<a href="#" class="user-link"><?php echo $data_user['username']; ?></a>
-										<!--<span class="user-subhead">Admin</span>-->
+										<a href="#" class="data-link"><?php echo $data_user['username']; ?></a>
+										<!--<span class="data-subhead">Admin</span>-->
 									</td>
 									<td>
 										<a href="#"><?php //echo $data_user['email']; ?></a>
@@ -52,7 +53,7 @@
 										<a href="#"><?php echo $data_user['address']; ?></a>
 									</td>
 									<td style="width: 20%;">
-										<a href="#" class="table-link">
+<!-- 										<a href="#" class="table-link">
 											<span class="fa-stack">
 												<i class="fa fa-square fa-stack-2x"></i>
 												<i class="fa fa-search-plus fa-stack-1x fa-inverse"></i>
@@ -69,11 +70,22 @@
 												<i class="fa fa-square fa-stack-2x"></i>
 												<i class="fa fa-trash-o fa-stack-1x fa-inverse"></i>
 											</span>
-										</a>
-										<form action="bll/UserManagementBLL/DeleteUser.php" method="post">
-										    <input type="submit" name="delete" value="DELETE" onclick="return confirm('Do you want to delete this record?');"/>
-				                            <input type="hidden" id="deleteId" name="deleteId" value="<?php echo $data_user['id']; ?>"/>
-				                            <input type="hidden" name="action" id="action" value="delete"/>
+										</a> -->
+										
+										<form action="bll/UserManagementBLL/search-user.php" method="post" class="fa-stack">
+											    <button type="submit" name="search" class="fa fa-search-plus fa-stack-1x fa-inverse btn-search"/></button> 
+					                            <input type="hidden" name="searchId" id="searchId" value="<?php echo $data_user['id']; ?>"/>
+					                            <input type="hidden" name="action" id="action" value="search"/>
+										</form>
+										<form action="bll/UserManagementBLL/update-user.php" method="post" class="fa-stack">
+											    <button type="submit" name="update" class="fa fa-pencil fa-stack-1x fa-inverse btn-update"/></button> 
+					                            <input type="hidden" name="updateId" id="updateId" value="<?php echo $data_user['id']; ?>"/>
+					                            <input type="hidden" name="action" id="action" value="update"/>
+										</form>
+										<form action="bll/UserManagementBLL/delete-user.php" method="post" class="fa-stack">
+											    <button type="submit" name="delete" class="fa fa-trash-o fa-stack-1x fa-inverse btn-delete" onclick="return confirm('Do you want to delete this record?');"/></button> 
+					                            <input type="hidden" name="deleteId" id="deleteId" value="<?php echo $data_user['id']; ?>"/>
+					                            <input type="hidden" name="action" id="action" value="delete"/>
 										</form>
 									</td>
 								</tr>

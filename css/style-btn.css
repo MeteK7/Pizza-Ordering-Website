@@ -1,0 +1,25 @@
+.btn-search {
+  background-color: dodgerblue;
+  border: none;
+  cursor: pointer;
+  opacity: 0.9;
+}
+
+.btn-update {
+  background-color: green;
+  border: none;
+  cursor: pointer;
+  opacity: 0.7;
+}
+
+
+.btn-delete {
+  background-color: red;
+  border: none;
+  cursor: pointer;
+  opacity: 0.7;
+}
+
+button:hover {
+  opacity: 1;
+}

@@ -4,7 +4,7 @@
 ?>
 <html>
 <head>
-	<title>Food Management</title>
+	<title>Beverage Management</title>
 	<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
 	<link rel="stylesheet" type="text/css" href="css/style-management.css">
 	<link rel="stylesheet" type="text/css" href="css/style-btn.css">
@@ -29,7 +29,7 @@
 					</thead>
 					<tbody>
 						<?php 
-						$table_name="tbl_pizza"; //Get table name for once and use it below.
+						$table_name="tbl_beverage"; //Get table name for once and use it below.
 						$table_data=GetData($table_name);
 						if ($table_data->num_rows > 0) 
 						{
@@ -77,7 +77,7 @@
 								</tr>
 								<?php
 							}
-						}
+						} 
 						else 
 						{ 
 							?>

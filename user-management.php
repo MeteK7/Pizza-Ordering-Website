@@ -6,7 +6,7 @@
 <head>
 	<title>User Management</title>
 	<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
-	<link rel="stylesheet" type="text/css" href="css/user-management.css">
+	<link rel="stylesheet" type="text/css" href="css/style-management.css">
 	<link rel="stylesheet" type="text/css" href="css/style-btn.css">
 </head>
 <body>
@@ -28,29 +28,30 @@
 					</thead>
 					<tbody>
 						<?php 
-						$result_user=GetData("tbl_customer");
-						if ($result_user->num_rows > 0) 
+						$table_name="tbl_customer"; //Get table name for once and use it below.
+						$table_data=GetData($table_name);
+						if ($table_data->num_rows > 0) 
 						{
-							while($data_user = $result_user->fetch_assoc()) 
+							while($data = $table_data->fetch_assoc()) 
 							{
 								?>
 								<tr>
 									<td>
-										<a href="#"><?php echo $data_user['id']; ?></a>
+										<a href="#"><?php echo $data['id']; ?></a>
 									</td>			
 									<td>
 										<img src="https://bootdey.com/img/Content/avatar/avatar1.png" alt="">
-										<a href="#" class="data-link"><?php echo $data_user['username']; ?></a>
+										<a href="#" class="data-link"><?php echo $data['username']; ?></a>
 										<!--<span class="data-subhead">Admin</span>-->
 									</td>
 									<td>
-										<a href="#"><?php //echo $data_user['email']; ?></a>
+										<a href="#"><?php //echo $data['email']; ?></a>
 									</td>
 									<td>
-										<a href="#"><?php //echo $data_user['credate']; ?></a>
+										<a href="#"><?php //echo $data['credate']; ?></a>
 									</td>
 									<td>
-										<a href="#"><?php echo $data_user['address']; ?></a>
+										<a href="#"><?php echo $data['address']; ?></a>
 									</td>
 									<td style="width: 20%;">
 <!-- 										<a href="#" class="table-link">
@@ -72,20 +73,20 @@
 											</span>
 										</a> -->
 										
-										<form action="bll/UserManagementBLL/search-user.php" method="post" class="fa-stack">
-											    <button type="submit" name="search" class="fa fa-search-plus fa-stack-1x fa-inverse btn-search"/></button> 
-					                            <input type="hidden" name="searchId" id="searchId" value="<?php echo $data_user['id']; ?>"/>
-					                            <input type="hidden" name="action" id="action" value="search"/>
+										<form action="bll/search.php" method="post" class="fa-stack">
+											    <button type="submit" name="btn-search" class="fa fa-search-plus fa-stack-1x fa-inverse btn-search"/></button> 
+					                            <input type="hidden" name="id-data" value="<?php echo $data['id']; ?>"/>
+					                            <input type="hidden" name="table-name" value="<?php echo $table_name; ?>"/>
 										</form>
-										<form action="bll/UserManagementBLL/update-user.php" method="post" class="fa-stack">
-											    <button type="submit" name="update" class="fa fa-pencil fa-stack-1x fa-inverse btn-update"/></button> 
-					                            <input type="hidden" name="updateId" id="updateId" value="<?php echo $data_user['id']; ?>"/>
-					                            <input type="hidden" name="action" id="action" value="update"/>
+										<form action="bll/update.php" method="post" class="fa-stack">
+											    <button type="submit" name="btn-update" class="fa fa-pencil fa-stack-1x fa-inverse btn-update"/></button> 
+					                            <input type="hidden" name="id-data" value="<?php echo $data['id']; ?>"/>
+					                            <input type="hidden" name="table-name" value="<?php echo $table_name; ?>"/>
 										</form>
-										<form action="bll/UserManagementBLL/delete-user.php" method="post" class="fa-stack">
-											    <button type="submit" name="delete" class="fa fa-trash-o fa-stack-1x fa-inverse btn-delete" onclick="return confirm('Do you want to delete this record?');"/></button> 
-					                            <input type="hidden" name="deleteId" id="deleteId" value="<?php echo $data_user['id']; ?>"/>
-					                            <input type="hidden" name="action" id="action" value="delete"/>
+										<form action="bll/delete.php" method="post" class="fa-stack">
+											    <button type="submit" name="btn-delete" class="fa fa-trash-o fa-stack-1x fa-inverse btn-delete" onclick="return confirm('Do you want to delete this record?');"/></button> 
+					                            <input type="hidden" name="id-data" value="<?php echo $data['id']; ?>"/>
+					                            <input type="hidden" name="table-name" value="<?php echo $table_name; ?>"/>
 										</form>
 									</td>
 								</tr>

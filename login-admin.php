@@ -18,7 +18,7 @@ if(isset($_POST['submit-login'])){
 
     if ($userid != "" && $password != ""){
 
-        $sql = "select count(*) from tbl_admin where id='".$userid."' and password='".$password."'";
+        $sql = "select count(*) from tbl_user where id='".$userid."' and password='".$password."'";
         $result = mysqli_query($conn,$sql);
         $row = mysqli_fetch_array($result, MYSQLI_ASSOC);
         $count =mysqli_num_rows($result); 

@@ -6,10 +6,6 @@
 <head>
 	<title>User Management</title>
 	<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
-	<!--
-	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
-	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
-	-->
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
@@ -117,6 +113,10 @@
 	          	<label><strong>Address</strong></label>
 	          	<p id="address"></p>
         	</div>
+	      	<div>
+	          	<label><strong>Admin</strong></label>
+	          	<p id="isadmin"></p>
+        	</div>
 	      </div>
 
 	      <!-- Modal Footer -->
@@ -148,27 +148,32 @@
 		      	<div>
 		          	<label><strong>Name</strong></label>
 		          	<br>
-		          	<input type=text id="update-username" name="update-username" required>
+		          	<input type="text" id="update-username" name="update-username" required>
 	        	</div>
 		      	<div>
 		          	<label><strong>Email</strong></label>
 		          	<br>
-		          	<input type=text id="update-email" name="update-email" required>
+		          	<input type="text" id="update-email" name="update-email" required>
 	        	</div>  
 	        	<div>
 		          	<label><strong>Contact</strong></label>
 		          	<br>
-		          	<input type=text id="update-contact" name="update-contact" required>
+		          	<input type="text" id="update-contact" name="update-contact" required>
 	        	</div>
 		      	<div>
 		          	<label><strong>Birth Date</strong></label>
 		          	<br>
-		          	<input type=text id="update-birthdate" name="update-birthdate" required>
+		          	<input type="text" id="update-birthdate" name="update-birthdate" required>
 	        	</div>
 		      	<div>
 		          	<label><strong>Address</strong></label>
 		          	<br>
-		          	<textarea type=text id="update-address" name="update-address" rows="4" cols="50" required></textarea>
+		          	<textarea type="text" id="update-address" name="update-address" rows="4" cols="50" required></textarea>
+	        	</div>
+		      	<div>
+		          	<label><strong>Admin</strong></label>
+		          	<br>
+		          	<input type="checkbox" id="update-isadmin" name="update-isadmin">
 	        	</div>
 		      </div>
 
@@ -248,12 +253,33 @@
 																<p><?php if($data['admin']==TRUE) echo "YES"; else echo "NO";?></p>
 															</td>
 															<td style="width: 20%;">
-																<button class="fa fa-search-plus fa-stack fa-inverse btn-view" data-id="<?php echo $data['id']; ?>" data-username="<?php echo $data['username']; ?>" data-email="<?php echo $data['email']; ?>" data-contact="<?php echo $data['contact']; ?>" data-birthdate="<?php echo $data['birthdate']; ?>" data-address="<?php echo $data['address']; ?>" data-bs-toggle="modal" data-bs-target="#modal-view"/></button>
-																<button class="fa fa-pencil fa-stack fa-inverse btn-update" data-id="<?php echo $data['id']; ?>" data-username="<?php echo $data['username']; ?>" data-email="<?php echo $data['email']; ?>" data-contact="<?php echo $data['contact']; ?>" data-birthdate="<?php echo $data['birthdate']; ?>" data-address="<?php echo $data['address']; ?>" data-bs-toggle="modal" data-bs-target="#modal-update"/></button> 
+																<button class="fa fa-search-plus fa-stack fa-inverse btn-view" 
+																		data-id="<?php echo $data['id']; ?>" 
+																		data-username="<?php echo $data['username']; ?>" 
+																		data-email="<?php echo $data['email']; ?>" 
+																		data-contact="<?php echo $data['contact']; ?>" 
+																		data-birthdate="<?php echo $data['birthdate']; ?>" 
+																		data-address="<?php echo $data['address']; ?>" 
+																		data-isadmin="<?php if($data['admin']==TRUE) echo "YES"; else echo "NO"; ?>" 
+																		data-bs-toggle="modal" 
+																		data-bs-target="#modal-view">
+																</button>
+																<button class="fa fa-pencil fa-stack fa-inverse btn-update" 
+																		data-id="<?php echo $data['id']; ?>" 
+																		data-username="<?php echo $data['username']; ?>" 
+																		data-email="<?php echo $data['email']; ?>" 
+																		data-contact="<?php echo $data['contact']; ?>" 
+																		data-birthdate="<?php echo $data['birthdate']; ?>" 
+																		data-address="<?php echo $data['address']; ?>" 
+																		data-isadmin="<?php echo $data['admin']?>" 
+																		data-bs-toggle="modal" 
+																		data-bs-target="#modal-update">
+																</button> 
 																<form action="bll/delete.php" method="post" class="fa-stack">
-																	    <button type="submit" name="btn-delete" class="fa fa-trash-o fa-stack-1x fa-inverse btn-delete" onclick="return confirm('Do you want to delete this record?');"/></button> 
+																	    <button type="submit" name="btn-delete" class="fa fa-trash-o fa-stack-1x fa-inverse btn-delete" onclick="return confirm('Do you want to delete this record?');"></button> 
 											                            <input type="hidden" name="id-data" value="<?php echo $data['id']; ?>"/>
 											                            <input type="hidden" name="table-name" value="<?php echo $table_name; ?>"/>
+											                            <input type="hidden" name="page-name" value="user-management.php"/>
 																</form>
 															</td>
 														</tr>
@@ -286,6 +312,7 @@
 		    var contact = $(this).data('contact');     
 		    var birthdate = $(this).data('birthdate');     
 		    var address = $(this).data('address');     
+		    var isadmin = $(this).data('isadmin');     
 
 		    $('#id').html(id);  
 		    $('#username').html(username);  
@@ -293,6 +320,7 @@
 		    $('#contact').html(contact);  
 		    $('#birthdate').html(birthdate);  
 		    $('#address').html(address);  
+		    $('#isadmin').html(isadmin);  
 	    } );
 
 	    $('.btn-update').click(function() {
@@ -302,13 +330,15 @@
 		    var contact = $(this).data('contact');     
 		    var birthdate = $(this).data('birthdate');     
 		    var address = $(this).data('address');     
-		  
+		  	var isadmin = $(this).data('isadmin'); 
+
 		    $('#update-id').val(id);  
 		    $('#update-username').val(username);  
 		    $('#update-email').val(email);  
 		    $('#update-contact').val(contact);  
 		    $('#update-birthdate').val(birthdate);  
 		    $('#update-address').val(address);    
+		    $('#update-isadmin').prop('checked', isadmin);
 	    } );
 	</script>
 </body>

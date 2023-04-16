@@ -17,6 +17,69 @@
 	<link rel="stylesheet" type="text/css" href="css/style-btn.css">
 </head>
 <body>
+	<!-- ADD MODAL -->
+	<div class="modal fade" id="modal-add">
+	  <div class="modal-dialog">
+	    <div class="modal-content">
+
+	      <!-- Modal Header -->
+	      <div class="modal-header">
+	        <h4 class="modal-title">Add User</h4>
+	        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+	      </div>
+
+	      <!-- Modal Body -->
+	      <div class="modal-body">
+	      	<form action="bll/adduser.php" method="POST">
+		      	<div>
+		          	<label><strong>Name</strong></label>
+		          	<br>
+		          	<input type="text" id="add-username" name="add-username" required>
+	        	</div>
+		      	<div>
+		          	<label><strong>Password</strong></label>
+		          	<br>
+		          	<input type="Password" id="add-password" name="add-password" required>
+	        	</div>
+		      	<div>
+		          	<label><strong>Email</strong></label>
+		          	<br>
+		          	<input type="text" id="add-email" name="add-email" required>
+	        	</div>  
+	        	<div>
+		          	<label><strong>Contact</strong></label>
+		          	<br>
+		          	<input type="text" id="add-contact" name="add-contact" required>
+	        	</div>
+		      	<div>
+		          	<label><strong>Birth Date</strong></label>
+		          	<br>
+		          	<input type="text" id="add-birthdate" name="add-birthdate" required>
+	        	</div>
+		      	<div>
+		          	<label><strong>Address</strong></label>
+		          	<br>
+		          	<textarea id="add-address" name="add-address" rows="4" cols="50" required></textarea>
+	        	</div>
+		      	<div>
+		          	<label><strong>Admin</strong></label>
+		          	<br>
+		          	<!-- When the checkbox is unchecked it's not transmitted in the post (so only the hidden is transmitted). When it's checked it is transmitted, and will overwrite the hidden value.-->
+		          	<input type="hidden" id="add-chk-admin" name="add-chk-admin" value="0">
+		          	<input type="checkbox" id="add-chk-admin" name="add-chk-admin" value="1">
+	        	</div>
+		      </div>
+
+		      <!-- Modal Footer -->
+		      <div class="modal-footer">
+		      	<button type="submit" name="adddata" class="btn btn-primary">Add</button>
+		        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+		      </div>
+	      </form>
+	    </div>
+	  </div>
+	</div>
+
 	<!-- VIEW MODAL -->
 	<div class="modal fade" id="modal-view">
 	  <div class="modal-dialog">
@@ -123,6 +186,13 @@
 		<div class="jumbotron">
             <div class="card">
                 <h2>User Management</h2>
+            </div>
+            <div class="card">
+                <div class="card-body">
+                    <button type="button" class="btn btn-primary"  data-bs-toggle="modal" data-bs-target="#modal-add">
+                        ADD DATA
+                    </button>
+                </div>
             </div>
             <div class="card">
                 <div class="card-body">

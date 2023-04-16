@@ -12,8 +12,8 @@
         $address = $_POST['update-address'];
         
 
-        $query = "UPDATE tbl_user SET username='$username', email='$email', contact='$contact', birthdate='$birthdate', address='$address' WHERE id='$id'";
-        $query_run=$conn->query($query);
+        $sql_query = "UPDATE tbl_user SET username='$username', email='$email', contact='$contact', birthdate='$birthdate', address='$address' WHERE id='$id'";
+        $query_run=$conn->query($sql_query);
 
         if($query_run)
         {

@@ -7,17 +7,24 @@ session_start();
 
 function GetUsernameById($userid, $userpassword) {
 	include "config.php";
-	$query_customer = "SELECT * FROM tbl_customer WHERE id='".$userid."' and password='".$userpassword."'";
+	$hashed_password = hash('sha256', $userpassword, false);
+	$query_customer = "SELECT username FROM tbl_customer WHERE id=? AND password=?";
+	$stmt_customer = $conn->prepare($query_customer);
+	$stmt_customer->bind_param("is", $userid, $hashed_password);
+	$stmt_customer->execute();
+	$result_customer=$stmt_customer->get_result();
 
-	$result_customer = $conn->query($query_customer);
-
+	$username = null;
 	if ($result_customer->num_rows > 0) 
 	{
-		while($row = $result_customer->fetch_assoc()) 
-			{
-				$_SESSION['username']= $row['username'];
-			}
+		$row = $result_customer->fetch_assoc();
+		$username = $row['username'];
 	}
+
+	$stmt_customer->close();
+	$conn->close();
+
+	return $row['username'];
 }
 
 function function_alert($message) {
@@ -46,7 +53,7 @@ if(isset($_POST['submit-login'])){
         if($count > 0){
             $_SESSION['userid'] = $userid; //Adding the user id to the session
 
-            GetUsernameById($userid, $userpassword); //Getting the username by id
+            $_SESSION['username'] = GetUsernameById($userid, $userpassword); //Getting the username by id
 
             header('Location: order.php'); //Routing to the ordering page
         }

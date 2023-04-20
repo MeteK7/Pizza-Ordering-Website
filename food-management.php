@@ -35,7 +35,7 @@ include('bll/get-bll.php');
 						<div>
 							<label><strong>Price Small</strong></label>
 							<br>
-							<textarea id="add-price-small" name="add-price-small" rows="4" cols="50" required></textarea>
+							<input id="add-price-small" name="add-price-small" required>
 						</div>
 						<div>
 							<label><strong>Price Medium</strong></label>

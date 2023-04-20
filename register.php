@@ -1,35 +1,58 @@
 <!DOCTYPE html>
 <html>
-  
+
 <head>
     <title>Customer Registration</title>
 </head>
-  
+
 <body>
     <center>
-        <!--MySQLi Data Insertion Object-oriented-->
-        <?php
-        include "config.php";
+       <!--MySQLi Data Insertion Object-oriented-->
+       <?php
+       include "config.php";
 
-        // Taking all 3 values from the form data(input)
-        $username =  $_REQUEST['username'];
-        $password =  $_REQUEST['password'];
-        $address = $_REQUEST['address'];
+      // Taking all 3 values from the form data(input)
+       $username =  $_REQUEST['username'];
+       $password =  $_REQUEST['userpassword'];
+       $address = $_REQUEST['address'];
 
-        $sql = "INSERT INTO tbl_customer (username, password, address)
-VALUES ('$username','$password','$address')";
-          
-        if ($conn->query($sql) === TRUE) {
+      // Validate user input
+       if (empty($username) || empty($password) || empty($address)) {
+          echo "Error: Please fill in all fields";
+          exit();
+      }
+
+      if (strlen($username) > 50) {
+          echo "Error: Username must be 50 characters or less";
+          exit();
+      }
+
+      if (strlen($password) < 8) {
+          echo "Error: Password must be at least 8 characters";
+          exit();
+      }
+
+      // Hash the password
+      $hashed_password = hash('sha256', $password);
+
+      // Use prepared statements
+      $sql = "INSERT INTO tbl_customer (username, password, address) VALUES (?, ?, ?)";
+      $stmt = $conn->prepare($sql);
+      $stmt->bind_param("sss", $username, $hashed_password, $address);
+
+      if ($stmt->execute()) {
           echo "New record created successfully";
-        } else {
-          echo "Error: " . $sql . "<br>" . $conn->error;
-        }
+      } else {
+          // Use error handling
+          echo "Error: " . $stmt->error;
+      }
 
-        $conn->close();
-        ?>
-    </center>
+      $stmt->close();
+      $conn->close();
+      ?>
+  </center>
 </body>
-  
+
 </html>
 
 <!--https://www.geeksforgeeks.org/how-to-insert-form-data-into-database-using-php/-->

@@ -207,24 +207,24 @@ include('bll/get-bll.php');
 								?>
 								<tr>
 									<td>
-										<a href="#"><?php echo $data['id']; ?></a>
+										<p href="#"><?php echo $data['id']; ?></p>
 									</td>			
 									<td>
 										<img src="https://bootdey.com/img/Content/avatar/avatar1.png" alt="">
-										<a href="#" class="data-link"><?php echo $data['name']; ?></a>
+										<p href="#" class="data-link"><?php echo $data['name']; ?></p>
 										<!--<span class="data-subhead">Admin</span>-->
 									</td>
 									<td>
-										<a href="#"><?php echo $data['price_small']; ?></a>
+										<p href="#"><?php echo $data['price_small']; ?></p>
 									</td>
 									<td>
-										<a href="#"><?php echo $data['price_medium']; ?></a>
+										<p href="#"><?php echo $data['price_medium']; ?></p>
 									</td>
 									<td>
-										<a href="#"><?php echo $data['price_large']; ?></a>
+										<p href="#"><?php echo $data['price_large']; ?></p>
 									</td>
 									<td>
-										<a href="#"><?php echo $data['availability']; ?></a>
+										<p href="#"><?php echo $data['availability']; ?></p>
 									</td>
 									<td style="width: 20%;">
 										<button class="fa fa-search-plus fa-stack fa-inverse btn-view" 

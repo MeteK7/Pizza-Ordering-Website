@@ -24,7 +24,7 @@
         else
         {
             //echo '<script> alert("Data Could Not Be Inserted"); </script>';
-            echo "Error inserting record: " .$username.$is_admin;
+            echo "Error inserting record: ".$conn->error;
         }
     }
 

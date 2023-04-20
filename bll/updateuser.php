@@ -18,12 +18,12 @@
 
         if($query_run)
         {
-            echo '<script> alert("Data Updated"); </script>';
+            echo '<script> alert("Data Has Been Updated"); </script>';
             header("Location:../user-management.php");
         }
         else
         {
-            //echo '<script> alert("Data Not Updated"); </script>';
+            //echo '<script> alert("Data could not be updated!"); </script>';
             echo "Error updating record: " . $conn->error;
         }
     }

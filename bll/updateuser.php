@@ -18,7 +18,7 @@
 
         if($query_run)
         {
-            echo '<script> alert("Data Has Been Updated"); </script>';
+            echo '<script> alert("Data has been updated!"); </script>';
             header("Location:../user-management.php");
         }
         else

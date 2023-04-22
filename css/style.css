@@ -1,3 +1,22 @@
 body{
 	background-image:url("../Images/Backgrounds/bg-pizza.jpg");
 }
+
+.card {
+  height: 100%;
+}
+
+.result {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.result-label {
+  font-weight: bold;
+}
+
+.card-title,
+.card-text {
+  text-align: center;
+}

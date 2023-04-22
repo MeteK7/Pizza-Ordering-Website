@@ -74,6 +74,7 @@
       <p><a href="food-management.php">Foods</a></p>
       <p><a href="beverage-management.php">Beverages</a></p>
       <p><a href="dessert-management.php">Desserts</a></p>
+      <p><a href="total-sale.php">Calculate Total Sale</a></p>
     </div>
     <div class="col-sm-8 text-left"> 
       <h1>Welcome</h1>

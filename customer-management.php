@@ -139,6 +139,11 @@
 		          	<br>
 		          	<input type="text" id="update-username" name="update-username" required>
 	        	</div>
+	        	<div>
+		          	<label><strong>Password</strong></label>
+		          	<br>
+		          	<input type="Password" id="update-password" name="update-password">
+	        	</div>
 		      	<div>
 		          	<label><strong>Email</strong></label>
 		          	<br>

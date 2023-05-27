@@ -172,7 +172,7 @@ include('bll/get-bll.php');
 			</div>
 			<div class="card">
 				<div class="card-body">
-					<button type="button" class="btn btn-primary"  data-bs-toggle="modal" data-bs-target="#modal-add">
+					<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modal-add">
 						ADD DATA
 					</button>
 				</div>
@@ -184,6 +184,12 @@ include('bll/get-bll.php');
 							<div class="col-lg-12">
 								<div class="main-box clearfix">
 									<div class="table-responsive">
+										<?php 
+											$table_name="tbl_dessert"; //Get table name for once and use it below.
+											$table_data=GetData($table_name);
+											$row_count=mysqli_num_rows($table_data);
+										?>
+										<p>Dessert Count: <?php echo $row_count; ?></p>
 										<table class="table data-list">
 											<thead>
 												<tr>
@@ -198,8 +204,6 @@ include('bll/get-bll.php');
 											</thead>
 											<tbody>
 												<?php 
-						$table_name="tbl_dessert"; //Get table name for once and use it below.
-						$table_data=GetData($table_name);
 						if ($table_data->num_rows > 0) 
 						{
 							while($data = $table_data->fetch_assoc()) 

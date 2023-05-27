@@ -1,32 +1,62 @@
 <?php 
 	// sql to update a record
-	include('../config.php');
+include('../config.php');
 
-	if(isset($_POST['updatedata']))
-    {   
-        $id = $_POST['update-id'];
-        $username = $_POST['update-username'];
-        $email = $_POST['update-email'];
-        $contact = $_POST['update-contact'];
-        $birthdate = $_POST['update-birthdate'];
-        $address = $_POST['update-address'];
-        $is_admin = isset($_POST['update-isadmin']) ? 1 : 0; // check if checkbox is checked
-        
+if(isset($_POST['updatedata']))
+{   
+    $id = $_POST['update-id'];
+    $username = $_POST['update-username'];
+    $password = isset($_POST['update-password'])? $_POST['update-password'] : 0;
+    $email = $_POST['update-email'];
+    $contact = $_POST['update-contact'];
+    $birthdate = $_POST['update-birthdate'];
+    $address = $_POST['update-address'];
+    $is_admin = isset($_POST['update-isadmin']) ? 1 : 0; // check if checkbox is checked
 
-        $sql_query = "UPDATE tbl_user SET username='$username', email='$email', contact='$contact', birthdate='$birthdate', address='$address', admin='$is_admin' WHERE id='$id'";
-        $query_run=$conn->query($sql_query);
+      // Validate user input
+    if (empty($username) || empty($email) || empty($contact) || empty($birthdate) || empty($address)) {
+      echo "Error: Please fill in all fields";
+      exit();
+  }
 
-        if($query_run)
-        {
-            echo '<script> alert("Data has been updated!"); </script>';
-            header("Location:../user-management.php");
-        }
-        else
-        {
-            //echo '<script> alert("Data could not be updated!"); </script>';
-            echo "Error updating record: " . $conn->error;
-        }
-    }
+  if (strlen($username) > 50) {
+      echo "Error: Username must be 50 characters or less";
+      exit();
+  }
 
-	$conn->close();
+  if (strlen($password) > 0 && strlen($password) < 8) {
+      echo "Error: Password must be at least 8 characters";
+      exit();
+  }
+
+  //If the user does not want to change the password, then keep the previous one.
+  if(strlen($password) == 0){
+      $sql = "UPDATE tbl_user SET username=?, address=?, email=?, contact=?, birthdate=?, address=?, admin=? WHERE id=?";
+      // Use prepared statements
+      $stmt = $conn->prepare($sql);
+      $stmt->bind_param("sssssssi", $username, $address, $email, $contact, $birthdate, $address, $is_admin, $id);
+  }
+
+  else{
+       // Hash the password
+      $hashed_password = hash('sha256', $password);
+      $sql = "UPDATE tbl_user SET username=?, password=?, address=?, email=?, contact=?, birthdate=?, address=?, admin=? WHERE id=?";
+
+      // Use prepared statements
+      $stmt = $conn->prepare($sql);
+      $stmt->bind_param("ssssssssi", $username, $hashed_password, $address, $email, $contact, $birthdate, $address, $is_admin, $id);
+  }
+
+    //Executing prepared statement
+      if ($stmt->execute()) {
+          echo '<script> alert("Data has been updated!"); </script>';
+          header("Location:../user-management.php");
+      } else {
+          // Use error handling
+          echo "Error: " . $stmt->error;
+      }
+
+      $stmt->close();
+      $conn->close();
+}
 ?>

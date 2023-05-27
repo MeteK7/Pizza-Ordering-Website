@@ -21,14 +21,16 @@
                         <!-- The for attribute is used in labels. It refers to the id of the element this label is associated with. When the user clicks with the mouse on the start-date text, the browser will automatically put the focus in the corresponding input field. -->
                         <label for="start-date" class="col-sm-2 col-form-label">Start Date:</label>
                         <div class="col-sm-10">
-                            <input type="date" class="form-control" id="start-date" name="start-date" required value="<?php echo isset($_POST['start-date']) ? $_POST['start-date'] : ''; ?>">
+                            <input type="date" class="form-control" id="start-date" name="start-date" required 
+                            value="<?php echo isset($_POST['start-date']) ? $_POST['start-date'] : ''; ?>">
                         </div>
                     </div>
                     <div class="form-group row">
                         <label for="end-date" class="col-sm-2 col-form-label">End Date:</label>
                         <div class="col-sm-10">
                             <!-- <input type="date" class="form-control" id="end-date" name="end-date" required> -->
-                            <input type="date" class="form-control" id="end-date" name="end-date" required value="<?php echo isset($_POST['end-date']) ? $_POST['end-date'] : ''; ?>">
+                            <input type="date" class="form-control" id="end-date" name="end-date" required 
+                            value="<?php echo isset($_POST['end-date']) ? $_POST['end-date'] : ''; ?>">
                         </div>
                     </div>
                     <div class="form-group row">

@@ -14,10 +14,12 @@
       // Taking all 3 values from the form data(input)
        $username =  $_REQUEST['username'];
        $password =  $_REQUEST['userpassword'];
+       $email = $_REQUEST['email'];
+       $contact = $_REQUEST['contact'];
        $address = $_REQUEST['address'];
 
       // Validate user input
-       if (empty($username) || empty($password) || empty($address)) {
+       if (empty($username) || empty($password) || empty($email)) {
           echo "Error: Please fill in all fields";
           exit();
       }
@@ -32,13 +34,16 @@
           exit();
       }
 
+      // Get date
+      $date = date('Y-m-d H:i:s');
+      
       // Hash the password
       $hashed_password = hash('sha256', $password);
 
       // Use prepared statements
-      $sql = "INSERT INTO tbl_customer (username, password, address) VALUES (?, ?, ?)";
+      $sql = "INSERT INTO tbl_customer (username, password, email, contact, address, creationdate) VALUES (?, ?, ?, ?, ?, ?)";
       $stmt = $conn->prepare($sql);
-      $stmt->bind_param("sss", $username, $hashed_password, $address);
+      $stmt->bind_param("ssssss", $username, $hashed_password, $email, $contact, $address, $date);
 
       if ($stmt->execute()) {
           echo "New record created successfully";

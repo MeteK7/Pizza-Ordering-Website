@@ -108,6 +108,10 @@ if(isset($_POST['submit-login'])){
 				<input type="text" name="username" id="username">
 				<label for="userpassword">Password:</label>
 				<input type="password" name="userpassword" id="userpassword">
+				<label for="email">Email:</label>
+				<input type="text" name="email" id="email">
+				<label for="contact">Contact:</label>
+				<input type="text" name="contact" id="contact">
 				<label for="address">Address:</label>
 				<input type="text" name="address" id="address">
 				<input type="submit" value="Register">

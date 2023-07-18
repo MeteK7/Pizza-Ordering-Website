@@ -71,27 +71,49 @@ if(isset($_POST['submit-login'])){
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>Login as Customer</title>
+	<link rel="stylesheet" type="text/css" href="css/style-login.css">
+	<script>
+		function toggleForms() {
+			var loginForm = document.getElementById("login-form");
+			var registerForm = document.getElementById("register-form");
 
+			if (loginForm.style.display === "none") {
+				loginForm.style.display = "block";
+				registerForm.style.display = "none";
+			} else {
+				loginForm.style.display = "none";
+				registerForm.style.display = "block";
+			}
+		}
+	</script>
 </head>
 <body>
-	<div>
-		<form action="" method="POST">
-			<label>Customer Number:</label>
-			<input type="text" name="userid">
-			<label>Password:</label>
-			<input type="Password" name="userpassword">
-			<input type="submit" value="Log in" name="submit-login" id="submit-login">
-		</form>
-		<p>If you visit our website for the first time, please register:</p>
-		<form action="register.php" method="POST">
-			<label>User Name:</label>
-			<input type="text" name="username">
-			<label>Password:</label>
-			<input type="Password" name="userpassword">
-			<label>Address:</label>
-			<input type="text" name="address">
-			<input type="submit" value="Register">
-		</form>
+	<div class="container">
+		<div class="login-form" id="login-form"style="display: block;">
+			<h1>Login as Customer</h1>
+			<form action="" method="POST">
+				<label for="userid">Customer Number:</label>
+				<input type="text" name="userid" id="userid">
+				<label for="userpassword">Password:</label>
+				<input type="password" name="userpassword" id="userpassword">
+				<input type="submit" value="Log in" name="submit-login" id="submit-login">
+			</form>
+			<p>If you are visiting our website for the first time, <a href="#" onclick="toggleForms()">register here</a>.</p>
+		</div>
+
+		<div class="register-form" id="register-form" style="display: none;">
+			<h1>Register as Customer</h1>
+			<form action="register.php" method="POST">
+				<label for="username">User Name:</label>
+				<input type="text" name="username" id="username">
+				<label for="userpassword">Password:</label>
+				<input type="password" name="userpassword" id="userpassword">
+				<label for="address">Address:</label>
+				<input type="text" name="address" id="address">
+				<input type="submit" value="Register">
+			</form>
+			<p>If you already have an account, <a href="#" onclick="toggleForms()">login here</a>.</p>
+		</div>
 	</div>
 </body>
 </html>

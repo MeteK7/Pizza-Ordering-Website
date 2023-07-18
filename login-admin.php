@@ -46,32 +46,26 @@ OLD QUERY
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>Login as Admin</title>
-
+	<link rel="stylesheet" type="text/css" href="css/style-login-admin.css">
 </head>
 <body>
-	<?php
-	function register(){
-
-	}
-	?>
-	<div>
-		<form action="" method="POST">
-			<label>Admin Number:</label>
-			<input type="text" name="userid">
-			<label>Password:</label>
-			<input type="Password" name="password">
-			<input type="submit" value="Log in" name="submit-login" id="submit-login">
-		</form>
-		<!--<p>If you visit our website for the first time, please register:</p>
-		<form action="register.php" method="POST">
-			<label>User Name:</label>
-			<input type="text" name="username">
-			<label>Password:</label>
-			<input type="Password" name="password">
-			<label>Address:</label>
-			<input type="text" name="address">
-			<input type="submit" value="Register">
-		</form>-->
+	<div class="container">
+		<div class="login-form">
+			<h1>Login as Admin</h1>
+			<form action="" method="POST">
+				<div class="form-group">
+					<label for="userid">Admin Number:</label>
+					<input type="text" name="userid" id="userid">
+				</div>
+				<div class="form-group">
+					<label for="password">Password:</label>
+					<input type="password" name="password" id="password">
+				</div>
+				<div class="form-group">
+					<input type="submit" value="Log in" name="submit-login" id="submit-login">
+				</div>
+			</form>
+		</div>
 	</div>
 </body>
 </html>

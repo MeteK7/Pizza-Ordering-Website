@@ -207,13 +207,15 @@
 										$summed_total_gross_price=array_sum($total_gross_price);
 
 										if ($summed_total_gross_price>=$price_min && $summed_total_gross_price<=$price_max) {
-											$discount=$data_discount_rate["discount"];
-											echo "%"; ?><input type="hidden" name="discount-rate" value="<?php echo $discount; ?>"><?php echo $discount;
+											$discount=$data_discount_rate["discount"];?>
+											<input type="hidden" name="discount-rate" value="<?php echo $discount; ?>">
+											<?php echo $discount; echo "%";
 											break;
 										}
 										elseif ($summed_total_gross_price>=$price_min && is_null($price_max)) {
-											$discount=$data_discount_rate["discount"];
-											echo "%"; ?><input type="hidden" name="discount-rate" value="<?php echo $discount; ?>"><?php echo $discount;
+											$discount=$data_discount_rate["discount"];?>
+											<input type="hidden" name="discount-rate" value="<?php echo $discount; ?>">
+											<?php echo $discount; echo "%";
 											break;
 										}
 									}

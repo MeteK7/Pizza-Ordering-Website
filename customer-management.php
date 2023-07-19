@@ -50,7 +50,7 @@
 		      	<div>
 		          	<label><strong>Birth Date</strong></label>
 		          	<br>
-		          	<input type="text" id="add-birthdate" name="add-birthdate" required>
+		          	<input type="date" id="add-birthdate" name="add-birthdate" required>
 	        	</div>
 		      	<div>
 		          	<label><strong>Address</strong></label>

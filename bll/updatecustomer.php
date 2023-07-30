@@ -1,6 +1,7 @@
 <?php 
 // sql to update a record
 include('../config.php');
+include('validate.php');
 
 if(isset($_POST['updatedata']))
 {   
@@ -27,7 +28,17 @@ if(isset($_POST['updatedata']))
         echo "Error: Password must be at least 8 characters";
         exit();
     }
+
+    if (!validatePhoneNumber($contact)) {
+        echo "Invalid Phone Number";
+        exit();
+    }
     
+    // if (!preg_match('/^(\+\d{1,2}\s)?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}$/', $contact)) {
+    //     echo "Invalid Phone Number";
+    //     exit();
+    // }
+
     //If the user does not want to change the password, then keep the previous one.
     if(strlen($password) == 0){
         $sql = "UPDATE tbl_customer SET username=?, address=?, email=?, contact=?, birthdate=?, address=? WHERE id=?";

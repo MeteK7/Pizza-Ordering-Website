@@ -28,6 +28,11 @@ if(isset($_POST['updatedata']))
         echo "Error: Password must be at least 8 characters";
         exit();
     }
+
+    if (!validatePhoneNumber($contact)) {
+        echo "Invalid Phone Number";
+        exit();
+    }
     
     //If the user does not want to change the password, then keep the previous one.
     if(strlen($password) == 0){

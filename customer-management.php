@@ -45,7 +45,7 @@
 	        	<div>
 		          	<label><strong>Contact</strong></label>
 		          	<br>
-		          	<input type="text" id="add-contact" name="add-contact" required>
+					<input type="tel" pattern="[0-9]{10}" id="add-contact" name="add-contact" required="" title="You can enter a ten-digit number.">
 	        	</div>
 		      	<div>
 		          	<label><strong>Birth Date</strong></label>
@@ -152,12 +152,12 @@
 	        	<div>
 		          	<label><strong>Contact</strong></label>
 		          	<br>
-		          	<input type="text" id="update-contact" name="update-contact" required>
+		          	<input type="tel" pattern="[0-9]{10}" id="update-contact" name="update-contact" required="" title="You can enter a ten-digit number.">
 	        	</div>
 		      	<div>
 		          	<label><strong>Birth Date</strong></label>
 		          	<br>
-		          	<input type="text" id="update-birthdate" name="update-birthdate" required>
+		          	<input type="date" id="update-birthdate" name="update-birthdate" required>
 	        	</div>
 		      	<div>
 		          	<label><strong>Address</strong></label>
